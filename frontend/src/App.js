@@ -1,50 +1,58 @@
-import * as React from 'react';
-import {
-  createBrowserRouter,
-  RouterProvider
-} from "react-router-dom"
-import Help from './Router/Help';
-import Login from './Router/Login';
-
-import Main from './Router/Main';
-import Pieces from './Router/Pieces';
-import Signup from './Router/Signup';
-import Mypage from './Router/MyPage';
+import * as React from "react";
+import { createGlobalStyle } from "styled-components";
+import reset from "styled-reset";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Main from "./Router/Main";
+import Login from "./Router/Login";
+import Signup from "./Router/Signup";
+import Mypage from "./Router/MyPage";
+import Pieces from "./Router/Pieces";
+import PieceDetail from "./Router/PieceDetail";
+import Help from "./Router/Help";
 
 const router = createBrowserRouter([
   {
-    path: '/',
-    element: <Main />
+    path: "/",
+    element: <Main />,
   },
   {
-    path: '/pieces',
-    element: <Pieces />
+    path: "/login",
+    element: <Login />,
   },
   {
-    path: '/help',
-    element: <Help />
+    path: "/signup",
+    element: <Signup />,
   },
   {
-    path: '/signup',
-    element: <Signup />
+    path: "/mypage",
+    element: <Mypage />,
   },
   {
-    path: '/login',
-    element: <Login />
+    path: "/pieces",
+    element: <Pieces />,
   },
   {
-    path: '/mypage',
-    element: <Mypage />
+    path: "/help",
+    element: <Help />,
   },
   {
-    path: '/pieces/:id'
-  }
-])
+    path: "/pieces/:id",
+    element: <PieceDetail />,
+  },
+]);
 
-function App() {
+const GlobalStyle = createGlobalStyle`
+  ${reset}
+  /* other styles */
+`;
+
+const App = () => {
   return (
-    <RouterProvider router={router} />
+    <React.Fragment>
+      <GlobalStyle />
+      <RouterProvider router={router} />
+    </React.Fragment>
   );
-}
+};
 
 export default App;

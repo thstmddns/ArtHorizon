@@ -1,11 +1,7 @@
 import React from "react";
 
 const Piecedetail = () => {
-    return (
-        <div>
-            Here is piecedetail
-        </div>
-    )
-}
+  return <div>Here is piecedetail</div>;
+};
 
-export default Piecedetail
+export default Piecedetail;

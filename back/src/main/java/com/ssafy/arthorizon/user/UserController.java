@@ -36,6 +36,16 @@ public class UserController {
         return new ResponseEntity<>(res, HttpStatus.CREATED);
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<Map<String, Object>> loginPost(@RequestBody Map<String, String> req) {
+        SignupDto signupDto = userService.login(req);
+        if (signupDto.getResult() == SignupDto.SignupResult.FAILURE) { return new ResponseEntity<>(HttpStatus.BAD_REQUEST); }
+        String jwt = jwtService.create(signupDto.getUserSeq(), signupDto.getUserEmail());
+        Map<String, Object> res = new HashMap<>();
+        res.put("jwt", jwt);
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
 
 
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.Map;
+import java.util.Objects;
 
 @Service
 public class UserService {
@@ -34,6 +35,24 @@ public class UserService {
             signupDto.setUserEmail(currentUser.getUserEmail());
             signupDto.setUserPassword(currentUser.getUserPassword());
             signupDto.setUserSeq(currentUser.getUserSeq());
+            signupDto.setResult(SignupDto.SignupResult.SUCCESS);
+            return signupDto;
+        }
+        signupDto.setResult(SignupDto.SignupResult.FAILURE);
+        return signupDto;
+    }
+
+    public SignupDto login(Map<String, String> req) {
+        SignupDto signupDto = new SignupDto();
+        // 해당 email(id) 있는지 확인 -> 있으면 그 사용자 password 사용해서 확인하기
+        UserEntity user = userRepository.findByUserEmail(req.get("userEmail"));
+        if (user == null) {
+            signupDto.setResult(SignupDto.SignupResult.FAILURE);
+            return signupDto;
+        }
+        if (Objects.equals(CryptoUtil.Sha512.hash(req.get("userPassword")), user.getUserPassword())) {
+            signupDto.setUserEmail(user.getUserEmail());
+            signupDto.setUserSeq(user.getUserSeq());
             signupDto.setResult(SignupDto.SignupResult.SUCCESS);
             return signupDto;
         }

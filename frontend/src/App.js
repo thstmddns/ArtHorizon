@@ -1,7 +1,6 @@
 import * as React from "react";
-import { createGlobalStyle } from "styled-components";
-import reset from "styled-reset";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
 import Main from "./Router/Main";
 import Login from "./Router/Login";
 import Signup from "./Router/Signup";
@@ -9,6 +8,8 @@ import Mypage from "./Router/MyPage";
 import Pieces from "./Router/Pieces";
 import PieceDetail from "./Router/PieceDetail";
 import Help from "./Router/Help";
+
+import GlobalStyle from "./GlobalStyle";
 
 const router = createBrowserRouter([
   {
@@ -40,11 +41,6 @@ const router = createBrowserRouter([
     element: <PieceDetail />,
   },
 ]);
-
-const GlobalStyle = createGlobalStyle`
-  ${reset}
-  /* other styles */
-`;
 
 const App = () => {
   return (

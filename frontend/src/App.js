@@ -1,13 +1,12 @@
 import * as React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import Main from "./Router/Main";
-import Login from "./Router/Login";
-import Signup from "./Router/Signup";
-import Mypage from "./Router/MyPage";
-import Pieces from "./Router/Pieces";
-import PieceDetail from "./Router/PieceDetail";
-import Help from "./Router/Help";
+import Main from "./pages/home/Home";
+import LogIn from "./pages/login/LogIn";
+import SignUp from "./pages/signup/SignUp";
+import MyPage from "./pages/mypage/MyPage";
+import Pieces from "./pages/pieces/Pieces";
+import Help from "./pages/help/Help";
 
 import GlobalStyle from "./GlobalStyle";
 
@@ -18,15 +17,15 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <Login />,
+    element: <LogIn />,
   },
   {
     path: "/signup",
-    element: <Signup />,
+    element: <SignUp />,
   },
   {
     path: "/mypage",
-    element: <Mypage />,
+    element: <MyPage />,
   },
   {
     path: "/pieces",
@@ -35,10 +34,6 @@ const router = createBrowserRouter([
   {
     path: "/help",
     element: <Help />,
-  },
-  {
-    path: "/pieces/:id",
-    element: <PieceDetail />,
   },
 ]);
 

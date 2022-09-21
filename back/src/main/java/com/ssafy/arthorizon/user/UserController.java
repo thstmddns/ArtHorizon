@@ -4,10 +4,7 @@ import com.ssafy.arthorizon.user.dto.SignupDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +14,6 @@ import java.util.Map;
 public class UserController {
     private final String SUCCESS = "SUCCESS";
     private final String FAILURE = "FAILURE";
-//    @Autowired
     private final UserService userService;
     private final JwtService jwtService;
 
@@ -44,6 +40,16 @@ public class UserController {
         Map<String, Object> res = new HashMap<>();
         res.put("jwt", jwt);
         return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    @PutMapping("/change")
+    public ResponseEntity<String> typeChange(@RequestHeader("jwt") String jwt) {
+        // jwt에서 userSeq 가져와서 그 유저 타입 전환
+        Long userSeq = jwtService.getUserSeq(jwt);
+        // 해당 유저가 없는 경우
+        if (userSeq == null) { return new ResponseEntity<>(FAILURE, HttpStatus.UNAUTHORIZED); }
+        if (userService.typeChange(userSeq)) { return new ResponseEntity<>(SUCCESS, HttpStatus.OK); }
+        else { return new ResponseEntity<>(FAILURE, HttpStatus.BAD_REQUEST); }
     }
 
 

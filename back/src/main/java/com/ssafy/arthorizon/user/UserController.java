@@ -61,6 +61,15 @@ public class UserController {
         return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
     }
 
+    @PutMapping("/change-profile")
+    public ResponseEntity<String> profileChange(@RequestHeader("jwt") String jwt, @RequestBody Map<String, String> req) {
+        Long userSeq = jwtService.getUserSeq(jwt);
+        userService.profileChange(userSeq, req);
+        return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
+    }
+
+
+
 
 
 }

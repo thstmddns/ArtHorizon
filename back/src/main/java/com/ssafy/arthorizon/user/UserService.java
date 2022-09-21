@@ -74,4 +74,10 @@ public class UserService {
         return false;
     }
 
+    public boolean quitUser(Long userSeq) {
+        UserEntity user = userRepository.findByUserSeq(userSeq);
+        userRepository.delete(user);
+        return true;
+    }
+
 }

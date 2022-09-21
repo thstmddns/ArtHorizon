@@ -47,9 +47,18 @@ public class UserController {
         // jwt에서 userSeq 가져와서 그 유저 타입 전환
         Long userSeq = jwtService.getUserSeq(jwt);
         // 해당 유저가 없는 경우
-        if (userSeq == null) { return new ResponseEntity<>(FAILURE, HttpStatus.UNAUTHORIZED); }
+        if (userSeq == null) { return new ResponseEntity<>(FAILURE, HttpStatus.BAD_REQUEST); }
         if (userService.typeChange(userSeq)) { return new ResponseEntity<>(SUCCESS, HttpStatus.OK); }
         else { return new ResponseEntity<>(FAILURE, HttpStatus.BAD_REQUEST); }
+    }
+
+    @DeleteMapping("/quit")
+    public ResponseEntity<String> quitUser(@RequestHeader("jwt") String jwt) {
+        Long userSeq = jwtService.getUserSeq(jwt);
+        // 해당 유저가 없는 경우
+        if (userSeq == null) { return new ResponseEntity<>(FAILURE, HttpStatus.BAD_REQUEST); }
+        userService.quitUser(userSeq);
+        return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
     }
 
 

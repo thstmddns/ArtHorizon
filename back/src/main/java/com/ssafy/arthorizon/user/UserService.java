@@ -9,9 +9,11 @@ import com.ssafy.arthorizon.user.dto.SignupDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -120,8 +122,25 @@ public class UserService {
         followUser.setUserFollowerCount(followUser.getUserFollowerCount() + 1);
         userRepository.save(followUser);
         UserEntity currentUser = userRepository.findByUserSeq(currentUserSeq);
-        currentUser.setUserFollowingCount(followUser.getUserFollowingCount() + 1);
+        currentUser.setUserFollowingCount(currentUser.getUserFollowingCount() + 1);
         userRepository.save(currentUser);
+        return true;
+    }
+
+    public boolean unfollowUser(Long currentUserSeq, Long followUserSeq) {
+        UserEntity followUser = userRepository.findByUserSeq(followUserSeq);
+        UserEntity currentUser = userRepository.findByUserSeq(currentUserSeq);
+        if (followUser == null) { return false; }
+        Optional<FollowEntity> followEntity = followRepository.findByFollowerSeqAndFollowingSeq(currentUserSeq, followUserSeq);
+        // 팔로우한 적 없으면 false 반환
+        if (!followEntity.isPresent()) {
+            return false;
+        }
+        followRepository.delete(followEntity.get());
+        currentUser.setUserFollowingCount(currentUser.getUserFollowingCount() - 1);
+        userRepository.save(currentUser);
+        followUser.setUserFollowerCount(followUser.getUserFollowerCount() - 1);
+        userRepository.save(followUser);
         return true;
     }
 

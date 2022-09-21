@@ -82,6 +82,13 @@ public class UserController {
         else { return new ResponseEntity<>(FAILURE, HttpStatus.BAD_REQUEST); }
     }
 
+    @DeleteMapping("/follow/{followUserSeq}")
+    public ResponseEntity<String> unfollowUser(@RequestHeader("jwt") String jwt, @PathVariable Long followUserSeq) {
+        Long currentUserSeq = jwtService.getUserSeq(jwt);
+        if (userService.unfollowUser(currentUserSeq, followUserSeq)) { return new ResponseEntity<>(SUCCESS, HttpStatus.OK); }
+        else { return new ResponseEntity<>(FAILURE, HttpStatus.BAD_REQUEST); }
+    }
+
 
 
 

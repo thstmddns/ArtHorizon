@@ -20,7 +20,6 @@ storage = firebase.storage()
 
 app = FastAPI()
 
-    
 @app.get("/fastapi/")
 async def root():
     return {"message" : "Hello World"}
@@ -37,3 +36,4 @@ async def op():
     some_data = storage.child('turtle.jpg').get_url(123)
     print(some_data)
     return {"img" : some_data}
+

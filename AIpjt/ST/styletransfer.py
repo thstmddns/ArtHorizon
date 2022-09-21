@@ -31,6 +31,7 @@ def style_transfer(source1, source2):
         image = loader(image).unsqueeze(0)
         return image.to(device,torch.float)
     
+
     src1 = cv2.imread(source1)
     src2 = cv2.imread(source2)
     
@@ -38,13 +39,16 @@ def style_transfer(source1, source2):
     dst2 = cv2.resize(src2,(512,512))
     cv2.imwrite(source1,dst1)
     cv2.imwrite(source2,dst2)
+
     # mp = image_loader(dst1)
     # my_img = image_loader(dst2)
 
     # mp = cv2.resize(mp,(512,512))
     # my_img = cv2.resize(my_img,(512,512))
+
     mp = image_loader(source1)
     my_img = image_loader(source2)
+
     # print(mp.shape)
     # print(my_img.size())
     assert mp.size() == my_img.size(), \

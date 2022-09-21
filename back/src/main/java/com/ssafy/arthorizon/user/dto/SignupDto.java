@@ -1,9 +1,6 @@
 package com.ssafy.arthorizon.user.dto;
 
-import com.ssafy.arthorizon.user.UserEntity;
 import lombok.Data;
-
-import java.sql.Date;
 
 @Data
 public class SignupDto {

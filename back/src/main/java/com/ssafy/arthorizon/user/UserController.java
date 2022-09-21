@@ -75,6 +75,13 @@ public class UserController {
         else { return new ResponseEntity<>(FAILURE, HttpStatus.BAD_REQUEST); }
     }
 
+    @PostMapping("/follow/{followUserSeq}")
+    public ResponseEntity<String> followUser(@RequestHeader("jwt") String jwt, @PathVariable Long followUserSeq) {
+        Long currentUserSeq = jwtService.getUserSeq(jwt);
+        if (userService.followUser(currentUserSeq, followUserSeq)) { return new ResponseEntity<>(SUCCESS, HttpStatus.OK); }
+        else { return new ResponseEntity<>(FAILURE, HttpStatus.BAD_REQUEST); }
+    }
+
 
 
 

@@ -1,6 +1,10 @@
 package com.ssafy.arthorizon.user;
 
 import com.ssafy.arthorizon.common.CryptoUtil;
+import com.ssafy.arthorizon.user.Entity.FollowEntity;
+import com.ssafy.arthorizon.user.Entity.UserEntity;
+import com.ssafy.arthorizon.user.Repository.FollowRepository;
+import com.ssafy.arthorizon.user.Repository.UserRepository;
 import com.ssafy.arthorizon.user.dto.SignupDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +18,9 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private FollowRepository followRepository;
 
     public SignupDto signup(Map<String, String> req) {
         // 가입하려는 유저가 DB에 있는지 email(id)로 확인. 없으면 가입 과정 수행
@@ -94,6 +101,27 @@ public class UserService {
         }
         user.setUserPassword(CryptoUtil.Sha512.hash(req.get("changeUserPassword")));
         userRepository.save(user);
+        return true;
+    }
+
+    public boolean followUser(Long currentUserSeq, Long followUserSeq) {
+        UserEntity followUser = userRepository.findByUserSeq(followUserSeq);
+        if (followUser == null) { return false; }
+        // 이미 팔로우하고 있으면 false 반환
+        if (followRepository.findByFollowerSeqAndFollowingSeq(currentUserSeq, followUserSeq).isPresent()) {
+            return false;
+        }
+        // follow tb에 추가
+        FollowEntity followEntity = new FollowEntity();
+        followEntity.setFollowerSeq(currentUserSeq);
+        followEntity.setFollowingSeq(followUserSeq);
+        followRepository.save(followEntity);
+        // user tb에 각 followerCount + 1, followingCount + 1
+        followUser.setUserFollowerCount(followUser.getUserFollowerCount() + 1);
+        userRepository.save(followUser);
+        UserEntity currentUser = userRepository.findByUserSeq(currentUserSeq);
+        currentUser.setUserFollowingCount(followUser.getUserFollowingCount() + 1);
+        userRepository.save(currentUser);
         return true;
     }
 

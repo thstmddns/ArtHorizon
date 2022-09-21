@@ -80,4 +80,22 @@ public class UserService {
         return true;
     }
 
+    public void profileChange(Long userSeq, Map<String, String> req) {
+        UserEntity user = userRepository.findByUserSeq(userSeq);
+        user.setUserNickname(req.get("userNickname"));
+        user.setUserDesc(req.get("userDesc"));
+        userRepository.save(user);
+    }
+
+    public boolean passwordChange(Long userSeq, Map<String ,String> req) {
+        UserEntity user = userRepository.findByUserSeq(userSeq);
+        if (!Objects.equals(user.getUserPassword(), CryptoUtil.Sha512.hash(req.get("userPassword")))) {
+            return false;
+        }
+        user.setUserPassword(CryptoUtil.Sha512.hash(req.get("changeUserPassword")));
+        userRepository.save(user);
+        return true;
+    }
+
+
 }

@@ -60,4 +60,18 @@ public class UserService {
         return signupDto;
     }
 
+    public boolean typeChange(Long userSeq) {
+        UserEntity user = userRepository.findByUserSeq(userSeq);
+        String type = user.getUserType();
+        // 해당 유저가 이미 화가 회원이면 False
+        if (Objects.equals(type, "A")) { return false; }
+        // 해당 유저가 일반 회원이면 타입 변환해주고 True
+        if (Objects.equals(type, "N")) {
+            user.setUserType("A");
+            userRepository.save(user);
+            return true;
+        }
+        return false;
+    }
+
 }

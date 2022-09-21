@@ -44,7 +44,7 @@ public class JwtService {
         String userSeqStr = payloadData[1];
         String userEmail = payloadData[3];
         try {
-            return userRepository.findUserEmailByUserSeq(Long.parseLong(userSeqStr)).equals(userEmail);
+            return userRepository.findByUserSeq(Long.parseLong(userSeqStr)).getUserEmail().equals(userEmail);
         } catch (NumberFormatException e) {
             return false;
         }

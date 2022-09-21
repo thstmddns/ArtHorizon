@@ -19,15 +19,4 @@ public class SignupDto {
     private SignupResult result;
 
 
-//    public SignupDto(UserEntity userEntity) {
-//        this.userEmail = userEntity.getUserEmail();
-////        this.userNickname = userEntity.getUserNickname();
-//        this.userSeq = userEntity.getUserSeq();
-//        this.userPassword = userEntity.getUserPassword();
-//
-//    }
-//
-//    public SignupDto() {
-//
-//    }
 }

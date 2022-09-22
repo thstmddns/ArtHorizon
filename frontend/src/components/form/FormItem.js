@@ -5,7 +5,7 @@ const FormItem = styled.div`
   height: auto;
   display: flex;
   flex-direction: column;
-  margin-bottom: 30px;
+  margin-bottom: 35px;
 `;
 
 export default FormItem;

@@ -2,7 +2,7 @@ package com.ssafy.arthorizon.piece;
 
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
-import com.ssafy.arthorizon.user.UserEntity;
+import com.ssafy.arthorizon.user.Entity.UserEntity;
 
 import javax.persistence.*;
 

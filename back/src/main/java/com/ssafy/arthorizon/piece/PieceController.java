@@ -33,8 +33,13 @@ public class PieceController {
 
     // 작품 목록 북마크순 조회 페이지네이션
 //    @GetMapping("/popular")
-//    public List<PieceEntity> pieceListRecent(@RequestParam("page") int page){
-//        return pieceService.pieceListRecentService(page);
+//    public ResponseEntity<PiecePageDto> pieceListPopular(@RequestParam("page") int page){
+//        PiecePageDto piecePageDto = pieceService.pieceListPopularService(page);
+//        if(piecePageDto.getResult()== PieceDto.PieceResult.SUCCESS){
+//            return new ResponseEntity<>(piecePageDto, HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity<>(piecePageDto, HttpStatus.BAD_REQUEST);
+//        }
 //    }
 
     // 단일 작품 조회

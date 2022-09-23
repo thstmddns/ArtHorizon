@@ -17,7 +17,7 @@ public interface PieceRepository extends JpaRepository<PieceEntity,Long> {
     int countAllBy();
 
     // 작품 목록 최신순 조회
-    @Query(value="select * from pieceTb limit :limit offset :offset", nativeQuery = true)
+    @Query(value="select * from pieceTb order by pieceSeq desc limit :limit offset :offset", nativeQuery = true)
     List<PieceEntity> findRecentList(@Param(value="limit") int limit, @Param(value="offset") int offset);
 
 

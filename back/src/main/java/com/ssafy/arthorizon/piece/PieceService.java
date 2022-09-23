@@ -19,7 +19,7 @@ public class PieceService {
         // limit는 고정
 
         // page를 통해 offset을 계산
-        int offset = LIMIT*(page);
+        int offset = LIMIT*(page-1);
 
         // 해당하는 옵션대로 작품 목록을 뽑아옴
         List<PieceEntity> pieceEntity = pieceRepository.findRecentList(LIMIT,offset);
@@ -32,7 +32,7 @@ public class PieceService {
         } else {
             // 제대로 되어있으면
             // 전체 작품 목록의 수를 뽑아옴
-            int totalPage = (int) Math.ceil((pieceRepository.countAllBy()-1)/LIMIT);
+            int totalPage = (int) Math.ceil((pieceRepository.countAllBy())/LIMIT);
 
             // 반환할 페이지 dto를 작성
             PiecePageDto piecePageDto = new PiecePageDto(totalPage, page,pieceEntity);
@@ -46,6 +46,12 @@ public class PieceService {
     }
 
     // 작품 목록 북마크순 조회 페이지네이션
+//    public PiecePageDto pieceListPopularService(int page) {
+//
+//
+//
+//
+//    }
 
     // 단일 작품 조회
     public PieceDto pieceOne(Long pieceSeq) {
@@ -53,6 +59,8 @@ public class PieceService {
         PieceDto dto = new PieceDto(entity);
         return dto;
     }
+
+
 
     // 태그 조회
 

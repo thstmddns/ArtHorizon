@@ -107,6 +107,18 @@ public class UserController {
         else { return new ResponseEntity<>(FAILURE, HttpStatus.BAD_REQUEST); }
     }
 
+    @DeleteMapping("/bookmark/{pieceSeq}")
+    public ResponseEntity<String> unbookmarkPiece(@RequestHeader("jwt") String jwt, @PathVariable Long pieceSeq) {
+        Long currentUserSeq = jwtService.getUserSeq(jwt);
+        BookmarkDto bookmarkDto = userService.unbookmarkPiece(currentUserSeq, pieceSeq);
+        if (bookmarkDto.getResult() == BookmarkDto.BookmarkResult.SUCCESS) {
+            return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
+        }
+        else { return new ResponseEntity<>(FAILURE, HttpStatus.BAD_REQUEST); }
+
+    }
+
+
 
 
 

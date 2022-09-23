@@ -216,5 +216,28 @@ public class UserService {
         return bookmarkDto;
     }
 
+    public BookmarkDto unbookmarkPiece(Long userSeq, Long pieceSeq) {
+        PieceEntity pieceEntity = pieceRepository.findByPieceSeq(pieceSeq);
+        BookmarkDto bookmarkDto = new BookmarkDto();
+        // 작품 있는지 확인
+        if (pieceEntity == null) {
+            bookmarkDto.setResult(BookmarkDto.BookmarkResult.NO_SUCH_PIECE);
+            return bookmarkDto;
+        }
+        // 북마크한 적 있는지 확인
+        Optional<BookmarkEntity> bookmarkEntity = bookmarkRepository.findAllByBookmarker_UserSeqAndBookmarking_PieceSeq(userSeq, pieceSeq);
+        if (!bookmarkEntity.isPresent()) {
+            bookmarkDto.setResult(BookmarkDto.BookmarkResult.NO_SUCH_PIECE);
+            return bookmarkDto;
+        }
+        // 북마크 삭제하기
+        bookmarkRepository.delete(bookmarkEntity.get());
+        // pieceTb에 pieceBookmarkCount - 1
+        pieceEntity.setPieceBookmarkCount(pieceEntity.getPieceBookmarkCount() - 1);
+        pieceRepository.save(pieceEntity);
+        bookmarkDto.setResult(BookmarkDto.BookmarkResult.SUCCESS);
+        return bookmarkDto;
+    }
+
 
 }

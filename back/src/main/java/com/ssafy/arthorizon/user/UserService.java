@@ -1,8 +1,15 @@
 package com.ssafy.arthorizon.user;
 
 import com.ssafy.arthorizon.common.CryptoUtil;
+import com.ssafy.arthorizon.piece.PieceEntity;
+import com.ssafy.arthorizon.piece.PieceRepository;
+import com.ssafy.arthorizon.piece.dto.PiecePageDto;
+import com.ssafy.arthorizon.user.Entity.BookmarkEntity;
 import com.ssafy.arthorizon.user.Entity.UserEntity;
+import com.ssafy.arthorizon.user.Repository.BookmarkRepository;
 import com.ssafy.arthorizon.user.Repository.UserRepository;
+import com.ssafy.arthorizon.user.dto.BookmarkDto;
+import com.ssafy.arthorizon.user.dto.BookmarkPageDto;
 import com.ssafy.arthorizon.user.dto.SignupDto;
 import com.ssafy.arthorizon.user.Entity.FollowEntity;
 import com.ssafy.arthorizon.user.Repository.FollowRepository;
@@ -14,15 +21,20 @@ import java.util.*;
 @Service
 public class UserService {
 
+
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private FollowRepository followRepository;
 
-//    @Autowired
-//    @PersistenceContext
-//    private EntityManager em;
+    @Autowired
+    private BookmarkRepository bookmarkRepository;
+
+    @Autowired
+    private PieceRepository pieceRepository;
+
+    private final int LIMIT = 8;
 
     public SignupDto signup(Map<String, String> req) {
         // 가입하려는 유저가 DB에 있는지 email(id)로 확인. 없으면 가입 과정 수행
@@ -177,6 +189,73 @@ public class UserService {
 //        result.put("results", users);
 //        return result;
 //    }
+
+    public BookmarkDto bookmarkPiece(Long userSeq, Long pieceSeq) {
+        UserEntity userEntity = userRepository.findByUserSeq(userSeq);
+        PieceEntity pieceEntity = pieceRepository.findByPieceSeq(pieceSeq);
+        BookmarkDto bookmarkDto = new BookmarkDto();
+        // 작품이 있는지 확인
+        if (pieceEntity == null) {
+            bookmarkDto.setResult(BookmarkDto.BookmarkResult.NO_SUCH_PIECE);
+            return bookmarkDto;
+        }
+        // 북마크한 적 있는지 확인
+        if (followRepository.findAllByFollower_UserSeqAndFollowing_UserSeq(userSeq, pieceSeq).isPresent()) {
+            bookmarkDto.setResult(BookmarkDto.BookmarkResult.ALREADY_BOOKMARK);
+            return bookmarkDto;
+        }
+        // 북마크하기
+        BookmarkEntity bookmarkEntity = new BookmarkEntity();
+        bookmarkEntity.setBookmarker(userEntity);
+        bookmarkEntity.setBookmarking(pieceEntity);
+        bookmarkRepository.save(bookmarkEntity);
+        // pieceTb에 pieceBookmarkCount + 1
+        pieceEntity.setPieceBookmarkCount(pieceEntity.getPieceBookmarkCount() + 1);
+        pieceRepository.save(pieceEntity);
+        bookmarkDto.setResult(BookmarkDto.BookmarkResult.SUCCESS);
+        return bookmarkDto;
+    }
+
+    public BookmarkDto unbookmarkPiece(Long userSeq, Long pieceSeq) {
+        PieceEntity pieceEntity = pieceRepository.findByPieceSeq(pieceSeq);
+        BookmarkDto bookmarkDto = new BookmarkDto();
+        // 작품 있는지 확인
+        if (pieceEntity == null) {
+            bookmarkDto.setResult(BookmarkDto.BookmarkResult.NO_SUCH_PIECE);
+            return bookmarkDto;
+        }
+        // 북마크한 적 있는지 확인
+        Optional<BookmarkEntity> bookmarkEntity = bookmarkRepository.findAllByBookmarker_UserSeqAndBookmarking_PieceSeq(userSeq, pieceSeq);
+        if (!bookmarkEntity.isPresent()) {
+            bookmarkDto.setResult(BookmarkDto.BookmarkResult.NO_SUCH_PIECE);
+            return bookmarkDto;
+        }
+        // 북마크 삭제하기
+        bookmarkRepository.delete(bookmarkEntity.get());
+        // pieceTb에 pieceBookmarkCount - 1
+        pieceEntity.setPieceBookmarkCount(pieceEntity.getPieceBookmarkCount() - 1);
+        pieceRepository.save(pieceEntity);
+        bookmarkDto.setResult(BookmarkDto.BookmarkResult.SUCCESS);
+        return bookmarkDto;
+    }
+
+    public BookmarkPageDto bookmarkList(Long userSeq, int page) {
+        int offset = LIMIT * (page - 1);
+        List<BookmarkEntity> bookmarkEntities = bookmarkRepository.findBookmarkList(userSeq, LIMIT, offset);
+        // 북마크한 작품이 없을 때
+        if (bookmarkEntities.isEmpty()) {
+            BookmarkPageDto bookmarkPageDto = new BookmarkPageDto();
+            bookmarkPageDto.setTotalPage(0);
+            bookmarkPageDto.setPage(0);
+            bookmarkPageDto.setResult(BookmarkDto.BookmarkResult.NO_SUCH_PIECE);
+            return bookmarkPageDto;
+        }
+        int totalPage = (int) Math.ceil((bookmarkRepository.countAllByBookmarker_UserSeq(userSeq))/(double)LIMIT);
+
+        BookmarkPageDto bookmarkPageDto = new BookmarkPageDto(totalPage, page, bookmarkEntities);
+        bookmarkPageDto.setResult(BookmarkDto.BookmarkResult.SUCCESS);
+        return bookmarkPageDto;
+    }
 
 
 }

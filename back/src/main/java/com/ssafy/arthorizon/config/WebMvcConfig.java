@@ -28,15 +28,15 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/service/notice/**");
     }
 
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("*")
-                .allowedHeaders("*")
-                .exposedHeaders("Authorization", "REFRESH_TOKEN")
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                .maxAge(6000);
-    }
+//    @Override
+//    public void addCorsMappings(CorsRegistry registry) {
+//        registry.addMapping("/**")
+//                .allowedOrigins("*")
+//                .allowedHeaders("*")
+//                .exposedHeaders("*")
+//                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+//                .maxAge(6000);
+//    }
     @Bean
     protected JwtInterceptor jwtInterceptor() {
         return new JwtInterceptor();

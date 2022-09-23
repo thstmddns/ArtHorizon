@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-@EnableJpaRepositories(basePackages = {"com.ssafy.arthorizon.user.Repository"})
+//@EnableJpaRepositories(basePackages = {"com.ssafy.arthorizon.user.Repository"})
 public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -31,8 +31,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://j7d201.p.ssafy.io:8081", "http://localhost:8081", "http://localhost:8080")
-                .allowedMethods("*");
+                .allowedOrigins("*")
+                .allowedHeaders("*")
+                .exposedHeaders("Authorization", "REFRESH_TOKEN")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .maxAge(6000);
     }
     @Bean
     protected JwtInterceptor jwtInterceptor() {

@@ -1,11 +1,17 @@
 package com.ssafy.arthorizon.user;
 
 import com.ssafy.arthorizon.common.CryptoUtil;
+import com.ssafy.arthorizon.piece.PieceEntity;
+import com.ssafy.arthorizon.piece.PieceRepository;
+import com.ssafy.arthorizon.user.Entity.BookmarkEntity;
 import com.ssafy.arthorizon.user.Entity.UserEntity;
+import com.ssafy.arthorizon.user.Repository.BookmarkRepository;
 import com.ssafy.arthorizon.user.Repository.UserRepository;
+import com.ssafy.arthorizon.user.dto.BookmarkDto;
 import com.ssafy.arthorizon.user.dto.SignupDto;
 import com.ssafy.arthorizon.user.Entity.FollowEntity;
 import com.ssafy.arthorizon.user.Repository.FollowRepository;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +25,12 @@ public class UserService {
 
     @Autowired
     private FollowRepository followRepository;
+
+    @Autowired
+    private BookmarkRepository bookmarkRepository;
+
+    @Autowired
+    private PieceRepository pieceRepository;
 
 //    @Autowired
 //    @PersistenceContext
@@ -177,6 +189,32 @@ public class UserService {
 //        result.put("results", users);
 //        return result;
 //    }
+
+    public BookmarkDto bookmarkPiece(Long userSeq, Long pieceSeq) {
+        UserEntity userEntity = userRepository.findByUserSeq(userSeq);
+        PieceEntity pieceEntity = pieceRepository.findByPieceSeq(pieceSeq);
+        BookmarkDto bookmarkDto = new BookmarkDto();
+        // 작품이 있는지 확인
+        if (pieceEntity == null) {
+            bookmarkDto.setResult(BookmarkDto.BookmarkResult.NO_SUCH_PIECE);
+            return bookmarkDto;
+        }
+        // 북마크한 적 있는지 확인
+        if (followRepository.findAllByFollower_UserSeqAndFollowing_UserSeq(userSeq, pieceSeq).isPresent()) {
+            bookmarkDto.setResult(BookmarkDto.BookmarkResult.ALREADY_BOOKMARK);
+            return bookmarkDto;
+        }
+        // 북마크하기
+        BookmarkEntity bookmarkEntity = new BookmarkEntity();
+        bookmarkEntity.setBookmarker(userEntity);
+        bookmarkEntity.setBookmarking(pieceEntity);
+        bookmarkRepository.save(bookmarkEntity);
+        // pieceTb에 pieceBookmarkCount + 1
+        pieceEntity.setPieceBookmarkCount(pieceEntity.getPieceBookmarkCount() + 1);
+        pieceRepository.save(pieceEntity);
+        bookmarkDto.setResult(BookmarkDto.BookmarkResult.SUCCESS);
+        return bookmarkDto;
+    }
 
 
 }

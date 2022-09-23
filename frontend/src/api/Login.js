@@ -2,7 +2,7 @@ import axios from "axios";
 import baseurl from "./BaseUrl";
 
 const Login = (id, password) => {
-  const url = `${baseurl}/login`;
+  const url = `${baseurl}/users/login`;
   const data = JSON.stringify({
     userEmail: id,
     userPassword: password,

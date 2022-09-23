@@ -44,8 +44,13 @@ public class PieceController {
 
     // 단일 작품 조회
     @GetMapping("/{pieceSeq}")
-    public PieceDto pieceOne(@PathVariable Long pieceSeq){
-        return pieceService.pieceOne(pieceSeq);
+    public ResponseEntity<PieceDto> pieceOne(@PathVariable Long pieceSeq){
+        PieceDto pieceDto = pieceService.pieceOne(pieceSeq);
+        if(pieceDto.getResult()== PieceDto.PieceResult.SUCCESS){
+            return new ResponseEntity<>(pieceDto,HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(pieceDto,HttpStatus.BAD_REQUEST);
+        }
     }
 
     // 태그 조회

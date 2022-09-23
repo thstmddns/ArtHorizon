@@ -30,6 +30,8 @@ public class PieceDto {
 
     private PieceResult result;
 
+    public PieceDto(){}
+
     // 생성자 만들어서 엔티티에서 dto로 바로 전환되게 하기
     public PieceDto(PieceEntity pieceEntity){
         this.pieceSeq=pieceEntity.getPieceSeq();

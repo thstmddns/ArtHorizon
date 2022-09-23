@@ -23,7 +23,7 @@ public class PieceService {
         // page를 통해 offset을 계산
         int offset = LIMIT*(page-1);
 
-        List<PieceEntity> pieceEntity = new ArrayList<PieceEntity>();
+        List<PieceEntity> pieceEntity;
 
         // 해당하는 옵션대로 작품 목록을 뽑아옴
         if(type.equals("popular")){
@@ -55,9 +55,18 @@ public class PieceService {
 
     // 단일 작품 조회
     public PieceDto pieceOne(Long pieceSeq) {
-        PieceEntity entity = pieceRepository.findByPieceSeq(pieceSeq);
-        PieceDto dto = new PieceDto(entity);
-        return dto;
+        PieceEntity pieceEntity = pieceRepository.findByPieceSeq(pieceSeq);
+
+        if(pieceEntity==null){
+            PieceDto pieceDto = new PieceDto();
+            pieceDto.setResult(PieceDto.PieceResult.FAILURE);
+            return pieceDto;
+        } else {
+            PieceDto pieceDto = new PieceDto(pieceEntity);
+            pieceDto.setResult(PieceDto.PieceResult.SUCCESS);
+            return pieceDto;
+        }
+
     }
 
 

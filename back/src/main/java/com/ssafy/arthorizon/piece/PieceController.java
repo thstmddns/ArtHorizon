@@ -22,7 +22,7 @@ public class PieceController {
     // 작품 목록 최신순 조회 페이지네이션
     @GetMapping("/recent")
     public ResponseEntity<PiecePageDto> pieceListRecent(@RequestParam("page") int page){
-        PiecePageDto piecePageDto = pieceService.pieceListRecentService(page);
+        PiecePageDto piecePageDto = pieceService.pieceListService(page, "recent");
         if(piecePageDto.getResult()== PieceDto.PieceResult.SUCCESS){
             return new ResponseEntity<>(piecePageDto, HttpStatus.OK);
         } else {
@@ -32,15 +32,15 @@ public class PieceController {
 
 
     // 작품 목록 북마크순 조회 페이지네이션
-//    @GetMapping("/popular")
-//    public ResponseEntity<PiecePageDto> pieceListPopular(@RequestParam("page") int page){
-//        PiecePageDto piecePageDto = pieceService.pieceListPopularService(page);
-//        if(piecePageDto.getResult()== PieceDto.PieceResult.SUCCESS){
-//            return new ResponseEntity<>(piecePageDto, HttpStatus.OK);
-//        } else {
-//            return new ResponseEntity<>(piecePageDto, HttpStatus.BAD_REQUEST);
-//        }
-//    }
+    @GetMapping("/popular")
+    public ResponseEntity<PiecePageDto> pieceListPopular(@RequestParam("page") int page){
+        PiecePageDto piecePageDto = pieceService.pieceListService(page, "popular");
+        if(piecePageDto.getResult()== PieceDto.PieceResult.SUCCESS){
+            return new ResponseEntity<>(piecePageDto, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(piecePageDto, HttpStatus.BAD_REQUEST);
+        }
+    }
 
     // 단일 작품 조회
     @GetMapping("/{pieceSeq}")

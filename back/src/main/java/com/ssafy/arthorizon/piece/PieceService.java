@@ -5,6 +5,7 @@ import com.ssafy.arthorizon.piece.dto.PiecePageDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -15,14 +16,21 @@ public class PieceService {
 
     private final int LIMIT = 8;
 
-    public PiecePageDto pieceListRecentService(int page) {
+    // 작품 목록 최신순, 북마크순 조회
+    public PiecePageDto pieceListService(int page, String type) {
         // limit는 고정
 
         // page를 통해 offset을 계산
         int offset = LIMIT*(page-1);
 
+        List<PieceEntity> pieceEntity = new ArrayList<PieceEntity>();
+
         // 해당하는 옵션대로 작품 목록을 뽑아옴
-        List<PieceEntity> pieceEntity = pieceRepository.findRecentList(LIMIT,offset);
+        if(type.equals("popular")){
+            pieceEntity = pieceRepository.findPopularList(LIMIT,offset);
+        } else {
+            pieceEntity = pieceRepository.findRecentList(LIMIT,offset);
+        }
 
         if(pieceEntity.isEmpty()){
             // 아까 조사해온게 비어있으면
@@ -44,14 +52,6 @@ public class PieceService {
         }
 
     }
-
-    // 작품 목록 북마크순 조회 페이지네이션
-//    public PiecePageDto pieceListPopularService(int page) {
-//
-//
-//
-//
-//    }
 
     // 단일 작품 조회
     public PieceDto pieceOne(Long pieceSeq) {

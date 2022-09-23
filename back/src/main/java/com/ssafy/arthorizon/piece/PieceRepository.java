@@ -22,7 +22,9 @@ public interface PieceRepository extends JpaRepository<PieceEntity,Long> {
 
 
     // 작품 목록 북마크순 조회
-    Page<PieceEntity> findAllByOrderByPieceBookmarkCount(Pageable pageable);
+
+    @Query(value="select * from pieceTb order by pieceBookmarkCount desc limit :limit offset :offset", nativeQuery = true)
+    List<PieceEntity> findPopularList(@Param(value="limit") int limit, @Param(value="offset") int offset);
 
     // 단일 작품 조회
     PieceEntity findByPieceSeq(Long pieceSeq);

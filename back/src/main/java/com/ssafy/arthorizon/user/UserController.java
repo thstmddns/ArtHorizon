@@ -1,6 +1,7 @@
 package com.ssafy.arthorizon.user;
 
 import com.ssafy.arthorizon.user.dto.BookmarkDto;
+import com.ssafy.arthorizon.user.dto.BookmarkPageDto;
 import com.ssafy.arthorizon.user.dto.SignupDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -115,7 +116,13 @@ public class UserController {
             return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
         }
         else { return new ResponseEntity<>(FAILURE, HttpStatus.BAD_REQUEST); }
+    }
 
+    @GetMapping("/bookmark")
+    public ResponseEntity<BookmarkPageDto> bookmarkList(@RequestHeader("jwt") String jwt, @RequestParam(value = "page", defaultValue = "1") int page) {
+        Long currentUserSeq = jwtService.getUserSeq(jwt);
+        BookmarkPageDto bookmarkPageDto = userService.bookmarkList(currentUserSeq, page);
+        return new ResponseEntity<>(bookmarkPageDto, HttpStatus.OK);
     }
 
 

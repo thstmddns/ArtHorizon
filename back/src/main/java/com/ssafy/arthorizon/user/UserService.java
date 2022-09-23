@@ -3,15 +3,16 @@ package com.ssafy.arthorizon.user;
 import com.ssafy.arthorizon.common.CryptoUtil;
 import com.ssafy.arthorizon.piece.PieceEntity;
 import com.ssafy.arthorizon.piece.PieceRepository;
+import com.ssafy.arthorizon.piece.dto.PiecePageDto;
 import com.ssafy.arthorizon.user.Entity.BookmarkEntity;
 import com.ssafy.arthorizon.user.Entity.UserEntity;
 import com.ssafy.arthorizon.user.Repository.BookmarkRepository;
 import com.ssafy.arthorizon.user.Repository.UserRepository;
 import com.ssafy.arthorizon.user.dto.BookmarkDto;
+import com.ssafy.arthorizon.user.dto.BookmarkPageDto;
 import com.ssafy.arthorizon.user.dto.SignupDto;
 import com.ssafy.arthorizon.user.Entity.FollowEntity;
 import com.ssafy.arthorizon.user.Repository.FollowRepository;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ import java.util.*;
 
 @Service
 public class UserService {
+
 
     @Autowired
     private UserRepository userRepository;
@@ -32,9 +34,7 @@ public class UserService {
     @Autowired
     private PieceRepository pieceRepository;
 
-//    @Autowired
-//    @PersistenceContext
-//    private EntityManager em;
+    private final int LIMIT = 8;
 
     public SignupDto signup(Map<String, String> req) {
         // 가입하려는 유저가 DB에 있는지 email(id)로 확인. 없으면 가입 과정 수행
@@ -237,6 +237,24 @@ public class UserService {
         pieceRepository.save(pieceEntity);
         bookmarkDto.setResult(BookmarkDto.BookmarkResult.SUCCESS);
         return bookmarkDto;
+    }
+
+    public BookmarkPageDto bookmarkList(Long userSeq, int page) {
+        int offset = LIMIT * (page - 1);
+        List<BookmarkEntity> bookmarkEntities = bookmarkRepository.findBookmarkList(userSeq, LIMIT, offset);
+        // 북마크한 작품이 없을 때
+        if (bookmarkEntities.isEmpty()) {
+            BookmarkPageDto bookmarkPageDto = new BookmarkPageDto();
+            bookmarkPageDto.setTotalPage(0);
+            bookmarkPageDto.setPage(0);
+            bookmarkPageDto.setResult(BookmarkDto.BookmarkResult.NO_SUCH_PIECE);
+            return bookmarkPageDto;
+        }
+        int totalPage = (int) Math.ceil((bookmarkRepository.countAllByBookmarker_UserSeq(userSeq))/(double)LIMIT);
+
+        BookmarkPageDto bookmarkPageDto = new BookmarkPageDto(totalPage, page, bookmarkEntities);
+        bookmarkPageDto.setResult(BookmarkDto.BookmarkResult.SUCCESS);
+        return bookmarkPageDto;
     }
 
 

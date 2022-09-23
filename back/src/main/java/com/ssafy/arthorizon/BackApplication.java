@@ -14,13 +14,4 @@ public class BackApplication {
 		SpringApplication.run(BackApplication.class, args);
 	}
 
-	@Bean
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedOrigins("http://j7d201.p.ssafy.io:8081");
-			}
-		};
-	}
 }

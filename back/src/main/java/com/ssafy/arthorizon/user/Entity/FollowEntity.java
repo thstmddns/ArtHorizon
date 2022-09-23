@@ -16,9 +16,11 @@ public class FollowEntity {
     @Column
     private Long followSeq;
 
-    @Column
-    private Long followerSeq;
+    @ManyToOne
+    @JoinColumn(name="followerSeq", referencedColumnName = "userSeq")
+    private UserEntity follower;
 
-    @Column
-    private Long followingSeq;
+    @ManyToOne
+    @JoinColumn(name="followingSeq", referencedColumnName = "userSeq")
+    private UserEntity following;
 }

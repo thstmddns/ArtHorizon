@@ -1,6 +1,7 @@
 package com.ssafy.arthorizon.user;
 
 import com.ssafy.arthorizon.common.CryptoUtil;
+import com.ssafy.arthorizon.user.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

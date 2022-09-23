@@ -1,4 +1,4 @@
-package com.ssafy.arthorizon.user;
+package com.ssafy.arthorizon.user.Entity;
 
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;

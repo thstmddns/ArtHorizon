@@ -1,7 +1,6 @@
 package com.ssafy.arthorizon.user;
 
 import com.ssafy.arthorizon.user.dto.SignupDto;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -74,6 +73,28 @@ public class UserController {
         if (userService.passwordChange(userSeq, req)) { return new ResponseEntity<>(SUCCESS, HttpStatus.OK); }
         else { return new ResponseEntity<>(FAILURE, HttpStatus.BAD_REQUEST); }
     }
+
+    @PostMapping("/follow/{followUserSeq}")
+    public ResponseEntity<String> followUser(@RequestHeader("jwt") String jwt, @PathVariable Long followUserSeq) {
+        Long currentUserSeq = jwtService.getUserSeq(jwt);
+        if (userService.followUser(currentUserSeq, followUserSeq)) { return new ResponseEntity<>(SUCCESS, HttpStatus.OK); }
+        else { return new ResponseEntity<>(FAILURE, HttpStatus.BAD_REQUEST); }
+    }
+
+    @DeleteMapping("/follow/{followUserSeq}")
+    public ResponseEntity<String> unfollowUser(@RequestHeader("jwt") String jwt, @PathVariable Long followUserSeq) {
+        Long currentUserSeq = jwtService.getUserSeq(jwt);
+        if (userService.unfollowUser(currentUserSeq, followUserSeq)) { return new ResponseEntity<>(SUCCESS, HttpStatus.OK); }
+        else { return new ResponseEntity<>(FAILURE, HttpStatus.BAD_REQUEST); }
+    }
+
+//    @GetMapping("/followers/{pageUserSeq}") //@RequestParam(defaultValue = "1") int page
+//    public ResponseEntity<Map<String, Object>> followerList(@RequestHeader("jwt") String jwt, @PathVariable Long pageUserSeq, Pageable pageable) {
+//        Long currentUserSeq = jwtService.getUserSeq(jwt);
+//        Map<String, Object> res = userService.followerList(currentUserSeq, pageUserSeq, pageable);
+//        if (res.isEmpty()) { return new ResponseEntity<>(HttpStatus.BAD_REQUEST); }
+//        return new ResponseEntity<>(res, HttpStatus.OK);
+//    }
 
 
 

@@ -89,11 +89,21 @@ public class UserController {
     }
 
     @GetMapping("/followers/{pageUserSeq}")
-    public ResponseEntity<FollowPageDto> followerList(@RequestHeader("jwt") String jwt,
-                                                      @PathVariable Long pageUserSeq,
-                                                      @RequestParam(value = "page", defaultValue = "1") int page) {
+    public ResponseEntity<FollowerPageDto> followerList(@RequestHeader("jwt") String jwt,
+                                                        @PathVariable Long pageUserSeq,
+                                                        @RequestParam(value = "page", defaultValue = "1") int page) {
         Long currentUserSeq = jwtService.getUserSeq(jwt);
-        FollowPageDto res = userService.followerList(currentUserSeq, pageUserSeq, page);
+        FollowerPageDto res = userService.followerList(currentUserSeq, pageUserSeq, page);
+        if (res.getResult() == FollowDto.FollowResult.NO_SUCH_USER) { return new ResponseEntity<>(HttpStatus.BAD_REQUEST); }
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    @GetMapping("/followings/{pageUserSeq}")
+    public ResponseEntity<FollowingPageDto> followingList(@RequestHeader("jwt") String jwt,
+                                                       @PathVariable Long pageUserSeq,
+                                                       @RequestParam(value = "page", defaultValue = "1") int page) {
+        Long currentUserSeq = jwtService.getUserSeq(jwt);
+        FollowingPageDto res = userService.followingList(currentUserSeq, pageUserSeq, page);
         if (res.getResult() == FollowDto.FollowResult.NO_SUCH_USER) { return new ResponseEntity<>(HttpStatus.BAD_REQUEST); }
         return new ResponseEntity<>(res, HttpStatus.OK);
     }

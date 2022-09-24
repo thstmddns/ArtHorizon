@@ -20,4 +20,10 @@ public interface FollowRepository extends JpaRepository<FollowEntity, Long> {
     @Query(value = "select * from followTb where followingSeq = :userSeq limit :limit offset :offset", nativeQuery = true)
     List<FollowEntity> findFollowerList(@Param(value = "userSeq") Long userSeq, @Param(value = "limit") int limit, @Param(value = "offset") int offset);
 
+    // 유저별 팔로잉 명수
+    int countAllByFollower_UserSeq(Long userSeq);
+
+    // 유저별 팔로잉 목록 조회
+    @Query(value = "select * from followTb where followerSeq = :userSeq limit :limit offset :offset", nativeQuery = true)
+    List<FollowEntity> findFollowingList(@Param(value = "userSeq") Long userSeq, @Param(value = "limit") int limit, @Param(value = "offset") int offset);
 }

@@ -153,26 +153,25 @@ public class UserService {
         return true;
     }
 
-    public FollowPageDto followerList(Long currentUserSeq, Long pageUserSeq, int page) {
-//        Map<String, Object> result = new HashMap<>();
+    public FollowerPageDto followerList(Long currentUserSeq, Long pageUserSeq, int page) {
         // 해당 마이페이지의 유저가 존재하는지 확인
         UserEntity pageUser = userRepository.findByUserSeq(pageUserSeq);
         if (pageUser == null) {
-            FollowPageDto followPageDto = new FollowPageDto();
-            followPageDto.setTotalPage(0);
-            followPageDto.setPage(0);
-            followPageDto.setResult(FollowDto.FollowResult.NO_SUCH_USER);
-            return followPageDto;
+            FollowerPageDto followerPageDto = new FollowerPageDto();
+            followerPageDto.setTotalPage(0);
+            followerPageDto.setPage(0);
+            followerPageDto.setResult(FollowDto.FollowResult.NO_SUCH_USER);
+            return followerPageDto;
         }
         int offset = LIMIT * (page - 1);
         List<FollowEntity> followEntities = followRepository.findFollowerList(pageUserSeq, LIMIT, offset);
         // 팔로워가 없을 때
         if (followEntities.isEmpty()) {
-            FollowPageDto followPageDto = new FollowPageDto();
-            followPageDto.setTotalPage(0);
-            followPageDto.setPage(0);
-            followPageDto.setResult(FollowDto.FollowResult.EMPTY);
-            return followPageDto;
+            FollowerPageDto followerPageDto = new FollowerPageDto();
+            followerPageDto.setTotalPage(0);
+            followerPageDto.setPage(0);
+            followerPageDto.setResult(FollowDto.FollowResult.EMPTY);
+            return followerPageDto;
         }
         int totalPage = (int) Math.ceil((followRepository.countAllByFollowing_UserSeq(pageUserSeq))/(double)LIMIT);
         List<FollowerListDto> followerListDtoList = new ArrayList<>();
@@ -186,9 +185,46 @@ public class UserService {
                 followerListDtoList.add(followerListDto);
             }
         }
-        FollowPageDto followPageDto = new FollowPageDto(totalPage, page, followerListDtoList);
-        followPageDto.setResult(FollowDto.FollowResult.SUCCESS);
-        return followPageDto;
+        FollowerPageDto followerPageDto = new FollowerPageDto(totalPage, page, followerListDtoList);
+        followerPageDto.setResult(FollowDto.FollowResult.SUCCESS);
+        return followerPageDto;
+    }
+
+    public FollowingPageDto followingList(Long currentUserSeq, Long pageUserSeq, int page) {
+        // 해당 마이페이지의 유저가 존재하는지 확인
+        UserEntity pageUser = userRepository.findByUserSeq(pageUserSeq);
+        if (pageUser == null) {
+            FollowingPageDto followingPageDto = new FollowingPageDto();
+            followingPageDto.setTotalPage(0);
+            followingPageDto.setPage(0);
+            followingPageDto.setResult(FollowDto.FollowResult.NO_SUCH_USER);
+            return followingPageDto;
+        }
+        int offset = LIMIT * (page - 1);
+        List<FollowEntity> followEntities = followRepository.findFollowingList(pageUserSeq, LIMIT, offset);
+        // 팔로잉이 없을 때
+        if (followEntities.isEmpty()) {
+            FollowingPageDto followingPageDto = new FollowingPageDto();
+            followingPageDto.setTotalPage(0);
+            followingPageDto.setPage(0);
+            followingPageDto.setResult(FollowDto.FollowResult.EMPTY);
+            return followingPageDto;
+        }
+        int totalPage = (int) Math.ceil((followRepository.countAllByFollower_UserSeq(pageUserSeq))/(double)LIMIT);
+        List<FollowingListDto> followingListDtoList = new ArrayList<>();
+        for (FollowEntity followEntity:followEntities) {
+            if (followRepository.findAllByFollower_UserSeqAndFollowing_UserSeq(currentUserSeq, followEntity.getFollowing().getUserSeq()).isPresent()) {
+                FollowingListDto followingListDto = new FollowingListDto(followEntity, currentUserSeq, 'Y');
+                followingListDtoList.add(followingListDto);
+            }
+            else {
+                FollowingListDto followingListDto = new FollowingListDto(followEntity, currentUserSeq, 'N');
+                followingListDtoList.add(followingListDto);
+            }
+        }
+        FollowingPageDto followingPageDto = new FollowingPageDto(totalPage, page, followingListDtoList);
+        followingPageDto.setResult(FollowDto.FollowResult.SUCCESS);
+        return followingPageDto;
     }
 
     public BookmarkDto bookmarkPiece(Long userSeq, Long pieceSeq) {

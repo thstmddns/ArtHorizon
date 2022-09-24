@@ -1,10 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+
+import { getBookmarks } from "../../../redux/authSlice";
 
 import ArtList from "./ArtList";
 
 const Arts = () => {
+  const dispatch = useDispatch();
   const [selectedTab, setSelectedTab] = useState("나의 아트");
+
+  useEffect(() => {
+    dispatch(getBookmarks());
+  }, [dispatch]);
 
   switch (selectedTab) {
     case "나의 아트":
@@ -21,12 +29,14 @@ const Arts = () => {
     <Wrapper>
       <Tabs>
         <Tab
+          key={"1"}
           isSelected={"나의 아트" === selectedTab}
           onClick={() => setSelectedTab("나의 아트")}
         >
           나의 아트
         </Tab>
         <Tab
+          key={"2"}
           isSelected={"북마크한 아트" === selectedTab}
           onClick={() => setSelectedTab("북마크한 아트")}
         >

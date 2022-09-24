@@ -1,12 +1,18 @@
-import { useEffect } from "react"; React from "react";
-import { Link } from "react-router-dom"
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import Newart from "../../api/Newart";
+import SearchBar from "../../components/serach/SerachBar";
 
 const Main = () => {
-  useEffect(
-    
-  )
+  const [pictures, setPictures] = useState([]);
+
+  useEffect(() => {
+    const { content } = Newart(0);
+    setPictures(content);
+  }, []);
   return (
-    <div>
+    <Main>
+      <SearchBar />
       <div>
         <hr />
         <div className="TagRecommend">
@@ -19,9 +25,18 @@ const Main = () => {
             <Title>최근 등록된 작품</Title>
             <Link to="pieces">더 보기</Link>
           </TopText>
+          <div>
+            {pictures.map((picture) => {
+              <Card
+                key={picture.pieceSeq}
+                title={picture.pieceTitle}
+                id={picture.pieceSeq}
+              />;
+            })}
+          </div>
         </div>
       </div>
-    </div>
+    </Main>
   );
 };
 
@@ -35,4 +50,4 @@ const TopText = styled.div`
 const Title = styled.div`
   font-size: 20px;
   font-weight: bold;
-`
+`;

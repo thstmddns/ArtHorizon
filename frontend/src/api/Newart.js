@@ -11,6 +11,9 @@ const Newart = (page) => {
     })
     .then((res) => {
       const content = res.content;
-      const totalpage = res.totalPages
+      const totalPage = res.totalPage
+      return {content, totalPage}
     });
 };
+
+export default Newart

@@ -10,8 +10,21 @@ export const login = createAsyncThunk(
     try {
       const res = await authApi.login(credentials);
       console.log(res);
-      localStorage.setItem("accessToken", `jwt ${res.data.jwt}`);
+      localStorage.setItem("access-token", `jwt ${res.data.jwt}`);
       // axios.defaults.headers.common["Authorization"] = `jwt ${res.data}`;
+    } catch (error) {
+      return rejectWithValue(error.response);
+    }
+  }
+);
+
+export const signup = createAsyncThunk(
+  "authSlice/signup",
+  async (credentials, { rejectWithValue }) => {
+    try {
+      const res = await authApi.signup(credentials);
+      console.log(res);
+      localStorage.setItem("access-token", `jwt ${res.data.jwt}`);
     } catch (error) {
       return rejectWithValue(error.response);
     }

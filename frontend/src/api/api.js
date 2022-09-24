@@ -35,4 +35,5 @@ const api = axios.create({
 
 export const authApi = {
   login: (loginData) => api.post("/users/login", loginData),
+  signup: (signupData) => api.post("/users/signup", signupData),
 };

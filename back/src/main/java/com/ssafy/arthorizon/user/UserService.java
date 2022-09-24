@@ -3,14 +3,11 @@ package com.ssafy.arthorizon.user;
 import com.ssafy.arthorizon.common.CryptoUtil;
 import com.ssafy.arthorizon.piece.PieceEntity;
 import com.ssafy.arthorizon.piece.PieceRepository;
-import com.ssafy.arthorizon.piece.dto.PiecePageDto;
 import com.ssafy.arthorizon.user.Entity.BookmarkEntity;
 import com.ssafy.arthorizon.user.Entity.UserEntity;
 import com.ssafy.arthorizon.user.Repository.BookmarkRepository;
 import com.ssafy.arthorizon.user.Repository.UserRepository;
-import com.ssafy.arthorizon.user.dto.BookmarkDto;
-import com.ssafy.arthorizon.user.dto.BookmarkPageDto;
-import com.ssafy.arthorizon.user.dto.SignupDto;
+import com.ssafy.arthorizon.user.dto.*;
 import com.ssafy.arthorizon.user.Entity.FollowEntity;
 import com.ssafy.arthorizon.user.Repository.FollowRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -156,39 +153,43 @@ public class UserService {
         return true;
     }
 
-//    public Map<String, Object> followerList(Long currentUserSeq, Long pageUserSeq, Pageable pageable) {
+    public FollowPageDto followerList(Long currentUserSeq, Long pageUserSeq, int page) {
 //        Map<String, Object> result = new HashMap<>();
-//        // 해당 마이페이지의 유저가 존재하는지 확인
-//        UserEntity pageUser = userRepository.findByUserSeq(pageUserSeq);
-//        if (pageUser == null) { return result; }
-//        ArrayList<UserDto> users = new ArrayList<>(); // 유저 리스트
-//        List<FollowEntity> followers = followRepository.findAll(pageable).getContent();
-////        Page<FollowEntity> followers = followRepository.findAllByFollowing_UserSeq(pageUserSeq, pageable);
-////        List<FollowEntity> followers = em.createQuery("select f from FollowEntity f where f.following = :pageUser order by f.followSeq", FollowEntity.class)
-////                .setParameter("pageUser", pageUser)
-////                .setFirstResult(0)
-////                .setMaxResults(10)
-////                .getResultList();
-//        for (FollowEntity follow : followers) {
-//            System.out.println(follow);
-//            UserDto userDto = new UserDto();
-//            UserEntity followerEntity = userRepository.findByUserSeq(follow.getFollower().getUserSeq());
-//            userDto.setUserSeq(followerEntity.getUserSeq());
-//            userDto.setUserNickname(followerEntity.getUserNickname());
-//            userDto.setUserImg(followerEntity.getUserImg());
-//            if (Objects.equals(currentUserSeq, follow.getFollower().getUserSeq())) { userDto.setUserIsMe('Y'); }
-//            else { userDto.setUserIsMe('N');}
-//            if (followRepository.findAllByFollower_UserSeqAndFollowing_UserSeq(currentUserSeq, follow.getFollower().getUserSeq()).isPresent()) {
-//                userDto.setUserFollowYn('Y');
-//            }
-//            else { userDto.setUserFollowYn('N'); }
-//            users.add(userDto);
-//        }
-////        result.put("totalPage", followers.getTotalPages());
-////        result.put("page", followers.getPageable().getPageNumber());
-//        result.put("results", users);
-//        return result;
-//    }
+        // 해당 마이페이지의 유저가 존재하는지 확인
+        UserEntity pageUser = userRepository.findByUserSeq(pageUserSeq);
+        if (pageUser == null) {
+            FollowPageDto followPageDto = new FollowPageDto();
+            followPageDto.setTotalPage(0);
+            followPageDto.setPage(0);
+            followPageDto.setResult(FollowDto.FollowResult.NO_SUCH_USER);
+            return followPageDto;
+        }
+        int offset = LIMIT * (page - 1);
+        List<FollowEntity> followEntities = followRepository.findFollowerList(pageUserSeq, LIMIT, offset);
+        // 팔로워가 없을 때
+        if (followEntities.isEmpty()) {
+            FollowPageDto followPageDto = new FollowPageDto();
+            followPageDto.setTotalPage(0);
+            followPageDto.setPage(0);
+            followPageDto.setResult(FollowDto.FollowResult.EMPTY);
+            return followPageDto;
+        }
+        int totalPage = (int) Math.ceil((followRepository.countAllByFollowing_UserSeq(pageUserSeq))/(double)LIMIT);
+        List<FollowerListDto> followerListDtoList = new ArrayList<>();
+        for (FollowEntity followEntity:followEntities) {
+            if (followRepository.findAllByFollower_UserSeqAndFollowing_UserSeq(currentUserSeq, followEntity.getFollower().getUserSeq()).isPresent()) {
+                FollowerListDto followerListDto = new FollowerListDto(followEntity, currentUserSeq, 'Y');
+                followerListDtoList.add(followerListDto);
+            }
+            else {
+                FollowerListDto followerListDto = new FollowerListDto(followEntity, currentUserSeq, 'N');
+                followerListDtoList.add(followerListDto);
+            }
+        }
+        FollowPageDto followPageDto = new FollowPageDto(totalPage, page, followerListDtoList);
+        followPageDto.setResult(FollowDto.FollowResult.SUCCESS);
+        return followPageDto;
+    }
 
     public BookmarkDto bookmarkPiece(Long userSeq, Long pieceSeq) {
         UserEntity userEntity = userRepository.findByUserSeq(userSeq);

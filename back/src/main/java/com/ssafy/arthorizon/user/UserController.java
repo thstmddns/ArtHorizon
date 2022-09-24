@@ -1,8 +1,6 @@
 package com.ssafy.arthorizon.user;
 
-import com.ssafy.arthorizon.user.dto.BookmarkDto;
-import com.ssafy.arthorizon.user.dto.BookmarkPageDto;
-import com.ssafy.arthorizon.user.dto.SignupDto;
+import com.ssafy.arthorizon.user.dto.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -90,13 +88,15 @@ public class UserController {
         else { return new ResponseEntity<>(FAILURE, HttpStatus.BAD_REQUEST); }
     }
 
-//    @GetMapping("/followers/{pageUserSeq}") //@RequestParam(defaultValue = "1") int page
-//    public ResponseEntity<Map<String, Object>> followerList(@RequestHeader("jwt") String jwt, @PathVariable Long pageUserSeq, Pageable pageable) {
-//        Long currentUserSeq = jwtService.getUserSeq(jwt);
-//        Map<String, Object> res = userService.followerList(currentUserSeq, pageUserSeq, pageable);
-//        if (res.isEmpty()) { return new ResponseEntity<>(HttpStatus.BAD_REQUEST); }
-//        return new ResponseEntity<>(res, HttpStatus.OK);
-//    }
+    @GetMapping("/followers/{pageUserSeq}")
+    public ResponseEntity<FollowPageDto> followerList(@RequestHeader("jwt") String jwt,
+                                                      @PathVariable Long pageUserSeq,
+                                                      @RequestParam(value = "page", defaultValue = "1") int page) {
+        Long currentUserSeq = jwtService.getUserSeq(jwt);
+        FollowPageDto res = userService.followerList(currentUserSeq, pageUserSeq, page);
+        if (res.getResult() == FollowDto.FollowResult.NO_SUCH_USER) { return new ResponseEntity<>(HttpStatus.BAD_REQUEST); }
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
 
     @PostMapping("/bookmark/{pieceSeq}")
     public ResponseEntity<String> bookmarkPiece(@RequestHeader("jwt") String jwt, @PathVariable Long pieceSeq) {
@@ -124,6 +124,7 @@ public class UserController {
         BookmarkPageDto bookmarkPageDto = userService.bookmarkList(currentUserSeq, page);
         return new ResponseEntity<>(bookmarkPageDto, HttpStatus.OK);
     }
+
 
 
 

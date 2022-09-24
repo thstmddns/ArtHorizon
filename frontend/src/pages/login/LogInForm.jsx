@@ -1,10 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { useSelector, useDispatch } from "react-redux";
-import axios from "axios";
-import { testLogin } from "../../redux/authSlice";
-
-import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/authSlice";
 
 import FormWrapper from "../../components/form/FormWrapper";
 import FormTitle from "../../components/form/FormTitle";
@@ -14,45 +11,24 @@ import FormLinksWrapper from "../../components/form/FormLinksWrapper";
 import Input from "../../components/input/Input";
 import Label from "../../components/input/Label";
 
-// const baseURL = "http://j7d201.p.ssafy.io:8081";
-const baseURL = "";
-axios.defaults.withCredentials = true;
-
-// "proxy": "http://j7d201.p.ssafy.io:8081"
+// "ljy1210@ssafy.com"
+// "1234ljy33"
 
 const LogInForm = () => {
-  const auth = useSelector((state) => state.auth.value);
   const dispatch = useDispatch();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const submitHandler = (e) => {
     e.preventDefault();
 
-    // console.log(`auth.nickname: ${auth.nickname}`);
-    // console.log(`auth.email: ${auth.email}`);
-    // console.log("auth: ", auth);
-
-    const url = `${baseURL}/users/login`;
-    const data = JSON.stringify({
-      userEmail: "ljy1210@ssafy.com",
-      userPassword: "1234ljy33",
+    const loginData = JSON.stringify({
+      userEmail: email,
+      userPassword: password,
     });
-
-    axios
-      .post(url, data, {
-        headers: {
-          withCredentials: true,
-          accept: "application/json,",
-          "Content-Type": "application/json;charset=UTF-8",
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        console.log(res.data);
-        localStorage.setItem("accessToken", `jwt ${res.data.jwt}`);
-
-        axios.defaults.headers.common["Authorization"] = `jwt ${res.data}`;
-      })
-      .catch((err) => console.error(err));
+    dispatch(login(loginData));
+    setEmail("");
+    setPassword("");
   };
 
   return (
@@ -61,7 +37,13 @@ const LogInForm = () => {
         <FormTitle>로그인</FormTitle>
         <FormItem>
           <Label htmlFor="email">이메일</Label>
-          <Input type="email" id="email" placeholder="이메일을 입력하세요" />
+          <Input
+            type="email"
+            id="email"
+            placeholder="이메일을 입력하세요"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </FormItem>
         <FormItem>
           <Label htmlFor="password">비밀번호</Label>
@@ -69,14 +51,11 @@ const LogInForm = () => {
             type="password"
             id="password"
             placeholder="비밀번호를 입력하세요"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </FormItem>
-        <LogInButton
-          type="submit"
-          onClick={() =>
-            dispatch(testLogin({ nickname: "test", email: "email" }))
-          }
-        >
+        <LogInButton type="submit" onClick={submitHandler}>
           로그인하기
         </LogInButton>
         <FormItem>

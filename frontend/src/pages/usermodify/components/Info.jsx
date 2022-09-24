@@ -9,8 +9,13 @@ import Textarea from "../../../components/input/Textarea";
 import FormButton from "../../../components/form/FormButton";
 
 const Info = (props) => {
+  const submitHandler = (e) => {
+    e.preventDefault();
+    // console.log("clicked");
+  };
+
   return (
-    <form>
+    <form method="post" onSubmit={submitHandler}>
       <TabTitle>기본정보 변경</TabTitle>
       <FormItem>
         <Label htmlFor="nickname">닉네임</Label>

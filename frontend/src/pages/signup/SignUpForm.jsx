@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-// import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
-// import { signup } from "../../redux/authSlice";
+import { signup } from "../../redux/authSlice";
 
 const SignUpForm = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [nickname, setNickname] = useState("");
   const [password1, setPassword1] = useState("");
@@ -70,7 +70,7 @@ const SignUpForm = () => {
     setNickname("");
     setPassword1("");
     setPassword2("");
-    // dispatch(signup(signupData));
+    dispatch(signup(signupData));
   };
 
   return (

@@ -33,7 +33,7 @@ const ArtList = () => {
   return (
     <Wrapper>
       {DUMMY_ARTS.map((art) => (
-        <ArtListItem />
+        <ArtListItem key={Math.random().toString()} />
       ))}
     </Wrapper>
   );

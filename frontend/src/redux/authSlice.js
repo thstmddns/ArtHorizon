@@ -13,6 +13,7 @@ export const login = createAsyncThunk(
       localStorage.setItem("access-token", `jwt ${res.data.jwt}`);
       // axios.defaults.headers.common["Authorization"] = `jwt ${res.data}`;
     } catch (error) {
+      console.error(error);
       return rejectWithValue(error.response);
     }
   }
@@ -31,6 +32,49 @@ export const signup = createAsyncThunk(
   }
 );
 
+export const quit = createAsyncThunk(
+  "authSlice/quit",
+  async (_, { rejectWithValue }) => {
+    try {
+      // axios.defaults.headers.common[
+      //   "Authorization"
+      // ] = `jwt ${localStorage.getItem("access-token")}`;
+      const res = await authApi.quit();
+      console.log(res);
+      localStorage.removeItem("access-token");
+    } catch (error) {
+      console.error(error);
+      return rejectWithValue(JSON.parse(error.response));
+    }
+  }
+);
+
+export const changeType = createAsyncThunk(
+  "authSlice/changeType",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await authApi.changeType();
+      console.log(res);
+    } catch (error) {
+      console.error(error);
+      return rejectWithValue(JSON.parse(error.response));
+    }
+  }
+);
+
+export const getBookmarks = createAsyncThunk(
+  "authSlice/getBookmarks",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await authApi.getBookmarks();
+      console.log(res);
+    } catch (error) {
+      console.error(error);
+      return rejectWithValue(JSON.parse(error.response));
+    }
+  }
+);
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -42,6 +86,9 @@ const authSlice = createSlice({
   extraReducers: {
     [login.fulfilled]: (state) => {
       state.isLoggedIn = true;
+    },
+    [login.rejected]: () => {
+      console.log("login rejected");
     },
   },
 });

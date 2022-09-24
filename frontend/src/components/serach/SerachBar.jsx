@@ -1,52 +1,65 @@
 import React, { useState } from "react";
 
-import { HiOutlineMagnifyingGlass } from "react-icon/hi2";
+import { HiOutlinePencil } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import { SerachWrapper } from "../../components/form";
-import { Input } from "../../components/input";
-import baseurl from "../../api/BaseUrl";
+import SearchWrapper from "../form/SearchWrapper";
+import Input from "../../components/input/Input";
+// import baseurl from "../../api/BaseUrl";
 
 const SearchBar = () => {
-  const [serach, setSearch] = useState();
-  const [serachType, setSerachType] = useState("");
+  const [search, setSearch] = useState("");
+  const [searchType, setsearchType] = useState("");
 
   const navigate = useNavigate();
 
   const onKeyPress = (e) => {
-    if (e.key == "Enter") {
+    if (e.key === "Enter") {
       goPiece();
     }
   };
 
-  const serachNow = () => {
+  const searchNow = () => {
     goPiece();
   };
 
   const goPiece = () => {
-    navigate(`/pieces`, {});
+    const pathname = "/pieces";
+    const params = { search: search, type: searchType };
+    navigate({
+      pathname: pathname,
+      search: params,
+    });
   };
 
   return (
-    <SerachWrapper>
-      <Input
-        type="text"
-        id="serach"
-        name="serach"
-        onChange={(e) => {
-          setSearch(e.target.value);
-        }}
-        onKeyPress={onKeyPress}
-        placeholder="검색어를 적어주세요"
-      ></Input>
-      <StartSerach onClick={serachNow}>
-        <HiOutlineMagnifyingGlass />
-      </StartSerach>
-    </SerachWrapper>
+    <Container>
+      <SearchWrapper>
+        <Input
+          type="text"
+          id="search"
+          name="search"
+          onChange={(e) => {
+            setSearch(e.target.value);
+          }}
+          onKeyPress={onKeyPress}
+          placeholder="검색어를 적어주세요"
+        ></Input>
+        <Startsearch onClick={searchNow}>
+          <HiOutlinePencil />
+        </Startsearch>
+      </SearchWrapper>
+    </Container>
   );
 };
 
 export default SearchBar;
 
-const StartSerach = styled.div``;
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 2vw 0;
+`;
+
+const Startsearch = styled.div``;

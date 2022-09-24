@@ -8,14 +8,15 @@ import UserModify from "./pages/usermodify/UserModify";
 import MyPage from "./pages/mypage/MyPage";
 import Pieces from "./pages/pieces/Pieces";
 import Help from "./pages/help/Help";
+import Filter from "./pages/filter/Filter"
 
 import GlobalStyle from "./GlobalStyle";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    // element: <Main />,
-    element: <LogIn />,
+    element: <Main />,
+    // element: <LogIn />,
   },
   {
     path: "/login",
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
   {
     path: "/pieces",
     element: <Pieces />,
+  },
+  {
+    path: '/filter',
+    element: <Filter />
   },
   {
     path: "/help",

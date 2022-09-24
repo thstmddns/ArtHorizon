@@ -1,15 +1,10 @@
 import React from "react";
-import { redirect } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
+import styled from "styled-components";
 
-const Navi = () => {
-  const goMain = () => {
-    return redirect("/");
-  };
+import Art_Horzion_Logo from "../assets/images/Art_Horizon_Logo.png";
 
-  const goPieces = () => {
-    return redirect("/pieces");
-  };
-
+const NavigationBar = () => {
   const goHelp = () => {
     return redirect("/help");
   };
@@ -19,23 +14,59 @@ const Navi = () => {
   };
 
   return (
-    <div>
-      <div>
+    <Container>
+      <LeftLogo>
         {/* 여기에 로고가 들어갈 예정 */}
-        <div onClick={goMain}>Art Horizon</div>
-      </div>
-      <div>
-        <div onClick={goPieces}>작품 목록</div>
-        <div>게임</div>
-        <div>그림분류</div>
-        <div onClick={goHelp}>고객센터</div>
-      </div>
-      <div>
+        <Link to="/">
+          <LogoImg src={Art_Horzion_Logo} alt="Art-Horizon" />
+        </Link>
+      </LeftLogo>
+      <ServiceList>
+        <NoneLink to="/pieces">작품 목록</NoneLink>
+        <NoneLink to="">Style Transfer</NoneLink>
+        <NoneLink to="">그림의향</NoneLink>
+        <NoneLink to="/help">고객센터</NoneLink>
+      </ServiceList>
+      <RightUser>
         {/* 유저 관련 아이콘 */}
         <div onClick={goMyPage}>user</div>
-      </div>
-    </div>
+      </RightUser>
+    </Container>
   );
 };
 
-export default Navi;
+export default NavigationBar;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 50px;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const ServiceList = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding-left: 5%;
+  align-items: center;
+`;
+
+const LeftLogo = styled.div`
+  margin-left: 1%;
+`;
+
+const RightUser = styled.div`
+  margin-right: 1%;
+`;
+
+const LogoImg = styled.img`
+  height: 40px;
+`;
+
+const NoneLink = styled(Link)`
+  text-decoration: none;
+  margin: 0 1%;
+  width: 8vw;
+`;

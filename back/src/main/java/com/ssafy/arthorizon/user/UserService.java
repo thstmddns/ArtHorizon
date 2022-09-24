@@ -44,7 +44,7 @@ public class UserService {
             userEntity.setUserEmail(req.get("userEmail"));
             userEntity.setUserNickname(req.get("userNickname"));
             userEntity.setUserPassword(CryptoUtil.Sha512.hash(req.get("userPassword")));
-            userEntity.setUserType(req.get("userType"));
+            userEntity.setUserType(req.get("userType").charAt(0));
             userEntity.setUserSignAt(today);
             userRepository.save(userEntity);
             // 저장 후 jwt 발급을 위해 다시 불러옴(userSeq 사용하기 위해)
@@ -80,12 +80,12 @@ public class UserService {
 
     public boolean typeChange(Long userSeq) {
         UserEntity user = userRepository.findByUserSeq(userSeq);
-        String type = user.getUserType();
+        char type = user.getUserType();
         // 해당 유저가 이미 화가 회원이면 False
-        if (Objects.equals(type, "A")) { return false; }
+        if (Objects.equals(type, 'A')) { return false; }
         // 해당 유저가 일반 회원이면 타입 변환해주고 True
-        if (Objects.equals(type, "N")) {
-            user.setUserType("A");
+        if (Objects.equals(type, 'N')) {
+            user.setUserType('A');
             userRepository.save(user);
             return true;
         }
@@ -294,5 +294,9 @@ public class UserService {
         return bookmarkPageDto;
     }
 
+    public UserInfoDto userInfo(Long userSeq) {
+        UserEntity user = userRepository.findByUserSeq(userSeq);
+        return new UserInfoDto(user);
+    }
 
 }

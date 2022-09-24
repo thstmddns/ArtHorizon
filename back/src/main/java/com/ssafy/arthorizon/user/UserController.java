@@ -135,6 +135,13 @@ public class UserController {
         return new ResponseEntity<>(bookmarkPageDto, HttpStatus.OK);
     }
 
+    @GetMapping("/info")
+    public ResponseEntity<UserInfoDto> userInfo(@RequestHeader("jwt") String jwt) {
+        Long currentUserSeq = jwtService.getUserSeq(jwt);
+        UserInfoDto userInfo = userService.userInfo(currentUserSeq);
+        return new ResponseEntity<>(userInfo, HttpStatus.OK);
+    }
+
 
 
 

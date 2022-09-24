@@ -34,7 +34,7 @@ public class UserEntity {
     private String userImg;
 
     @Column
-    private String userType;
+    private char userType;
 
     @Column
     private int userArtCount;

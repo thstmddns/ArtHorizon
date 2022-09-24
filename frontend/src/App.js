@@ -14,7 +14,8 @@ import GlobalStyle from "./GlobalStyle";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Main />,
+    // element: <Main />,
+    element: <LogIn />,
   },
   {
     path: "/login",

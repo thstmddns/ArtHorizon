@@ -12,30 +12,20 @@ import Withdrawal from "./components/Withdrawal";
 const UserModify = () => {
   const [selectedTab, setSelectedTab] = useState("기본정보 변경");
 
-  switch (selectedTab) {
-    case "기본정보 변경":
-      // console.log("기본정보 변경");
-      console.log(selectedTab);
-      break;
-    case "비밀번호 변경":
-      // console.log("비밀번호 변경");
-      console.log(selectedTab);
-      break;
-    case "프사 변경":
-      // console.log("프사 변경");
-      console.log(selectedTab);
-      break;
-    case "화가로 전환":
-      // console.log("화가로 전환");
-      console.log(selectedTab);
-      break;
-    case "회원 탈퇴":
-      // console.log("회원 탈퇴");
-      console.log(selectedTab);
-      break;
-    default:
-      break;
-  }
+  // switch (selectedTab) {
+  //   case "기본정보 변경":
+  //     break;
+  //   case "비밀번호 변경":
+  //     break;
+  //   case "프사 변경":
+  //     break;
+  //   case "화가로 전환":
+  //     break;
+  //   case "회원 탈퇴":
+  //     break;
+  //   default:
+  //     break;
+  // }
 
   return (
     <Container>

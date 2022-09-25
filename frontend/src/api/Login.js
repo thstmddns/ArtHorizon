@@ -1,4 +1,5 @@
 import axios from "axios";
+import { redirect } from "react-router-dom";
 import baseurl from "./BaseUrl";
 
 const Login = (id, password) => {
@@ -11,6 +12,7 @@ const Login = (id, password) => {
     .post(url, data)
     .then((res) => {
       console.log(res);
+      redirect("/");
     })
     .catch((err) => {
       console.log(err);

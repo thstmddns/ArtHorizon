@@ -1,5 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+
+import { quit } from "../../../redux/authSlice";
 
 import FormTitle from "../../../components/form/FormTitle";
 import FormItem from "../../../components/form/FormItem";
@@ -8,8 +11,16 @@ import Input from "../../../components/input/Input";
 import FormButton from "../../../components/form/FormButton";
 
 const Withdrawal = (props) => {
+  const dispatch = useDispatch();
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+
+    dispatch(quit());
+  };
+
   return (
-    <form>
+    <form method="post" onSubmit={submitHandler}>
       <TabTitle>회원 탈퇴</TabTitle>
       <FormItem>
         <Label htmlFor="password">기존 비밀번호</Label>

@@ -1,8 +1,5 @@
 package com.ssafy.arthorizon.piece;
 
-import com.ssafy.arthorizon.piece.dto.PieceListDto;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -22,7 +19,6 @@ public interface PieceRepository extends JpaRepository<PieceEntity,Long> {
 
 
     // 작품 목록 북마크순 조회
-
     @Query(value="select * from pieceTb order by pieceBookmarkCount desc limit :limit offset :offset", nativeQuery = true)
     List<PieceEntity> findPopularList(@Param(value="limit") int limit, @Param(value="offset") int offset);
 

@@ -1,10 +1,12 @@
 package com.ssafy.arthorizon.piece;
 
+import com.ssafy.arthorizon.user.Entity.UserEntity;
+import com.ssafy.arthorizon.userArt.dto.UserArtDto;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
-import com.ssafy.arthorizon.user.Entity.UserEntity;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @DynamicUpdate
@@ -66,6 +68,21 @@ public class PieceEntity {
 
     @Column
     private String pieceScent;
+
+    public PieceEntity() {}
+
+    public PieceEntity(UserArtDto userArtDto){
+        this.pieceType = "A";
+        this.pieceTitleKr = userArtDto.getPieceTitleKr();
+        this.pieceTitleEn = userArtDto.getPieceTitleEn();
+        this.pieceDesc = userArtDto.getPieceDesc();
+        this.pieceHitCount = 0;
+        this.pieceBookmarkCount = 0;
+        this.pieceTag = userArtDto.getPieceTag();
+        this.pieceYear = LocalDate.now().getDayOfYear();
+        this.pieceCentury = (int) Math.floor(this.pieceYear/100)+1;
+        this.pieceScent = userArtDto.getPieceScent();
+    }
 
 
 

@@ -10,9 +10,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/pieces")
 public class PieceController {
 
-    private final String SUCCESS = "SUCCESS";
-    private final String FAILURE = "FAILURE";
-
     private final PieceService pieceService;
 
     public PieceController(PieceService pieceService) {

@@ -11,9 +11,12 @@ const Newart = (page) => {
     })
     .then((res) => {
       const content = res.content;
-      const totalPage = res.totalPage
-      return {content, totalPage}
+      const totalPage = res.totalPage;
+      return [content, totalPage];
+    })
+    .catch((err) => {
+      alert(err);
     });
 };
 
-export default Newart
+export default Newart;

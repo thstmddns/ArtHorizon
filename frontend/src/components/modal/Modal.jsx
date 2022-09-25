@@ -13,7 +13,7 @@ const ModalOverlay = (props) => {
     <ModalCard>
       {/* <ModalOverlayTitle>모달 제목</ModalOverlayTitle> */}
       {/* <ModalOverlayContent>{props.content}</ModalOverlayContent> */}
-      <ModalOverlayContent>모달 내용입니다</ModalOverlayContent>
+      <ModalOverlayContent>{props.content}</ModalOverlayContent>
       <ModalOverlayButton onClick={props.onConfirm}>확인</ModalOverlayButton>
     </ModalCard>
   );
@@ -23,7 +23,7 @@ const Modal = (props) => {
   return (
     <React.Fragment>
       {ReactDOM.createPortal(
-        <Backdrop onConfirm={props.onComfirm} />,
+        <Backdrop onConfirm={props.onConfirm} />,
         document.getElementById("backdrop-root")
       )}
       {ReactDOM.createPortal(

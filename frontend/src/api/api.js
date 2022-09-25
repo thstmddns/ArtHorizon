@@ -24,6 +24,7 @@ const api = axios.create({
 // axios.defaults.headers.common["Authorization"] = `jwt ${localStorage.getItem(
 //   "access-token"
 // )}`;
+// const token = store.getState().Auth.token;
 
 api.interceptors.request.use((config) => {
   if (!config.headers.jwt) {
@@ -40,12 +41,22 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// const token = store.getState().Auth.token;
+// api.interceptors.response.use(
+//   (config) => {
+//     return config;
+//   },
+//   (error) => {
+//     return Promise.reject(error);
+//   }
+// );
 
 export const authApi = {
+  getUser: () => api.get("/users/info"),
   login: (loginData) => api.post("/users/login", loginData),
   signup: (signupData) => api.post("/users/signup", signupData),
   quit: () => api.delete("/users/quit"),
+  changeProfile: (profileData) => api.put("/users/change-profile", profileData),
+  changePassword: (passwordData) => api.put("/users/password", passwordData),
   changeType: () => api.put("/users/change"),
   getBookmarks: () => api.get("/users/bookmark"),
 };

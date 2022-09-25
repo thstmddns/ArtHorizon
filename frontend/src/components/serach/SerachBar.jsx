@@ -8,7 +8,7 @@ import SearchWrapper from "../form/SearchWrapper";
 import Input from "../../components/input/Input";
 // import baseurl from "../../api/BaseUrl";
 
-// react-select, react-dropdown 참고할 것
+// react-select, react-dropdown 참고
 
 const SearchBar = () => {
   const [search, setSearch] = useState("");
@@ -97,7 +97,7 @@ const DropDownContent = styled.div`
   top: 15%;
   padding: 15px;
   left: 39%;
-  background: #f5f5f5
+  background: #f5f5f5;
 `;
 
 const DropDownItem = styled.div`

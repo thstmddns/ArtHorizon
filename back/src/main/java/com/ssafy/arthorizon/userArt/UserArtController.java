@@ -22,7 +22,7 @@ public class UserArtController {
     }
 
     // 유저 아트 등록
-    @PostMapping()
+    @PostMapping("")
     public ResponseEntity<String> userArtUpload(@RequestHeader("jwt") String jwt, @RequestBody UserArtDto userArtDto){
 
         if(jwt.isEmpty()){

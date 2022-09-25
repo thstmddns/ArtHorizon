@@ -16,7 +16,6 @@ import java.io.InputStream;
 @Service
 public class UserArtService {
 
-    private final int FILE_MAX_UPLOAD_SIZE = 10485760; // 1024 * 1024 * 10
     private final String SAVE_ROOT = "/home/ubuntu/Medici_data/images/";
 
     @Autowired

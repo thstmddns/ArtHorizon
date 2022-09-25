@@ -2,7 +2,28 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { authApi } from "../api/api";
 
-const initialState = { isLoggedIn: false, nickname: "", email: "" };
+const initialState = {
+  isLoggedIn: false,
+  seq: "",
+  email: "",
+  nickname: "",
+  imageURL: "",
+  userType: "",
+};
+
+export const getUser = createAsyncThunk(
+  "authSlice/getUser",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await authApi.getUser();
+      console.log("res.data:", res.data);
+      return res.data;
+    } catch (error) {
+      console.error(error);
+      return rejectWithValue(error.response);
+    }
+  }
+);
 
 export const login = createAsyncThunk(
   "authSlice/login",
@@ -49,6 +70,32 @@ export const quit = createAsyncThunk(
   }
 );
 
+export const changeProfile = createAsyncThunk(
+  "authSlice/changeProfile",
+  async (profileData, { rejectWithValue }) => {
+    try {
+      const res = await authApi.changeProfile(profileData);
+      console.log(res);
+    } catch (error) {
+      console.error(error);
+      return rejectWithValue(JSON.parse(error.response));
+    }
+  }
+);
+
+export const changePassword = createAsyncThunk(
+  "authSlice/changePassword",
+  async (passwordData, { rejectWithValue }) => {
+    try {
+      const res = await authApi.changePassword(passwordData);
+      console.log(res);
+    } catch (error) {
+      console.error(error);
+      return rejectWithValue(JSON.parse(error.response));
+    }
+  }
+);
+
 export const changeType = createAsyncThunk(
   "authSlice/changeType",
   async (_, { rejectWithValue }) => {
@@ -86,9 +133,20 @@ const authSlice = createSlice({
   extraReducers: {
     [login.fulfilled]: (state) => {
       state.isLoggedIn = true;
+      getUser();
     },
     [login.rejected]: () => {
       console.log("login rejected");
+    },
+    [getUser.fulfilled]: (state, action) => {
+      const userInfo = action.payload;
+      console.log("userInfo:", userInfo);
+      state.isLoggedIn = true;
+      state.seq = userInfo.userSeq;
+      state.email = userInfo.userEmail;
+      state.nickname = userInfo.userNickname;
+      state.imageURL = userInfo.userImg;
+      state.userType = userInfo.userType;
     },
   },
 });

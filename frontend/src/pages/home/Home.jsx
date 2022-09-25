@@ -1,18 +1,40 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import axios from "axios";
 
-import SearchBar from "../../components/serach/SerachBar";
 import NavigationBar from "../../components/NavigationBar";
-import Newart from "../../api/Newart";
+import SearchBar from "../../components/serach/SerachBar";
+import Card from "../../components/piece/Card";
+import baseurl from "../../api/BaseUrl";
+// import Newart from "../../api/Newart";
 
 const Home = () => {
   const [pictures, setPictures] = useState([]);
 
-  // useEffect(() => {
-  //   const { content } = Newart(0);
-  //   setPictures(content);
-  // }, []);
+  const Newart = (page) => {
+    const url = `${baseurl}/pieces/recent`;
+    axios
+      .get(url, {
+        params: {
+          page: page,
+        },
+      })
+      .then((res) => {
+        const content = res.content;
+        // const totalPage = res.totalPage;
+        setPictures(content);
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  };
+
+  useEffect(() => {
+    const content = Newart(1);
+    console.log(content);
+    // setPictures(content.pieceList);
+  }, []);
   return (
     <Main>
       <NavigationBar />
@@ -35,8 +57,9 @@ const Home = () => {
                 return (
                   <Card
                     key={picture.pieceSeq}
-                    title={picture.pieceTitle}
                     id={picture.pieceSeq}
+                    title={picture.pieceTitle}
+                    image={picture.pieceImg}
                   />
                 );
               })}
@@ -67,10 +90,4 @@ const TopText = styled.div`
 const Title = styled.div`
   font-size: 20px;
   font-weight: bold;
-`;
-
-const Card = styled.div`
-  background: #f5f5f5;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 10px;
 `;

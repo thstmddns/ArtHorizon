@@ -59,4 +59,6 @@ export const authApi = {
   changePassword: (passwordData) => api.put("/users/password", passwordData),
   changeType: () => api.put("/users/change"),
   getBookmarks: () => api.get("/users/bookmark"),
+  // getMyPage: (targetSeq) => api.get(`/users/profile/${targetSeq}`),
+  getMyPage: (userSeq) => api.get(`/users/profile/${userSeq}`),
 };

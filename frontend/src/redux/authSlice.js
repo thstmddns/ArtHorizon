@@ -123,6 +123,19 @@ export const getBookmarks = createAsyncThunk(
   }
 );
 
+// export const getMyPage = createAsyncThunk(
+//   "authSlice/getMyPage",
+//   async (targetSeq, { rejectWithValue }) => {
+//     try {
+//       const res = await authApi.getMyPage(targetSeq);
+//       console.log(res);
+//     } catch (error) {
+//       console.error(error);
+//       return rejectWithValue(JSON.parse(error.response));
+//     }
+//   }
+// );
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -153,6 +166,10 @@ const authSlice = createSlice({
       state.userType = userInfo.userType;
       state.desc = userInfo.userDesc;
     },
+    // [getMyPage.fulfilled]: (state, action) => {
+    //   console.log("action.payload: ", action.payload);
+    //   return action.payload;
+    // },
   },
 });
 

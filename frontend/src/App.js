@@ -7,6 +7,7 @@ import SignUp from "./pages/signup/SignUp";
 import MyPage from "./pages/mypage/MyPage";
 import Pieces from "./pages/pieces/Pieces";
 import Help from "./pages/help/Help";
+import Filter from "./pages/filter/Filter";
 
 import GlobalStyle from "./GlobalStyle";
 import PieceCommit from "./pages/piececommit/PieceCommit";
@@ -25,12 +26,21 @@ const router = createBrowserRouter([
     element: <SignUp />,
   },
   {
-    path: "/mypage",
+    path: "/usermodify",
+    element: <UserModify />,
+  },
+  {
+    // path: "/mypage",
+    path: "/mypage/:userSeq",
     element: <MyPage />,
   },
   {
     path: "/pieces",
     element: <Pieces />,
+  },
+  {
+    path: "/filter",
+    element: <Filter />,
   },
   {
     path: "/help",

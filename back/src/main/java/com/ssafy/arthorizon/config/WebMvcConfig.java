@@ -24,11 +24,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/api/users/profile/**")
                 .excludePathPatterns("/api/users/followers/**")
                 .excludePathPatterns("/api/users/followings/**")
-                .excludePathPatterns("/search/**")
-                .excludePathPatterns("/pieces/**")
-                .excludePathPatterns("/game/**")
-                .excludePathPatterns("/service/notice")
-                .excludePathPatterns("/service/notice/**");
+                .excludePathPatterns("/api/search/**")
+                .excludePathPatterns("/api/pieces/**")
+                .excludePathPatterns("/api/game/**")
+                .excludePathPatterns("/api/service/notice")
+                .excludePathPatterns("/api/service/notice/**");
     }
 
 //    @Override

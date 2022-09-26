@@ -1,11 +1,9 @@
 package com.ssafy.arthorizon.userArt;
 
-import ch.qos.logback.core.encoder.EchoEncoder;
 import com.ssafy.arthorizon.piece.PieceEntity;
 import com.ssafy.arthorizon.piece.PieceRepository;
 import com.ssafy.arthorizon.user.Repository.UserRepository;
 import com.ssafy.arthorizon.userArt.dto.UserArtDto;
-import jdk.internal.util.xml.impl.Input;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

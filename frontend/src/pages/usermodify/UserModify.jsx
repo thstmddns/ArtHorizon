@@ -7,8 +7,6 @@ import ProfileImage from "./components/ProfileImage";
 import Convert from "./components/Convert";
 import Withdrawal from "./components/Withdrawal";
 
-// import FormWrapper from "../../components/form/FormWrapper";
-
 const UserModify = () => {
   const [selectedTab, setSelectedTab] = useState("기본정보 변경");
 

@@ -4,11 +4,6 @@ import { useDispatch } from "react-redux";
 
 import { changeType } from "../../../redux/authSlice";
 
-import FormTitle from "../../../components/form/FormTitle";
-import FormItem from "../../../components/form/FormItem";
-import Label from "../../../components/input/Label";
-import Input from "../../../components/input/Input";
-
 const Convert = (props) => {
   const dispatch = useDispatch();
 
@@ -21,7 +16,7 @@ const Convert = (props) => {
   return (
     <form method="post" onSubmit={submitHandler}>
       <TabTitle>화가로 전환</TabTitle>
-      <FormItem>
+      {/* <FormItem>
         <Label htmlFor="toArtist">화가로..</Label>
         <Input
           type="text"
@@ -29,20 +24,18 @@ const Convert = (props) => {
           name="toArtist"
           placeholder="변경할 닉네임을 입력하세요"
         />
-        <Toggle type="checkbox" id="toggle" hidden />
-        <Toggle type="checkbox" id="toggle" hidden />
-        <button>테스트버튼</button>
-      </FormItem>
+      </FormItem> */}
+      <button>테스트버튼</button>
     </form>
   );
 };
 
 export default Convert;
 
-const TabTitle = styled(FormTitle)`
+const TabTitle = styled.h1`
   font-size: 1.6rem;
+  font-weight: bold;
+  margin-bottom: 60px;
   padding-bottom: 5px;
   border-bottom: 1px solid #222529;
 `;
-
-const Toggle = styled.input``;

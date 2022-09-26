@@ -3,10 +3,7 @@ import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { login } from "../../redux/authSlice";
-
-// "ljy1210@ssafy.com"
-// "1234ljy33"
+import { login, getUser } from "../../redux/authSlice";
 
 const LogInForm = () => {
   const dispatch = useDispatch();

@@ -64,9 +64,9 @@ const PieceCommit = () => {
           onChange={(e) => updatePrice(e.target.value)}
         />
         <RegistItem>태그 추가</RegistItem>
-        <TagWrapper>
+        {/* <TagWrapper>
           <TagInput />
-        </TagWrapper>
+        </TagWrapper> */}
       </Container>
     </div>
   );

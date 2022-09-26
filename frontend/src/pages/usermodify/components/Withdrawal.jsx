@@ -22,7 +22,7 @@ const Withdrawal = (props) => {
   return (
     <form method="post" onSubmit={submitHandler}>
       <TabTitle>회원 탈퇴</TabTitle>
-      <FormItem>
+      {/* <FormItem>
         <Label htmlFor="password">기존 비밀번호</Label>
         <Input
           type="password"
@@ -30,7 +30,7 @@ const Withdrawal = (props) => {
           name="password"
           placeholder="기존 비밀번호를 입력하세요"
         />
-      </FormItem>
+      </FormItem> */}
       <SubmitButton type="submit">회원 탈퇴하기</SubmitButton>
     </form>
   );

@@ -9,6 +9,7 @@ const initialState = {
   nickname: "",
   imageURL: "",
   userType: "",
+  desc: "",
 };
 
 export const getUser = createAsyncThunk(
@@ -126,14 +127,17 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    testLogin: (state, action) => {
+    getUserInfoSelector: (state, action) => {
       state.value = action.payload;
+    },
+    logout: (state) => {
+      state = initialState;
+      localStorage.setItem("access-token", "");
     },
   },
   extraReducers: {
     [login.fulfilled]: (state) => {
       state.isLoggedIn = true;
-      getUser();
     },
     [login.rejected]: () => {
       console.log("login rejected");
@@ -147,9 +151,10 @@ const authSlice = createSlice({
       state.nickname = userInfo.userNickname;
       state.imageURL = userInfo.userImg;
       state.userType = userInfo.userType;
+      state.desc = userInfo.userDesc;
     },
   },
 });
 
-export const { testLogin } = authSlice.actions;
+export const { logout } = authSlice.actions;
 export default authSlice;

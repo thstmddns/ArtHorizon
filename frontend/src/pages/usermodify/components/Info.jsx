@@ -1,18 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { changeProfile } from "../../../redux/authSlice";
-// import { getUser } from "../../../redux/authSlice";
+import { changeProfile, getUser } from "../../../redux/authSlice";
 
 import Modal from "../../../components/modal/Modal";
 
 const Info = (props) => {
   const dispatch = useDispatch();
+  const originNickname = useSelector((state) => state.auth.nickname);
+  const originDesc = useSelector((state) => state.auth.desc);
   const [nickname, setNickname] = useState("");
   const [description, setDescription] = useState("");
   const [errorNicknameMessage, setErrorNicknameMessage] = useState("");
   const [modal, setModal] = useState(false);
+
+  useEffect(() => {
+    dispatch(getUser());
+    setNickname(originNickname);
+    setDescription(originDesc);
+  }, [dispatch, originNickname, originDesc]);
 
   const submitHandler = (e) => {
     e.preventDefault();

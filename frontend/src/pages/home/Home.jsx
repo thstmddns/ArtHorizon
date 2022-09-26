@@ -12,21 +12,19 @@ import baseurl from "../../api/BaseUrl";
 const Home = () => {
   const [pictures, setPictures] = useState([]);
 
-  const Newart = (page) => {
-    const url = `${baseurl}/pieces/recent`;
+  const Newart = async (page) => {
+    const url = `${baseurl}/pieces/recent?page=1`;
     axios
-      .get(url, {
-        params: {
-          page: page,
-        },
-      })
+      .get(url)
       .then((res) => {
-        const content = res.content;
+        console.log(res);
+        const content = res.data.pieceList;
         // const totalPage = res.totalPage;
         setPictures(content);
       })
       .catch((err) => {
         alert(err);
+        console.log(err.response);
       });
   };
 
@@ -53,7 +51,7 @@ const Home = () => {
               <Link to="pieces">더 보기</Link>
             </TopText>
             <div>
-              {pictures.map((picture) => {
+              {pictures?.map((picture) => {
                 return (
                   <Card
                     key={picture.pieceSeq}

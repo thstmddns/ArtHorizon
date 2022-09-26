@@ -4,19 +4,17 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Main from "./pages/home/Home";
 import LogIn from "./pages/login/LogIn";
 import SignUp from "./pages/signup/SignUp";
-import UserModify from "./pages/usermodify/UserModify";
 import MyPage from "./pages/mypage/MyPage";
 import Pieces from "./pages/pieces/Pieces";
 import Help from "./pages/help/Help";
-import Filter from "./pages/filter/Filter"
 
 import GlobalStyle from "./GlobalStyle";
+import PieceCommit from "./pages/piececommit/PieceCommit";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Main />,
-    // element: <LogIn />,
   },
   {
     path: "/login",
@@ -27,10 +25,6 @@ const router = createBrowserRouter([
     element: <SignUp />,
   },
   {
-    path: "/usermodify",
-    element: <UserModify />,
-  },
-  {
     path: "/mypage",
     element: <MyPage />,
   },
@@ -39,12 +33,12 @@ const router = createBrowserRouter([
     element: <Pieces />,
   },
   {
-    path: '/filter',
-    element: <Filter />
-  },
-  {
     path: "/help",
     element: <Help />,
+  },
+  {
+    path: "/register",
+    element: <PieceCommit />,
   },
 ]);
 

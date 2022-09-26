@@ -4,7 +4,7 @@ import styled from "styled-components";
 const Card = (props) => {
   return (
     <CardWrapper>
-      <RadiusImg src={props.image} />
+      <RadiusImg src={`http://j7d201.p.ssafy.io:8081${props.image}`} />
     </CardWrapper>
   );
 };

@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from ST.styletransfer import style_transfer
+from ST.tag_recommend import get_tag
 import pyrebase
 import os
 firebaseConfig = {
@@ -24,16 +25,14 @@ app = FastAPI()
 async def root():
     return {"message" : "Hello World"}
 
-@app.get("/fastapi/styletransfer")
-async def nst():
+@app.post("/medici/nst")
+async def nst(source1,source2):
     source1 = "https://firebasestorage.googleapis.com/v0/b/art-horizon.appspot.com/o/Henri_Matisse_26.jpg?alt=media&token=123"
     source2 = "https://firebasestorage.googleapis.com/v0/b/art-horizon.appspot.com/o/turtle.jpg?alt=media&token=123"
     return {"image" : style_transfer(source1, source2)} 
 
 
-@app.get("/fastapi/open")
-async def op():
-    some_data = storage.child('turtle.jpg').get_url(123)
-    print(some_data)
-    return {"img" : some_data}
+@app.post("/medici/get_tag")
+async def tag_recommend(img):
+    return {"tag" : get_tag(img)}
 

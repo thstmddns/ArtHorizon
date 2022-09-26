@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/pieces")
+@RequestMapping("/api/pieces")
 public class PieceController {
 
     private final PieceService pieceService;

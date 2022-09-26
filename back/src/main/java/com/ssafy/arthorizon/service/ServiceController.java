@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/service")
+@RequestMapping("/api/service")
 public class ServiceController {
 
     private final String SUCCESS = "SUCCESS";

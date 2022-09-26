@@ -11,7 +11,7 @@ import java.util.Objects;
 
 //@CrossOrigin(origins = "*")
 @RestController
-@RequestMapping(value = "/users")
+@RequestMapping(value = "/api/users")
 public class UserController {
     private final String SUCCESS = "SUCCESS";
     private final String FAILURE = "FAILURE";

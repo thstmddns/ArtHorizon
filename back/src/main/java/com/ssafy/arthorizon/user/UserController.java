@@ -140,7 +140,7 @@ public class UserController {
     }
 
     @GetMapping("/info")
-    public ResponseEntity<UserInfoDto> userInfo(@RequestHeader("Authorization") String jwt) {
+    public ResponseEntity<UserInfoDto> userInfo(@RequestHeader("jwt") String jwt) {
         Long currentUserSeq = jwtService.getUserSeq(jwt);
         UserInfoDto userInfo = userService.userInfo(currentUserSeq);
         return new ResponseEntity<>(userInfo, HttpStatus.OK);

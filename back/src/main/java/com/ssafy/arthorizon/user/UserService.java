@@ -350,4 +350,12 @@ public class UserService {
 
     }
 
+    public String checkNicknameService(String nickname) {
+        Optional<UserEntity> userEntity = userRepository.findByUserNickname(nickname);
+        if(userEntity.isPresent()) {
+            return "중복";
+        } else {
+            return "success";
+        }
+    }
 }

@@ -5,9 +5,9 @@ import { useDispatch } from "react-redux";
 import { quit } from "../../../redux/authSlice";
 
 import FormTitle from "../../../components/form/FormTitle";
-import FormItem from "../../../components/form/FormItem";
-import Label from "../../../components/input/Label";
-import Input from "../../../components/input/Input";
+// import FormItem from "../../../components/form/FormItem";
+// import Label from "../../../components/input/Label";
+// import Input from "../../../components/input/Input";
 import FormButton from "../../../components/form/FormButton";
 
 const Withdrawal = (props) => {

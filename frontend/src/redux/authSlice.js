@@ -17,11 +17,10 @@ export const getUser = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const res = await authApi.getUser();
-      console.log("res.data:", res.data);
       return res.data;
     } catch (error) {
       console.error(error);
-      return rejectWithValue(error.response);
+      return rejectWithValue(JSON.parse(error));
     }
   }
 );
@@ -123,19 +122,6 @@ export const getBookmarks = createAsyncThunk(
   }
 );
 
-// export const getMyPage = createAsyncThunk(
-//   "authSlice/getMyPage",
-//   async (targetSeq, { rejectWithValue }) => {
-//     try {
-//       const res = await authApi.getMyPage(targetSeq);
-//       console.log(res);
-//     } catch (error) {
-//       console.error(error);
-//       return rejectWithValue(JSON.parse(error.response));
-//     }
-//   }
-// );
-
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -144,8 +130,15 @@ const authSlice = createSlice({
       state.value = action.payload;
     },
     logout: (state) => {
-      state = initialState;
-      localStorage.setItem("access-token", "");
+      console.log("state.isLoggedIn:", state.isLoggedIn);
+      state.isLoggedIn = false;
+      state.seq = 0;
+      state.email = "";
+      state.nickname = "";
+      state.imageURL = "";
+      state.userType = "";
+      state.desc = "";
+      localStorage.removeItem("access-token");
     },
   },
   extraReducers: {
@@ -157,7 +150,6 @@ const authSlice = createSlice({
     },
     [getUser.fulfilled]: (state, action) => {
       const userInfo = action.payload;
-      console.log("userInfo:", userInfo);
       state.isLoggedIn = true;
       state.seq = userInfo.userSeq;
       state.email = userInfo.userEmail;
@@ -166,10 +158,15 @@ const authSlice = createSlice({
       state.userType = userInfo.userType;
       state.desc = userInfo.userDesc;
     },
-    // [getMyPage.fulfilled]: (state, action) => {
-    //   console.log("action.payload: ", action.payload);
-    //   return action.payload;
-    // },
+    [getUser.rejected]: (state, action) => {
+      state.isLoggedIn = false;
+      state.seq = 0;
+      state.email = "";
+      state.nickname = "";
+      state.imageURL = "";
+      state.userType = "";
+      state.desc = "";
+    },
   },
 });
 

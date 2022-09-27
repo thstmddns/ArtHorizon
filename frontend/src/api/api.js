@@ -1,10 +1,10 @@
 import axios from "axios";
 // import store from "../redux/store";
 
-// const baseURL = "http://j7d201.p.ssafy.io:8081";
+// const baseURL = "http://j7d201.p.ssafy.io:8081/api";
 const baseURL = "";
 
-// "proxy": "http://j7d201.p.ssafy.io:8081"
+// "proxy": "http://j7d201.p.ssafy.io:8081/api"
 
 axios.defaults.withCredentials = true;
 
@@ -36,6 +36,8 @@ api.interceptors.request.use((config) => {
       config.headers.jwt = accessToken.slice(4);
       config.headers.crossDomain = true;
       config.headers.credentials = "include";
+    } else {
+      // config.headers.jwt = "";
     }
   }
   return config;

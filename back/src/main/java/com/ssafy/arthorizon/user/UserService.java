@@ -299,4 +299,42 @@ public class UserService {
         return new UserInfoDto(user);
     }
 
+    // jwt 없는 경우
+    public MypageDto myPage(Long userSeq) {
+        // 유저가 있는지 확인
+        UserEntity pageUser = userRepository.findByUserSeq(userSeq);
+        if (pageUser == null) {
+            MypageDto mypageDto = new MypageDto();
+            mypageDto.setResult(SignupDto.SignupResult.NO_SUCH_USER);
+            return mypageDto;
+        }
+        // 있으면 정보 가져오기
+        MypageDto mypageDto = new MypageDto(pageUser);
+        mypageDto.setUserIsMe('N');
+        mypageDto.setUserFollowYn('N');
+        mypageDto.setResult(SignupDto.SignupResult.SUCCESS);
+        return mypageDto;
+    }
+
+    // jwt 있는 경우
+    public MypageDto myPageJwt(Long currentUserSeq, Long pageUserSeq) {
+        UserEntity pageUser = userRepository.findByUserSeq(pageUserSeq);
+        if (pageUser == null) {
+            MypageDto mypageDto = new MypageDto();
+            mypageDto.setResult(SignupDto.SignupResult.NO_SUCH_USER);
+            return mypageDto;
+        }
+        MypageDto mypageDto = new MypageDto(pageUser);
+        if (Objects.equals(mypageDto.getUserSeq(), currentUserSeq)) {
+            mypageDto.setUserIsMe('Y');
+        }
+        else { mypageDto.setUserIsMe('N'); }
+        if (followRepository.findAllByFollower_UserSeqAndFollowing_UserSeq(currentUserSeq, pageUserSeq).isPresent()) {
+            mypageDto.setUserFollowYn('Y');
+        }
+        else { mypageDto.setUserFollowYn('N'); }
+        mypageDto.setResult(SignupDto.SignupResult.SUCCESS);
+        return mypageDto;
+    }
+
 }

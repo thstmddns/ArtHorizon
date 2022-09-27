@@ -9,7 +9,7 @@ public class UserArtDto {
     private String pieceTitleKr;
     private String pieceTitleEn;
     private String pieceDesc;
-    private MultipartFile pieceImg;
+    private String pieceImg;
     private String pieceTag;
     private String pieceScent;
 

@@ -35,7 +35,7 @@ export const login = createAsyncThunk(
       // axios.defaults.headers.common["Authorization"] = `jwt ${res.data}`;
     } catch (error) {
       console.error(error);
-      return rejectWithValue(error.response);
+      return rejectWithValue(JSON.parse(error));
     }
   }
 );
@@ -48,7 +48,7 @@ export const signup = createAsyncThunk(
       console.log(res);
       localStorage.setItem("access-token", `jwt ${res.data.jwt}`);
     } catch (error) {
-      return rejectWithValue(error.response);
+      return rejectWithValue(JSON.parse(error));
     }
   }
 );

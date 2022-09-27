@@ -38,6 +38,10 @@ const Info = () => {
     };
     getMyPageInfo();
     dispatch(getUser());
+    // authApi
+    //   .getFollowers(1)
+    //   .then((res) => console.log("팔로워를가져오겠다:", res))
+    //   .catch((err) => console.error(err));
   }, [dispatch, targetUserSeq, isLoggedIn, isFollowed]);
 
   const followHandler = () => {

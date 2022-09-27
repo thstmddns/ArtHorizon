@@ -10,6 +10,7 @@ import UserModify from "./pages/usermodify/UserModify";
 import Pieces from "./pages/pieces/Pieces";
 import Help from "./pages/help/Help";
 import Filter from "./pages/filter/Filter";
+import PieceDetail from "./pages/piecedetail/PieceDetail";
 
 import GlobalStyle from "./GlobalStyle";
 import PieceCommit from "./pages/piececommit/PieceCommit";
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
   {
     path: "/pieces",
     element: <Pieces />,
+  },
+  {
+    path: "/piece/:pieceSeq",
+    element: <PieceDetail />,
   },
   {
     path: "/filter",

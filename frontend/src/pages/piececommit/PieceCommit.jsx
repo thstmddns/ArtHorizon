@@ -2,13 +2,25 @@ import React from "react";
 import { useRef } from "react";
 import { useState } from "react";
 import styled from "styled-components";
+import { Container, Row, Col } from "react-grid-system";
+import { VscChromeClose } from "react-icons/vsc";
 
 import NavigationBar from "../../components/NavigationBar";
 import Input from "../../components/input/Input";
+import Button from "../../components/Button";
 
 const PieceCommit = () => {
   const [newArt, setNewArt] = useState("");
   const [price, setPrice] = useState(0);
+  const [tags, setTags] = useState([
+    "밝음",
+    "빛나는",
+    "사과",
+    "바다",
+    "스파이시",
+  ]);
+  const [newTag, setNewTag] = useState([]);
+
   const ImageInput = useRef();
 
   const handleChange = () => {
@@ -31,10 +43,15 @@ const PieceCommit = () => {
     setPrice(newPrice);
   };
 
+  const tagItemUpdate = (text) => {
+    setNewTag(text);
+    console.log(newTag);
+  };
+
   return (
     <div>
       <NavigationBar />
-      <Container>
+      <ItemContainer>
         <Title>나의 아트 등록</Title>
         <hr />
         <RegistItem>아트 이미지</RegistItem>
@@ -50,31 +67,67 @@ const PieceCommit = () => {
           <BringButton onClick={handleChange}>아트 업로드</BringButton>
         </ButtonWrapper>
         <RegistItem>제목</RegistItem>
-        <TitleInput />
+        <TitleInput placeholder="제목을 입력해주세요" />
         <RegistItem>아트 설명</RegistItem>
-        <ArtTextInput />
+        <ArtTextInput placeholder="설명을 입력해주세요" />
         <RegistItem>판매 여부</RegistItem>
         <Allow>
           {/* 스위치 안에 허용/거부 넣으면 될듯 */}
           <AllowCheck>판매 여부를 결정해주세요</AllowCheck>
           <input type="checkbox" />
         </Allow>
-        <Price
+        <PriceInput
           placeholder="원하는 가격을 입력해주세요"
+          type="number"
+          min="0"
+          step="10000"
           onChange={(e) => updatePrice(e.target.value)}
         />
         <RegistItem>태그 추가</RegistItem>
-        {/* <TagWrapper>
-          <TagInput />
-        </TagWrapper> */}
-      </Container>
+        <TagWrapper>
+          <TagInput
+            name="newTag"
+            onChange={(e) => tagItemUpdate(e.target.value)}
+          />
+          <BlueButton>태그 추가</BlueButton>
+          <WhiteButton>태그 추천받기</WhiteButton>
+        </TagWrapper>
+        <TagContainer>
+          <Row>
+            {tags?.map((tag, index) => {
+              if (index % 2) {
+                return (
+                  <ColItem key={index}>
+                    <BlueItem sm={3}>
+                      # {tag}
+                      <VscChromeClose color="white" />
+                    </BlueItem>
+                  </ColItem>
+                );
+              } else {
+                return (
+                  <ColItem key={index}>
+                    <WhiteItem sm={3}>
+                      # {tag} <VscChromeClose />
+                    </WhiteItem>
+                  </ColItem>
+                );
+              }
+            })}
+          </Row>
+        </TagContainer>
+        <hr />
+        <br />
+        <BlueButton>아트 등록하기</BlueButton>
+        <WhiteButton>목록으로</WhiteButton>
+      </ItemContainer>
     </div>
   );
 };
 
 export default PieceCommit;
 
-const Container = styled.div`
+const ItemContainer = styled.div`
   margin: 2vw 2vw;
   padding: 3vw 6vw;
   background: #f9f9f7;
@@ -141,6 +194,9 @@ const BringButton = styled.button`
 
 const TitleInput = styled(Input)`
   width: 60%;
+  &:: placeholder {
+    color: #8d959f;
+  }
 `;
 
 const ArtTextInput = styled.textarea`
@@ -151,6 +207,9 @@ const ArtTextInput = styled.textarea`
   padding: 3px 12px 3px 12px;
   background-color: #ffffff;
   resize: none;
+  &:: placeholder {
+    color: #8d959f;
+  }
 `;
 
 const Allow = styled.div`
@@ -170,9 +229,70 @@ const AllowCheck = styled.div`
   margin-bottom: 1vw;
 `;
 
-const Price = styled(Input)`
+const PriceInput = styled(Input)`
   width: 300px;
   &:: placeholder {
     color: #8d959f;
   }
+`;
+
+const TagWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const TagInput = styled(Input)`
+  width: 400px;
+  margin-right: 20px;
+`;
+
+const BlueButton = styled(Button)`
+  width: 200px;
+  height: 40px;
+  font-size: 15px;
+  margin-right: 20px;
+`;
+
+const WhiteButton = styled(Button)`
+  width: 200px;
+  color: #88c4e6;
+  height: 40px;
+  font-size: 15px;
+  background-color: #ffffff;
+`;
+
+const TagContainer = styled.div`
+  margin-top: 30px;
+  margin-left: 0px;
+  width: 1080px;
+`;
+
+const ColItem = styled(Col)`
+  padding: 15px;
+`;
+
+const BlueItem = styled.div`
+  background-color: #88c4e6;
+  border: 1px solid #6cb6e1;
+  border-radius: 10px;
+  color: #ffffff;
+  width: 200px;
+  height: 40px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+`;
+
+const WhiteItem = styled.div`
+  background-color: #ffffff;
+  border-radius: 10px;
+  width: 200px;
+  height: 40px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
 `;

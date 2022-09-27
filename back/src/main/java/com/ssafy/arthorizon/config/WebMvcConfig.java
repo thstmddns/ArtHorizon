@@ -31,29 +31,30 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/service/notice/**");
     }
 
-//    @Override
-//    public void addCorsMappings(CorsRegistry registry) {
-//        registry.addMapping("/**")
-//                .allowedOrigins("*")
-//                .allowedHeaders("*")
-//                .exposedHeaders("*")
-//                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-//                .maxAge(6000);
-//    }
-
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOriginPattern("*");
-        configuration.addAllowedMethod("*");
-        configuration.addAllowedHeader("*");
-        configuration.addExposedHeader("*");
-        configuration.setAllowCredentials(true);
-        configuration.setMaxAge(3600L);
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("http://localhost:3000")
+                .allowedHeaders("*")
+                .exposedHeaders("*")
+                .allowCredentials(true)
+                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                .maxAge(6000);
     }
+
+//    @Bean
+//    public CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration configuration = new CorsConfiguration();
+//        configuration.addAllowedOriginPattern("*");
+//        configuration.addAllowedMethod("*");
+//        configuration.addAllowedHeader("*");
+//        configuration.addExposedHeader("*");
+//        configuration.setAllowCredentials(true);
+//        configuration.setMaxAge(3600L);
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);
+//        return source;
+//    }
     @Bean
     protected JwtInterceptor jwtInterceptor() {
         return new JwtInterceptor();

@@ -1,5 +1,6 @@
 package com.ssafy.arthorizon.user;
 
+import com.ssafy.arthorizon.user.Entity.UserEntity;
 import com.ssafy.arthorizon.user.dto.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 //@CrossOrigin(origins = "*")
 @RestController
@@ -164,6 +166,30 @@ public class UserController {
         }
     }
 
+    // 여기서부터 박자연
+    // 프로필 사진 수정
+    @PutMapping("/profile-img")
+    public ResponseEntity<String> userProfileImg(@RequestHeader("jwt") String jwt, @RequestBody Map<String, String> imgData){
+        // 존재하는 유저가 맞는지는 테스트하지 않았음
+        Long currentUserSeq = jwtService.getUserSeq(jwt);
+        String img = imgData.get("userImg");
+        if(userService.userProfileImgService(currentUserSeq, img).equals("success")){
+            return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(FAILURE, HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+    // 닉네임 중복 확인
+    @GetMapping("/check")
+    public ResponseEntity<String> checkNickname(@RequestParam(value = "nickname") String nickname){
+        if(userService.checkNicknameService(nickname).equals("success")){
+            return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(FAILURE, HttpStatus.OK);
+        }
+    }
 
 
 }

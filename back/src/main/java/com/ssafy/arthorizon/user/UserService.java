@@ -337,4 +337,25 @@ public class UserService {
         return mypageDto;
     }
 
+    public String userProfileImgService(Long currentUserSeq, String img) {
+        UserEntity user = userRepository.findByUserSeq(currentUserSeq);
+        user.setUserImg(img);
+        try {
+            userRepository.save(user);
+        } catch (Exception e) {
+            return "fail";
+        }
+
+        return "success";
+
+    }
+
+    public String checkNicknameService(String nickname) {
+        Optional<UserEntity> userEntity = userRepository.findByUserNickname(nickname);
+        if(userEntity.isPresent()) {
+            return "중복";
+        } else {
+            return "success";
+        }
+    }
 }

@@ -34,7 +34,7 @@ const router = createBrowserRouter([
   },
   {
     // path: "/mypage",
-    path: "/mypage/:userSeq",
+    path: "/mypage/:targetUserSeq",
     element: <MyPage />,
   },
   {

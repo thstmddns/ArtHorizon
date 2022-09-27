@@ -12,8 +12,8 @@ const NavBar = () => {
   const dispatch = useDispatch();
   const {
     isLoggedIn,
-    seq: userSeq,
-    nickname,
+    mySeq: userSeq,
+    myNickname,
   } = useSelector((state) => state.auth);
 
   useEffect(() => {
@@ -42,10 +42,10 @@ const NavBar = () => {
         )}
         {isLoggedIn && (
           <UserLinks>
-            <div onClick={() => navigate(`/mypage/${userSeq}`)}>
-              {nickname}'s 마이페이지
-            </div>
-            <div onClick={() => dispatch(logout())}>로그아웃</div>
+            <UserLink onClick={() => navigate(`/mypage/${userSeq}`)}>
+              {myNickname}'s 마이페이지
+            </UserLink>
+            <UserLink onClick={() => dispatch(logout())}>로그아웃</UserLink>
           </UserLinks>
         )}
       </Right>
@@ -85,8 +85,13 @@ const LogoImg = styled.img`
 `;
 
 const ServiceLink = styled(Link)`
+  cursor: pointer;
   margin-right: 20px;
   text-decoration: none;
+`;
+
+const UserLink = styled.div`
+  cursor: pointer;
 `;
 
 const AuthWrapper = styled.div``;

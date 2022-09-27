@@ -62,5 +62,7 @@ export const authApi = {
   changeType: () => api.put("/users/change"),
   getBookmarks: () => api.get("/users/bookmark"),
   // getMyPage: (targetSeq) => api.get(`/users/profile/${targetSeq}`),
-  getMyPage: (userSeq) => api.get(`/users/profile/${userSeq}`),
+  getMyPage: (targetUserSeq) => api.get(`/users/profile/${targetUserSeq}`),
+  follow: (targetUserSeq) => api.post(`/users/follow/${targetUserSeq}`),
+  unfollow: (targetUserSeq) => api.delete(`/users/follow/${targetUserSeq}`),
 };

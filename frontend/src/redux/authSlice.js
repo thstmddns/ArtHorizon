@@ -4,12 +4,12 @@ import { authApi } from "../api/api";
 
 const initialState = {
   isLoggedIn: false,
-  seq: "",
-  email: "",
-  nickname: "",
-  imageURL: "",
-  userType: "",
-  desc: "",
+  mySeq: "",
+  myEmail: "",
+  myNickname: "",
+  myImageURL: "",
+  myUserType: "",
+  myDesc: "",
 };
 
 export const getUser = createAsyncThunk(
@@ -132,12 +132,12 @@ const authSlice = createSlice({
     logout: (state) => {
       console.log("state.isLoggedIn:", state.isLoggedIn);
       state.isLoggedIn = false;
-      state.seq = 0;
-      state.email = "";
-      state.nickname = "";
-      state.imageURL = "";
-      state.userType = "";
-      state.desc = "";
+      state.mySeq = 0;
+      state.myEmail = "";
+      state.myNickname = "";
+      state.myImageURL = "";
+      state.myUserType = "";
+      state.myDesc = "";
       localStorage.removeItem("access-token");
     },
   },
@@ -151,21 +151,21 @@ const authSlice = createSlice({
     [getUser.fulfilled]: (state, action) => {
       const userInfo = action.payload;
       state.isLoggedIn = true;
-      state.seq = userInfo.userSeq;
-      state.email = userInfo.userEmail;
-      state.nickname = userInfo.userNickname;
-      state.imageURL = userInfo.userImg;
-      state.userType = userInfo.userType;
-      state.desc = userInfo.userDesc;
+      state.mySeq = userInfo.userSeq;
+      state.myEmail = userInfo.userEmail;
+      state.myNickname = userInfo.userNickname;
+      state.myImageURL = userInfo.userImg;
+      state.myUserType = userInfo.userType;
+      state.myDesc = userInfo.userDesc;
     },
     [getUser.rejected]: (state, action) => {
       state.isLoggedIn = false;
-      state.seq = 0;
-      state.email = "";
-      state.nickname = "";
-      state.imageURL = "";
-      state.userType = "";
-      state.desc = "";
+      state.mySeq = 0;
+      state.myEmail = "";
+      state.myNickname = "";
+      state.myImageURL = "";
+      state.myUserType = "";
+      state.myDesc = "";
     },
   },
 });

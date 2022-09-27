@@ -299,4 +299,16 @@ public class UserService {
         return new UserInfoDto(user);
     }
 
+    public String userProfileImgService(Long currentUserSeq, String img) {
+        UserEntity user = userRepository.findByUserSeq(currentUserSeq);
+        user.setUserImg(img);
+        try {
+            userRepository.save(user);
+        } catch (Exception e) {
+            return "fail";
+        }
+
+        return "success";
+
+    }
 }

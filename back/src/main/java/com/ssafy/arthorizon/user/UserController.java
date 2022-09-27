@@ -7,9 +7,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
-@CrossOrigin(origins = "*")
+import java.util.Objects;
+
+//@CrossOrigin(origins = "*")
 @RestController
-@RequestMapping(value = "/users")
+@RequestMapping(value = "/api/users")
 public class UserController {
     private final String SUCCESS = "SUCCESS";
     private final String FAILURE = "FAILURE";
@@ -142,6 +144,26 @@ public class UserController {
         return new ResponseEntity<>(userInfo, HttpStatus.OK);
     }
 
+    // 로그인 안한 유저 (jwt X), 로그인한 유저 (jwt O)
+    @GetMapping("/profile/{pageUserSeq}")
+    public ResponseEntity<MypageDto> myPage(@RequestHeader("jwt") String jwt, @PathVariable Long pageUserSeq) {
+        if (jwt.isEmpty()) {
+            MypageDto res = userService.myPage(pageUserSeq);
+            if (res.getResult() == SignupDto.SignupResult.SUCCESS) {
+                return new ResponseEntity<>(res, HttpStatus.OK);
+            }
+            else { return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST); }
+        }
+        else {
+            Long currentUserSeq = jwtService.getUserSeq(jwt);
+            MypageDto res = userService.myPageJwt(currentUserSeq, pageUserSeq);
+            if (res.getResult() == SignupDto.SignupResult.SUCCESS) {
+                return new ResponseEntity<>(res, HttpStatus.OK);
+            }
+            else { return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST); }
+        }
+    }
+
     // 여기서부터 박자연
     // 프로필 사진 수정
     @PutMapping("/profile-img")
@@ -158,8 +180,6 @@ public class UserController {
     }
 
     // 닉네임 중복 확인
-
-
 
 
 

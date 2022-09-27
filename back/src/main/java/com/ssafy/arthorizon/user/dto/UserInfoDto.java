@@ -11,6 +11,8 @@ public class UserInfoDto {
     private String userImg;
     private char userType;
 
+    private String userDesc;
+
     public UserInfoDto() {}
 
     public UserInfoDto(UserEntity userEntity) {
@@ -19,5 +21,6 @@ public class UserInfoDto {
         this.userEmail = userEntity.getUserEmail();
         this.userImg = userEntity.getUserImg();
         this.userType = userEntity.getUserType();
+        this.userDesc = userEntity.getUserDesc();
     }
 }

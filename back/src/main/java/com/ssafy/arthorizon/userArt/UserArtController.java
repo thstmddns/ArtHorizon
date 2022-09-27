@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import com.ssafy.arthorizon.user.JwtService;
 
 @RestController
-@RequestMapping("/user-art")
+@RequestMapping("/api/user-art")
 public class UserArtController {
 
     private final String SUCCESS = "SUCCESS";

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
+import NavBar from "../../components/NavBar";
+
 import Info from "./components/Info";
 import Password from "./components/Password";
 import ProfileImage from "./components/ProfileImage";
@@ -26,51 +28,54 @@ const UserModify = () => {
   // }
 
   return (
-    <Container>
-      <Left>
-        <TabLinks>
-          <TabLink
-            isSelected={"기본정보 변경" === selectedTab}
-            onClick={() => setSelectedTab("기본정보 변경")}
-          >
-            기본정보 변경
-          </TabLink>
-          <TabLink
-            isSelected={"비밀번호 변경" === selectedTab}
-            onClick={() => setSelectedTab("비밀번호 변경")}
-          >
-            비밀번호 변경
-          </TabLink>
-          <TabLink
-            isSelected={"프사 변경" === selectedTab}
-            onClick={() => setSelectedTab("프사 변경")}
-          >
-            프사 변경
-          </TabLink>
-          <TabLink
-            isSelected={"화가로 전환" === selectedTab}
-            onClick={() => setSelectedTab("화가로 전환")}
-          >
-            화가로 전환
-          </TabLink>
-          <TabLink
-            isSelected={"회원 탈퇴" === selectedTab}
-            onClick={() => setSelectedTab("회원 탈퇴")}
-          >
-            회원 탈퇴
-          </TabLink>
-        </TabLinks>
-      </Left>
-      <Right>
-        <TabContainer>
-          {selectedTab === "기본정보 변경" && <Info />}
-          {selectedTab === "비밀번호 변경" && <Password />}
-          {selectedTab === "프사 변경" && <ProfileImage />}
-          {selectedTab === "화가로 전환" && <Convert />}
-          {selectedTab === "회원 탈퇴" && <Withdrawal />}
-        </TabContainer>
-      </Right>
-    </Container>
+    <React.Fragment>
+      <NavBar />
+      <Container>
+        <Left>
+          <TabLinks>
+            <TabLink
+              isSelected={"기본정보 변경" === selectedTab}
+              onClick={() => setSelectedTab("기본정보 변경")}
+            >
+              기본정보 변경
+            </TabLink>
+            <TabLink
+              isSelected={"비밀번호 변경" === selectedTab}
+              onClick={() => setSelectedTab("비밀번호 변경")}
+            >
+              비밀번호 변경
+            </TabLink>
+            <TabLink
+              isSelected={"프사 변경" === selectedTab}
+              onClick={() => setSelectedTab("프사 변경")}
+            >
+              프사 변경
+            </TabLink>
+            <TabLink
+              isSelected={"화가로 전환" === selectedTab}
+              onClick={() => setSelectedTab("화가로 전환")}
+            >
+              화가로 전환
+            </TabLink>
+            <TabLink
+              isSelected={"회원 탈퇴" === selectedTab}
+              onClick={() => setSelectedTab("회원 탈퇴")}
+            >
+              회원 탈퇴
+            </TabLink>
+          </TabLinks>
+        </Left>
+        <Right>
+          <TabContainer>
+            {selectedTab === "기본정보 변경" && <Info />}
+            {selectedTab === "비밀번호 변경" && <Password />}
+            {selectedTab === "프사 변경" && <ProfileImage />}
+            {selectedTab === "화가로 전환" && <Convert />}
+            {selectedTab === "회원 탈퇴" && <Withdrawal />}
+          </TabContainer>
+        </Right>
+      </Container>
+    </React.Fragment>
   );
 };
 

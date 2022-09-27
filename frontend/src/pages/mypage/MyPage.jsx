@@ -1,17 +1,21 @@
 import React from "react";
 import styled from "styled-components";
 
+import NavBar from "../../components/NavBar";
 import Info from "./components/Info";
 import Arts from "./components/Arts";
 
 const Mypage = () => {
   return (
-    <Container>
-      <Wrapper>
-        <Info />
-        <Arts />
-      </Wrapper>
-    </Container>
+    <React.Fragment>
+      <NavBar />
+      <Container>
+        <Wrapper>
+          <Info />
+          <Arts />
+        </Wrapper>
+      </Container>
+    </React.Fragment>
   );
 };
 

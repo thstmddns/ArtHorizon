@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getUser, getMyPage } from "../../../redux/authSlice";
+import { getUser } from "../../../redux/authSlice";
 import { authApi } from "../../../api/api";
 
 const Info = () => {
-  // const dispatch = useDispatch();
-  const { userSeq } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { targetUserSeq } = useParams();
+  const { isLoggedIn } = useSelector((state) => state.auth);
   const [nickname, setNickname] = useState("");
   const [userType, setUserType] = useState("N");
   const [email, setEmail] = useState("");
@@ -16,13 +18,12 @@ const Info = () => {
   const [numOfFollowers, setNumOfFollowers] = useState(0);
   const [numOfFollowings, setNumOfFollowings] = useState(0);
   const [isMine, setIsMine] = useState(false);
+  const [isFollowed, setIsFollowed] = useState(false);
 
   useEffect(() => {
     const getMyPageInfo = async () => {
-      // const res = await authApi.getMyPage(1);
       try {
-        const res = await authApi.getMyPage(userSeq);
-        console.log("mypage res:", res);
+        const res = await authApi.getMyPage(targetUserSeq);
         setNickname(res.data.userNickname);
         setUserType(res.data.userType);
         setEmail(res.data.userEmail);
@@ -30,13 +31,34 @@ const Info = () => {
         setNumOfFollowers(res.data.userFollowerCount);
         setNumOfFollowings(res.data.userFollowingCount);
         setIsMine(res.data.userIsMe === "Y" ? true : false);
+        setIsFollowed(res.data.userFollowYn === "Y" ? true : false);
       } catch (error) {
         console.error("해당하는 유저가 존재하지 않습니다");
       }
     };
     getMyPageInfo();
-    // const y = dispatch(getMyPage(1)).unwrap();
-  }, []);
+    dispatch(getUser());
+  }, [dispatch, targetUserSeq, isLoggedIn, isFollowed]);
+
+  const followHandler = () => {
+    const followUser = async () => {
+      try {
+        await authApi.follow(targetUserSeq);
+        setIsFollowed(true);
+      } catch (error) {}
+    };
+    followUser();
+  };
+
+  const unfollowHandler = () => {
+    const unfollowUser = async () => {
+      try {
+        await authApi.unfollow(targetUserSeq);
+        setIsFollowed(false);
+      } catch (error) {}
+    };
+    unfollowUser();
+  };
 
   return (
     <Wrapper>
@@ -57,8 +79,17 @@ const Info = () => {
         </Row>
       </ContentBox>
 
-      {setIsMine && <Button>프로필 수정</Button>}
-      {!setIsMine && <SecondaryButton>팔로우</SecondaryButton>}
+      {isMine && (
+        <SecondaryButton onClick={() => navigate("/usermodify")}>
+          프로필 수정
+        </SecondaryButton>
+      )}
+      {!isMine && !isFollowed && (
+        <PrimaryButton onClick={followHandler}>팔로우</PrimaryButton>
+      )}
+      {!isMine && isFollowed && (
+        <SecondaryButton onClick={unfollowHandler}>팔로우 해제</SecondaryButton>
+      )}
     </Wrapper>
   );
 };
@@ -132,7 +163,26 @@ const Col = styled.div`
 //   margin-left: auto;
 // `;
 
-const Button = styled.button`
+const PrimaryButton = styled.button`
+  cursor: pointer;
+  background-color: #88c4e6;
+  border: 1px solid #6cb6e1;
+  border-radius: 10px;
+  color: #ffffff;
+  width: 15rem;
+  height: 45px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  &:hover {
+    background-color: #6cb6e1;
+    border: 1px solid #88c4e6;
+  }
+  margin-left: auto;
+`;
+
+const SecondaryButton = styled.button`
   cursor: pointer;
   background-color: #ffffff;
   border: 1px solid #88c4e6;
@@ -150,15 +200,4 @@ const Button = styled.button`
     color: #ffffff;
   }
   margin-left: auto;
-`;
-
-const SecondaryButton = styled(Button)`
-  background-color: #88c4e6;
-  border: 1px solid #6cb6e1;
-  color: #ffffff;
-  &:hover {
-    background-color: #88c4e6;
-    border: 1px solid #6cb6e1;
-    color: #ffffff;
-  }
 `;

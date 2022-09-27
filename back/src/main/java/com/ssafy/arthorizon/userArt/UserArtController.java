@@ -1,6 +1,5 @@
 package com.ssafy.arthorizon.userArt;
 
-import com.ssafy.arthorizon.piece.PieceRepository;
 import com.ssafy.arthorizon.userArt.dto.UserArtDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +19,8 @@ public class UserArtController {
         this.userArtService = userArtService;
         this.jwtService = jwtService;
     }
+
+
 
     // 유저 아트 등록
     @PostMapping("")

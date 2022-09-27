@@ -76,10 +76,11 @@ public class PieceEntity {
         this.pieceTitleKr = userArtDto.getPieceTitleKr();
         this.pieceTitleEn = userArtDto.getPieceTitleEn();
         this.pieceDesc = userArtDto.getPieceDesc();
+        this.pieceImg = userArtDto.getPieceImg();
         this.pieceHitCount = 0;
         this.pieceBookmarkCount = 0;
         this.pieceTag = userArtDto.getPieceTag();
-        this.pieceYear = LocalDate.now().getDayOfYear();
+        this.pieceYear = LocalDate.now().getYear();
         this.pieceCentury = (int) Math.floor(this.pieceYear/100)+1;
         this.pieceScent = userArtDto.getPieceScent();
     }

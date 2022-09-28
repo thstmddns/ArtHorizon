@@ -1,4 +1,4 @@
-from fastapi import FastAPI, File,UploadFile
+from fastapi import FastAPI, File,UploadFile, Form
 from ST.styletransfer import style_transfer
 from ST.tag_recommend import get_tag
 from pydantic import BaseModel
@@ -32,12 +32,13 @@ class Style_transfer(BaseModel):
 async def root():
     return {"message" : "Hello World"}
 
+
 @app.post("/medici/nst")
-async def nst(file: UploadFile, style : Style_transfer):
-    return file,style
+async def nst(filed: bytes = File(), src : str = Form()):
+    print(len(filed))
+    return src
 
 
 @app.post("/medici/get_tag")
 async def tag_recommend(img: UploadFile):
     return {"tag" : get_tag(img)}
-

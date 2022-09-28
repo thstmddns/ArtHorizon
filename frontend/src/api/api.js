@@ -14,7 +14,6 @@ const headers = {
   // accept: "application/json,",
   "Content-Type": "application/json;charset=UTF-8",
   // jwt: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX3NlcSI6IjE0IiwidXNlcl9lbWFpbCI6ImNvcnNAY29ycy5jb20ifQ==.1adaa1cbb87f4d0cb34e0d152d1d9460efab251978b3f409e46bf07e51d00700",
-  // jwt: "",
   // Authorization:
   // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX3NlcSI6IjE0IiwidXNlcl9lbWFpbCI6ImNvcnNAY29ycy5jb20ifQ==.1adaa1cbb87f4d0cb34e0d152d1d9460efab251978b3f409e46bf07e51d00700",
   Accept: "*/*",

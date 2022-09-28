@@ -9,6 +9,9 @@ import torchvision.transforms as transforms
 import torchvision.models as models
 import os
 import copy
+import urllib.request
+import io
+import numpy
 device = torch.device("cpu")
 
 
@@ -31,43 +34,33 @@ def style_transfer(source1, source2):
         image = loader(image).unsqueeze(0)
         return image.to(device,torch.float)
     
-
-    src1 = cv2.imread(source1)
-    src2 = cv2.imread(source2)
+    urllib.request.urlretrieve(
+        source2, "src2.jpg"
+    )
+    # src1 = source1
+    # src2 = cv2.imread(source2)
     
-    dst1 = cv2.resize(src1,(512,512))
-    dst2 = cv2.resize(src2,(512,512))
-    cv2.imwrite(source1,dst1)
-    cv2.imwrite(source2,dst2)
+    # dst1 = cv2.resize(src1,(512,512))
+    # dst2 = cv2.resize(src2,(512,512))
+    # cv2.imwrite(source1,dst1)
+    # cv2.imwrite(source2,dst2)
 
     # mp = image_loader(dst1)
     # my_img = image_loader(dst2)
 
     # mp = cv2.resize(mp,(512,512))
     # my_img = cv2.resize(my_img,(512,512))
-
+    
     mp = image_loader(source1)
-    my_img = image_loader(source2)
-
-    # print(mp.shape)
-    # print(my_img.size())
+    my_img = image_loader("src2.jpg")
+    
+    
     assert mp.size() == my_img.size(), \
         "we need to import style and content images of the same size"
         
         
-    unloader = transforms.ToPILImage()
-
-    plt.ion()
-
-    def imshow(tensor, title = None):
-        image = tensor.cpu().clone() # 원본 보존을 위해 클론
-        image = image.squeeze(0) # fake batch dim을 삭제
-        image = unloader(image)
-        plt.imshow(image)
-        
-        if title is not None:
-            plt.title(title)
-        plt.pause(0.01)
+    
+    
     
     class ContentLoss(nn.Module):
         def __init__(self,target,):
@@ -249,8 +242,6 @@ def style_transfer(source1, source2):
     output = run_style_transfer(cnn, cnn_normalization_mean, cnn_normalization_std,
                             my_img, mp, input_img)
     
-    plt.figure()
-    imshow(output,title="output")
     
-    print(output)
+    
     return output

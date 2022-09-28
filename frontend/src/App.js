@@ -2,7 +2,7 @@ import * as React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 // import Main from "./pages/home/Home";
-import TestHome from "./pages/testhome/TestHome";
+import TailwindHome from "./pages/tailwind-home/TailwindHome";
 import LogIn from "./pages/login/LogIn";
 import SignUp from "./pages/signup/SignUp";
 import MyPage from "./pages/mypage/MyPage";
@@ -12,6 +12,8 @@ import Help from "./pages/help/Help";
 import Filter from "./pages/filter/Filter";
 import PieceDetail from "./pages/piecedetail/PieceDetail";
 
+import TailwindMyPage from "./pages/tailwind-mypage/TailwindMyPage";
+
 import GlobalStyle from "./GlobalStyle";
 import PieceCommit from "./pages/piececommit/PieceCommit";
 
@@ -19,7 +21,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     // element: <Main />,
-    element: <TestHome />,
+    element: <TailwindHome />,
   },
   {
     path: "/login",
@@ -36,7 +38,8 @@ const router = createBrowserRouter([
   {
     // path: "/mypage",
     path: "/mypage/:targetUserSeq",
-    element: <MyPage />,
+    // element: <MyPage />,
+    element: <TailwindMyPage />,
   },
   {
     path: "/pieces",

@@ -49,6 +49,7 @@ const PieceDetail = () => {
             setGenre(res.data.pieceGenre);
             setScent(res.data.pieceScent);
             console.log(Boolean(desc));
+            console.log(`http://j7d201.p.ssafy.io:8081/images/${res.data.pieceImg}`);
           })
           .catch((err) => {
             console.error(err);
@@ -62,9 +63,13 @@ const PieceDetail = () => {
 
   return (
     <React.Fragment>
-      <NavBar />
+      {/* <NavBar /> */}
       <PieceContainer>
-        {img ? <PieceImg src={img} /> : <DefaultImg />}
+        {img ? (
+          <PieceImg src={`http://j7d201.p.ssafy.io:8081/images/${img}`} />
+        ) : (
+          <DefaultImg />
+        )}
         <PieceDetails>
           <Title>작품명</Title>
           <Content>{title}</Content>

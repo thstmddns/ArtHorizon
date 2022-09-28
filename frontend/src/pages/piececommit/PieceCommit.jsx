@@ -12,14 +12,8 @@ import Button from "../../components/Button";
 const PieceCommit = () => {
   const [newArt, setNewArt] = useState("");
   const [price, setPrice] = useState(0);
-  const [tags, setTags] = useState([
-    "밝음",
-    "빛나는",
-    "사과",
-    "바다",
-    "스파이시",
-  ]);
-  const [newTag, setNewTag] = useState([]);
+  const [tags, setTags] = useState([]);
+  const [newTag, setNewTag] = useState("");
 
   const ImageInput = useRef();
 
@@ -47,6 +41,24 @@ const PieceCommit = () => {
     setNewTag(text);
     console.log(newTag);
   };
+
+  const onAddTag = () => {
+    let tagArr = [...tags];
+    tagArr.push(newTag);
+    setNewTag("");
+    setTags(tagArr);
+  };
+
+  const deleteTag = (index) => {
+    console.log(index);
+    let tagArr = [...tags];
+    tagArr.splice(index, 1);
+    setTags(tagArr);
+  };
+
+  const submitPiece = () => {
+    
+  }
 
   return (
     <div>
@@ -86,10 +98,13 @@ const PieceCommit = () => {
         <RegistItem>태그 추가</RegistItem>
         <TagWrapper>
           <TagInput
-            name="newTag"
+            type="text"
+            value={newTag}
             onChange={(e) => tagItemUpdate(e.target.value)}
           />
-          <BlueButton>태그 추가</BlueButton>
+          <BlueButton onClick={onAddTag} value={newTag} name={newTag}>
+            태그 추가
+          </BlueButton>
           <WhiteButton>태그 추천받기</WhiteButton>
         </TagWrapper>
         <TagContainer>
@@ -97,18 +112,32 @@ const PieceCommit = () => {
             {tags?.map((tag, index) => {
               if (index % 2) {
                 return (
-                  <ColItem key={index}>
+                  <ColItem key={tag}>
                     <BlueItem sm={3}>
                       # {tag}
-                      <VscChromeClose color="white" />
+                      <div onClick={() => deleteTag(index)}>
+                        <VscChromeClose
+                          color="white"
+                          style={{
+                            cursor: "pointer",
+                          }}
+                        />
+                      </div>
                     </BlueItem>
                   </ColItem>
                 );
               } else {
                 return (
-                  <ColItem key={index}>
+                  <ColItem key={tag}>
                     <WhiteItem sm={3}>
-                      # {tag} <VscChromeClose />
+                      # {tag}
+                      <div onClick={() => deleteTag(index)}>
+                        <VscChromeClose
+                          style={{
+                            cursor: "pointer",
+                          }}
+                        />
+                      </div>
                     </WhiteItem>
                   </ColItem>
                 );
@@ -118,7 +147,7 @@ const PieceCommit = () => {
         </TagContainer>
         <hr />
         <br />
-        <BlueButton>아트 등록하기</BlueButton>
+        <BlueButton type="submit" onClick={submitPiece} >아트 등록하기</BlueButton>
         <WhiteButton>목록으로</WhiteButton>
       </ItemContainer>
     </div>

@@ -1,38 +1,43 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, File,UploadFile
 from ST.styletransfer import style_transfer
 from ST.tag_recommend import get_tag
-import pyrebase
+from pydantic import BaseModel
 import os
-firebaseConfig = {
-  "apiKey": "AIzaSyAE8MStGjmPpGc1APmdSDXD8tXdT-8db84",
-  "authDomain": "art-horizon.firebaseapp.com",
-  "databaseURL" : "https://console.firebase.google.com/u/0/project/art-horizon/firestore/data/~2F",
-  "projectId": "art-horizon",
-  "storageBucket": "art-horizon.appspot.com",
-  "messagingSenderId": "769245386612",
-  "appId": "1:769245386612:web:bf5ff758abd344bb457e21",
-  "measurementId": "G-Y8MPFXX6V8"
-}
-
-firebase = pyrebase.initialize_app(firebaseConfig)
-auth = firebase.auth()
-db = firebase.database()
-storage = firebase.storage()
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-@app.get("/fastapi/")
+origins = [
+    "http://localhost.tiangolo.com",
+    "https://localhost.tiangolo.com",
+    "http://localhost",
+    "http://localhost:8080",
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+class Style_transfer(BaseModel):
+    src1 : str
+
+
+
+@app.get("/")
 async def root():
     return {"message" : "Hello World"}
 
 @app.post("/medici/nst")
-async def nst(source1,source2):
-    source1 = "https://firebasestorage.googleapis.com/v0/b/art-horizon.appspot.com/o/Henri_Matisse_26.jpg?alt=media&token=123"
-    source2 = "https://firebasestorage.googleapis.com/v0/b/art-horizon.appspot.com/o/turtle.jpg?alt=media&token=123"
-    return {"image" : style_transfer(source1, source2)} 
+async def nst(file: UploadFile, style : Style_transfer):
+    return file,style
 
 
 @app.post("/medici/get_tag")
-async def tag_recommend(img):
+async def tag_recommend(img: UploadFile):
     return {"tag" : get_tag(img)}
 

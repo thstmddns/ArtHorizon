@@ -1,189 +1,140 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 import { getBookmarks } from "../../../redux/authSlice";
+
+import { authApi } from "../../../api/api";
 
 import ArtList from "./ArtList";
 
 const Arts = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [selectedTab, setSelectedTab] = useState("나의 아트");
+  const [myArts, setMyArts] = useState([]);
+  const [bookmarks, setBookmarks] = useState([]);
 
   useEffect(() => {
-    dispatch(getBookmarks());
-  }, [dispatch]);
+    // const fetchBookmarks = async () => {
+    //   try {
+    //     const { data } = await authApi.getBookmarks();
+    //     setBookmarks(data.bookmarkList);
+    //     console.log("data:", data);
+    //   } catch (error) {}
+    // };
+    // fetchBookmarks();
+    // dispatch(getBookmarks());
+  }, []);
 
-  switch (selectedTab) {
-    case "나의 아트":
-      console.log(selectedTab);
-      break;
+  const getMyArts = () => {
+    setSelectedTab("나의 아트");
+  };
 
-    case "북마크한 아트":
-      console.log(selectedTab);
-      break;
-    default:
-      break;
-  }
+  const getBookmarkArts = () => {
+    setSelectedTab("북마크한 아트");
+    const fetchBookmarks = async () => {
+      try {
+        const { data } = await authApi.getBookmarks();
+        setBookmarks(data.bookmarkList);
+        console.log("bookmarks data:", data);
+      } catch (error) {}
+    };
+    fetchBookmarks();
+  };
+
   return (
     <Wrapper>
       <Tabs>
         <Tab
           key={"1"}
           isSelected={"나의 아트" === selectedTab}
-          onClick={() => setSelectedTab("나의 아트")}
+          onClick={getMyArts}
         >
           나의 아트
         </Tab>
         <Tab
           key={"2"}
           isSelected={"북마크한 아트" === selectedTab}
-          onClick={() => setSelectedTab("북마크한 아트")}
+          onClick={getBookmarkArts}
         >
           북마크한 아트
         </Tab>
       </Tabs>
 
       {/* <ArtList /> */}
-      <section class="text-gray-600 body-font">
-        <div class="container px-5 pb-24 mx-auto">
-          {/* <div class="flex flex-col text-center w-full mb-20">
-            <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">
-              Master Cleanse Reliac Heirloom
-            </h1>
-            <p class="lg:w-2/3 mx-auto leading-relaxed text-base">
-              Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical
-              gentrify, subway tile poke farm-to-table. Franzen you probably
-              haven't heard of them man bun deep jianbing selfies heirloom.
-            </p>
-          </div> */}
-          <div class="flex flex-wrap -m-4">
-            <div class="xl:w-1/4 lg:w-1/3 sm:w-1/2 p-4 shadow-md">
-              <div class="flex relative">
-                <img
-                  alt="gallery"
-                  class="absolute inset-0 w-full h-full object-cover object-center"
-                  src="https://dummyimage.com/600x360"
-                />
-                <div class="px-8 py-10 relative z-10 w-full border-4 border-gray-200 bg-white opacity-0 hover:opacity-100">
-                  <h2 class="tracking-widest text-sm title-font font-medium text-blue-500 mb-1">
-                    THE SUBTITLE
-                  </h2>
-                  <h1 class="title-font text-lg font-medium text-gray-900 mb-3">
-                    Shooting Stars
-                  </h1>
-                  <p class="leading-relaxed">
-                    Photo booth fam kinfolk cold-pressed sriracha leggings
-                    jianbing microdosing tousled waistcoat.
-                  </p>
+      <section className="text-gray-600 body-font">
+        <div className="container px-5 pb-24 mx-auto">
+          <div className="flex flex-wrap -m-4 gap-2">
+            {selectedTab === "나의 아트" &&
+              myArts?.map((bookmark) => (
+                <div
+                  key={Math.random().toString()}
+                  className="shadow-md rounded mb-2 drop-shadow-md overflow-hidden relative cursor-pointer xl:w-1/4 lg:w-1/3 sm:w-1/2 p-4 shadow-md"
+                  onClick={() => navigate(`${bookmark.pieceSeq}`)}
+                >
+                  {/* 그림 */}
+                  <div
+                    className="absolute inset-0 bg-cover bg-center z-0"
+                    style={{
+                      backgroundImage: `url('https://source.unsplash.com/random/${bookmark.pieceSeq}x${bookmark.pieceSeq}')`,
+                    }}
+                  ></div>
+
+                  {/* 설명 */}
+                  <div className="opacity-0 hover:opacity-90 hover:bg-gray-900 ease-in-out duration-300 absolute inset-0 z-10 flex flex-col justify-center items-center">
+                    <div className="text-1xl text-white font-semibold mb-2">
+                      {bookmark.pieceArtistKr}
+                    </div>
+                    <div className="text-1xl text-white font-semibold">
+                      {bookmark.pieceTitleKr}
+                    </div>
+                  </div>
+                  <img
+                    alt="gallery"
+                    className="w-full h-full object-cover object-center rounded transition ease-in-out duration-300"
+                    // src={`https://source.unsplash.com/random/${parseInt(
+                    //   (Math.random() * (40 - 10) + 10) * 10
+                    // )}x${parseInt((Math.random() * (50 - 10) + 10) * 10)}`}
+                    src={`https://source.unsplash.com/random/${bookmark.pieceSeq}x${bookmark.pieceSeq}`}
+                  />
                 </div>
-              </div>
-            </div>
-            <div class="xl:w-1/4 lg:w-1/3 sm:w-1/2 p-4 shadow-md">
-              <div class="flex relative">
-                <img
-                  alt="gallery"
-                  class="absolute inset-0 w-full h-full object-cover object-center"
-                  src="https://dummyimage.com/601x361"
-                />
-                <div class="px-8 py-10 relative z-10 w-full border-4 border-gray-200 bg-white opacity-0 hover:opacity-100">
-                  <h2 class="tracking-widest text-sm title-font font-medium text-blue-500 mb-1">
-                    THE SUBTITLE
-                  </h2>
-                  <h1 class="title-font text-lg font-medium text-gray-900 mb-3">
-                    The Catalyzer
-                  </h1>
-                  <p class="leading-relaxed">
-                    Photo booth fam kinfolk cold-pressed sriracha leggings
-                    jianbing microdosing tousled waistcoat.
-                  </p>
+              ))}
+            {selectedTab === "북마크한 아트" &&
+              bookmarks?.map((bookmark) => (
+                <div
+                  key={Math.random().toString()}
+                  className="shadow-md rounded mb-2 drop-shadow-md overflow-hidden relative cursor-pointer xl:w-1/4 lg:w-1/3 sm:w-1/2 p-4 shadow-md"
+                  onClick={() => navigate(`${bookmark.pieceSeq}`)}
+                >
+                  {/* 그림 */}
+                  <div
+                    className="absolute inset-0 bg-cover bg-center z-0"
+                    style={{
+                      backgroundImage: `url('https://source.unsplash.com/random/${bookmark.pieceSeq}x${bookmark.pieceSeq}')`,
+                    }}
+                  ></div>
+
+                  {/* 설명 */}
+                  <div className="opacity-0 hover:opacity-90 hover:bg-gray-900 ease-in-out duration-300 absolute inset-0 z-10 flex flex-col justify-center items-center">
+                    <div className="text-1xl text-white font-semibold mb-2">
+                      {bookmark.pieceArtistKr}
+                    </div>
+                    <div className="text-1xl text-white font-semibold">
+                      {bookmark.pieceTitleKr}
+                    </div>
+                  </div>
+                  <img
+                    alt="gallery"
+                    className="w-full h-full object-cover object-center rounded transition ease-in-out duration-300"
+                    // src={`https://source.unsplash.com/random/${parseInt(
+                    //   (Math.random() * (40 - 10) + 10) * 10
+                    // )}x${parseInt((Math.random() * (50 - 10) + 10) * 10)}`}
+                    src={`https://source.unsplash.com/random/${bookmark.pieceSeq}x${bookmark.pieceSeq}`}
+                  />
                 </div>
-              </div>
-            </div>
-            <div class="xl:w-1/4 lg:w-1/3 sm:w-1/2 p-4 shadow-md">
-              <div class="flex relative">
-                <img
-                  alt="gallery"
-                  class="absolute inset-0 w-full h-full object-cover object-center"
-                  src="https://dummyimage.com/603x363"
-                />
-                <div class="px-8 py-10 relative z-10 w-full border-4 border-gray-200 bg-white opacity-0 hover:opacity-100">
-                  <h2 class="tracking-widest text-sm title-font font-medium text-blue-500 mb-1">
-                    THE SUBTITLE
-                  </h2>
-                  <h1 class="title-font text-lg font-medium text-gray-900 mb-3">
-                    The 400 Blows
-                  </h1>
-                  <p class="leading-relaxed">
-                    Photo booth fam kinfolk cold-pressed sriracha leggings
-                    jianbing microdosing tousled waistcoat.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="xl:w-1/4 lg:w-1/3 sm:w-1/2 p-4 shadow-md">
-              <div class="flex relative">
-                <img
-                  alt="gallery"
-                  class="absolute inset-0 w-full h-full object-cover object-center"
-                  src="https://dummyimage.com/602x362"
-                />
-                <div class="px-8 py-10 relative z-10 w-full border-4 border-gray-200 bg-white opacity-0 hover:opacity-100">
-                  <h2 class="tracking-widest text-sm title-font font-medium text-blue-500 mb-1">
-                    THE SUBTITLE
-                  </h2>
-                  <h1 class="title-font text-lg font-medium text-gray-900 mb-3">
-                    Neptune
-                  </h1>
-                  <p class="leading-relaxed">
-                    Photo booth fam kinfolk cold-pressed sriracha leggings
-                    jianbing microdosing tousled waistcoat.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="xl:w-1/4 lg:w-1/3 sm:w-1/2 p-4 shadow-md">
-              <div class="flex relative">
-                <img
-                  alt="gallery"
-                  class="absolute inset-0 w-full h-full object-cover object-center"
-                  src="https://dummyimage.com/605x365"
-                />
-                <div class="px-8 py-10 relative z-10 w-full border-4 border-gray-200 bg-white opacity-0 hover:opacity-100">
-                  <h2 class="tracking-widest text-sm title-font font-medium text-blue-500 mb-1">
-                    THE SUBTITLE
-                  </h2>
-                  <h1 class="title-font text-lg font-medium text-gray-900 mb-3">
-                    Holden Caulfield
-                  </h1>
-                  <p class="leading-relaxed">
-                    Photo booth fam kinfolk cold-pressed sriracha leggings
-                    jianbing microdosing tousled waistcoat.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="xl:w-1/4 lg:w-1/3 sm:w-1/2 p-4 shadow-md">
-              <div class="flex relative">
-                <img
-                  alt="gallery"
-                  class="absolute inset-0 w-full h-full object-cover object-center"
-                  src="https://dummyimage.com/606x366"
-                />
-                <div class="px-8 py-10 relative z-10 w-full border-4 border-gray-200 bg-white opacity-0 hover:opacity-100">
-                  <h2 class="tracking-widest text-sm title-font font-medium text-blue-500 mb-1">
-                    THE SUBTITLE
-                  </h2>
-                  <h1 class="title-font text-lg font-medium text-gray-900 mb-3">
-                    Alper Kamu
-                  </h1>
-                  <p class="leading-relaxed">
-                    Photo booth fam kinfolk cold-pressed sriracha leggings
-                    jianbing microdosing tousled waistcoat.
-                  </p>
-                </div>
-              </div>
-            </div>
+              ))}
           </div>
         </div>
       </section>

@@ -29,7 +29,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/api/game/**")
                 .excludePathPatterns("/api/service/notice")
                 .excludePathPatterns("/api/service/notice/**")
-                .excludePathPatterns("/api/file/read/**");
+                .excludePathPatterns("/api/my-file/read/**");
     }
 
     @Override

@@ -81,8 +81,10 @@ public class FileController {
             System.out.println("주소 가져오기");
             Path path = Paths.get(ORIGIN_PATH+fileRoot);
             System.out.println("주소 가져오기 성공");
-            String contentType = Files.probeContentType(path);;
+//            String contentType = Files.probeContentType(path);;
+            String contentType = "image/jpeg";
             System.out.println(path);
+
 
 //            System.out.println("리소스 접근");
 //            Resource resource = new InputStreamResource(Files.newInputStream(path));

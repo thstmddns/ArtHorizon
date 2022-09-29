@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 // import Main from "./pages/home/Home";
 import TailwindHome from "./pages/tailwind-home/TailwindHome";
+import TailwindPieces from "./pages/tailwind-pieces/TailwindPieces";
 import LogIn from "./pages/login/LogIn";
 import SignUp from "./pages/signup/SignUp";
 import MyPage from "./pages/mypage/MyPage";
@@ -45,7 +46,8 @@ const router = createBrowserRouter([
   },
   {
     path: "/pieces",
-    element: <Pieces />,
+    // element: <Pieces />,
+    element: <TailwindPieces />,
   },
   {
     path: "/piece/:pieceSeq",

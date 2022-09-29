@@ -74,3 +74,8 @@ export const authApi = {
   getFollowers: (targetUserSeq) =>
     api.get(`/users/followers/${targetUserSeq}?page=${1}`),
 };
+
+export const piecesApi = {
+  getPiecesRecent: (page) => api.get("/pieces/recent", { params: { page } }),
+  getPiecesPopular: (page) => api.get("/pieces/popular", { params: { page } }),
+};

@@ -1,5 +1,7 @@
 package com.ssafy.arthorizon.file;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ContentDisposition;
@@ -8,7 +10,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import sun.nio.ch.IOUtil;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -95,8 +101,22 @@ public class FileController {
             System.out.println("파일 접근 성공");
             System.out.println(file);
 
-            System.out.println("MockMultipartFile 생성");
+            System.out.println("바이트 단위로 리딩");
             byte[] content = Files.readAllBytes(path);
+            System.out.println(content);
+
+            System.out.println("이미지를 출력 (방법1)");
+            ByteArrayInputStream bis = new ByteArrayInputStream(content);
+            BufferedImage bufferedImage = ImageIO.read(bis);
+            System.out.println(bufferedImage);
+
+            System.out.println("이미지를 출력 (방법2)");
+            byte[] byteEnc64 = Base64.encodeBase64(content);
+            String imgStr = new String(byteEnc64, "UTF-8");
+            System.out.println(imgStr);
+
+            System.out.println("이미지를 출력 (방법3, 현재 적용)");
+            byte[] media = IOUtils.toByteArray(bis);
 
             System.out.println("헤더 작성");
             HttpHeaders headers = new HttpHeaders();
@@ -104,12 +124,14 @@ public class FileController {
             headers.add(HttpHeaders.CONTENT_TYPE, contentType);
             System.out.println("헤더 작성 성공");
 
+
+
             // 헤더가 없으면 조회만 되구
             // 헤더가 있으면 다운로드가? 된다?
 
             System.out.println("반환");
 //            return new ResponseEntity<>(file, headers, HttpStatus.OK);
-            return new ResponseEntity<>(new File(String.valueOf(path)), headers, HttpStatus.OK);
+            return new ResponseEntity<>(media, headers, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(FAILURE,HttpStatus.BAD_REQUEST);
         }

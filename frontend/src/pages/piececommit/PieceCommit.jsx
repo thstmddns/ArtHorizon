@@ -56,9 +56,7 @@ const PieceCommit = () => {
     setTags(tagArr);
   };
 
-  const submitPiece = () => {
-    
-  }
+  const submitPiece = () => {};
 
   return (
     <div>
@@ -73,6 +71,7 @@ const PieceCommit = () => {
         <ButtonWrapper>
           <ImgInput
             type="file"
+            accept="image/png"
             ref={ImageInput}
             onChange={(e) => updateImg(e.target.files[0])}
           />
@@ -147,7 +146,9 @@ const PieceCommit = () => {
         </TagContainer>
         <hr />
         <br />
-        <BlueButton type="submit" onClick={submitPiece} >아트 등록하기</BlueButton>
+        <BlueButton type="submit" onClick={submitPiece}>
+          아트 등록하기
+        </BlueButton>
         <WhiteButton>목록으로</WhiteButton>
       </ItemContainer>
     </div>

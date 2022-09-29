@@ -16,6 +16,8 @@ import TailwindMyPage from "./pages/tailwind-mypage/TailwindMyPage";
 
 import GlobalStyle from "./GlobalStyle";
 import PieceCommit from "./pages/piececommit/PieceCommit";
+import StyleTransfer from "./pages/styletransfer/StyleTransfer";
+import Scent from "./pages/scent/Scent";
 
 const router = createBrowserRouter([
   {
@@ -60,6 +62,14 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <PieceCommit />,
+  },
+  {
+    path: "/styletransfer",
+    element: <StyleTransfer />,
+  },
+  {
+    path: "/scent",
+    element: <Scent />,
   },
 ]);
 

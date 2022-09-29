@@ -20,7 +20,7 @@ public class FileController {
 
     private final String SUCCESS = "SUCCESS";
     private final String FAILURE = "FAILURE";
-    private final String ORIGIN_PATH = "/images/";
+    private final String ORIGIN_PATH = "http://j7d201.p.ssafy.io/images/";
 //private final String ORIGIN_PATH = "C:/";
 
     private final FileService fileService;

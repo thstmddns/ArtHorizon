@@ -2,35 +2,83 @@ import React from "react";
 import { useRef } from "react";
 import { useState } from "react";
 import styled from "styled-components";
-import { Container, Row, Col } from "react-grid-system";
+import { Row, Col } from "react-grid-system";
 import { VscChromeClose } from "react-icons/vsc";
 
 import NavigationBar from "../../components/NavigationBar";
 import Input from "../../components/input/Input";
 import Button from "../../components/Button";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { getUser } from "../../redux/authSlice";
 
 const PieceCommit = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { mySeq: userSeq } = useSelector((state) => state.auth);
+
   const [newArt, setNewArt] = useState("");
+  const [artTitle, setArtTitle] = useState("");
+  const [artContent, setArtContent] = useState("");
+  const [pieceImg, setPieceImg] = useState("");
+  const [uploadArt, setUploadArt] = useState(null);
   const [price, setPrice] = useState(0);
   const [tags, setTags] = useState([]);
   const [newTag, setNewTag] = useState("");
+  const [scent, setScent] = useState("");
 
+  const [base64, setBase64] = useState(null);
+
+  useEffect(() => {
+    dispatch(getUser());
+  }, [dispatch]);
   const ImageInput = useRef();
+
+  const token = localStorage.getItem("access-token").slice(4);
 
   const handleChange = () => {
     ImageInput.current.click();
   };
 
   const updateImg = (file) => {
-    // console.log(file);
+    console.log(file);
+    setUploadArt(file);
+    setTags([]);
+
+    // base64형식 파일 만들기
     const reader = new FileReader();
     reader.readAsDataURL(file);
     return new Promise((resolve) => {
       reader.onload = () => {
-        setNewArt(reader.result);
+        const encode = reader.result;
+        setNewArt(encode);
+        const byteString = atob(encode.split(",")[1]);
+        const ab = new ArrayBuffer(byteString.length);
+        const ia = new Uint8Array(ab);
+        for (let i = 0; i < byteString.length; i++) {
+          ia[i] = byteString.charCodeAt(i);
+        }
+        const blob = new Blob([ia], {
+          type: "image/jpeg",
+        });
+        const file = new File([blob], "image.jpg");
+
+        const formData = new FormData();
+        formData.append("img", file);
+        setBase64(formData);
         resolve();
       };
     });
+  };
+
+  const updateArtTitle = (title) => {
+    setArtTitle(title);
+  };
+
+  const updateArtContent = (content) => {
+    setArtContent(content);
   };
 
   const updatePrice = (newPrice) => {
@@ -49,6 +97,21 @@ const PieceCommit = () => {
     setTags(tagArr);
   };
 
+  const tagRecommend = () => {
+    console.log(newArt);
+    const url = "http://127.0.0.1:8000/medici/detection";
+    const config = {
+      Headers: {
+        "content-type": "multipart/form-data",
+      },
+    };
+    axios.post(url, base64, config).then((res) => {
+      const aiRecommend = res.data.tag;
+      console.log(aiRecommend);
+      setTags((preState) => preState.concat(aiRecommend));
+    });
+  };
+
   const deleteTag = (index) => {
     console.log(index);
     let tagArr = [...tags];
@@ -56,7 +119,71 @@ const PieceCommit = () => {
     setTags(tagArr);
   };
 
-  const submitPiece = () => {};
+  const submitPiece = () => {
+    // 먼저 사진을 보내서 향을 받아오고
+    // 이후 먼저 사진을 보내고 pieceImg를 받고 <= 여기서 이제 토큰을 가져와야하는데 어디서 가져옴? <= 해결
+    // 마지막으로 pieceTitleKr, pieceDesc, pieceImg, pieceTag, pieceScent를 JSON으로 보내기
+    try {
+      const formData1 = new FormData();
+      const formData2 = new FormData();
+      formData1.append("UploadFile", uploadArt);
+      formData2.append("multipartFile", uploadArt);
+      const url1 = "http://localhost:3000/medici/get_tag";
+      const url2 = "http://j7d201.p.ssafy.io/api/my-file/user-art";
+      const url3 = "http://j7d201.p.ssafy.io/api/user-art";
+
+      const config1 = {
+        Headers: {
+          "content-type": "multipart/form-data",
+        },
+      };
+
+      axios
+        .post(url1, formData1, config1)
+        .then((res) => {
+          console.log(res.data);
+          setScent(res.data);
+
+          const config2 = {
+            Headers: {
+              jwt: token,
+              "content-type": "multipart/form-data",
+            },
+          };
+          axios
+            .post(url2, formData2, config2)
+            .then((res) => {
+              setPieceImg(res);
+              const tagString = tags.join();
+              const data = {
+                pieceTitleKr: artTitle,
+                pieceTitleEn: "",
+                pieceDesc: artContent,
+                pieceImg: pieceImg,
+                pieceTag: tagString,
+                pieceScent: scent,
+                piecePrice: price,
+              };
+              const config3 = {
+                Headers: {
+                  jwt: token,
+                  "content-type": "application/json",
+                },
+              };
+              axios.post(url3, JSON.stringify(data), config3).then((res) => {
+                console.log(res);
+                navigate(`/mypage/${userSeq}`);
+              });
+            })
+            .catch((err) => console.error(err));
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } catch {
+      console.error("오류가 발생했습니다");
+    }
+  };
 
   return (
     <div>
@@ -71,16 +198,22 @@ const PieceCommit = () => {
         <ButtonWrapper>
           <ImgInput
             type="file"
-            accept="image/png"
+            accept="image/jpeg"
             ref={ImageInput}
             onChange={(e) => updateImg(e.target.files[0])}
           />
           <BringButton onClick={handleChange}>아트 업로드</BringButton>
         </ButtonWrapper>
         <RegistItem>제목</RegistItem>
-        <TitleInput placeholder="제목을 입력해주세요" />
+        <TitleInput
+          onChange={(e) => updateArtTitle(e.target.value)}
+          placeholder="제목을 입력해주세요"
+        />
         <RegistItem>아트 설명</RegistItem>
-        <ArtTextInput placeholder="설명을 입력해주세요" />
+        <ArtTextInput
+          onChange={(e) => updateArtContent(e.target.value)}
+          placeholder="설명을 입력해주세요"
+        />
         <RegistItem>판매 여부</RegistItem>
         <Allow>
           {/* 스위치 안에 허용/거부 넣으면 될듯 */}
@@ -104,7 +237,7 @@ const PieceCommit = () => {
           <BlueButton onClick={onAddTag} value={newTag} name={newTag}>
             태그 추가
           </BlueButton>
-          <WhiteButton>태그 추천받기</WhiteButton>
+          <WhiteButton onClick={tagRecommend}>태그 추천받기</WhiteButton>
         </TagWrapper>
         <TagContainer>
           <Row>
@@ -146,9 +279,7 @@ const PieceCommit = () => {
         </TagContainer>
         <hr />
         <br />
-        <BlueButton type="submit" onClick={submitPiece}>
-          아트 등록하기
-        </BlueButton>
+        <BlueButton onClick={submitPiece}>아트 등록하기</BlueButton>
         <WhiteButton>목록으로</WhiteButton>
       </ItemContainer>
     </div>

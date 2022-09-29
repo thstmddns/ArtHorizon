@@ -53,7 +53,7 @@ const TailStyleTransfer = () => {
             <input
               className="hidden"
               type="file"
-              accept="image/jpg"
+              accept="image/jpeg"
               ref={targetInput}
               onChange={(e) => updateTarget(e.target.files[0])}
             />

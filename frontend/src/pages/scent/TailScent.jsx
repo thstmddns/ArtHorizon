@@ -43,6 +43,7 @@ const TailScent = () => {
           <input
             className="hidden"
             type="file"
+            accept="image/jpeg"
             ref={ImageInput}
             onChange={(e) => updateImg(e.target.files[0])}
           />

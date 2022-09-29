@@ -11,10 +11,10 @@ import java.util.Date;
 public class FileService {
 
     private final String ROOT_PROFILE = "profiles/";
-    private final String ROOT_USERART = "userArts/";
+//    private final String ROOT_USERART = "userArts/";
 
 //    private final String ROOT_PROFILE = "C:/";
-//    private final String ROOT_USERART = "C:/";
+    private final String ROOT_USERART = "C:/";
 
     // 파일 쓰기
     // 파일 이름을 보내주면 경로를 알아서 치겠습니다

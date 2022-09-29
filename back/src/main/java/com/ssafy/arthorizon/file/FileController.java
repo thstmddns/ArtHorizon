@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -83,10 +84,15 @@ public class FileController {
             String contentType = "image/jpg";
             System.out.println(path);
 
-            System.out.println("리소스 접근");
-            Resource resource = new InputStreamResource(Files.newInputStream(path));
-            System.out.println("리소스 접근 성공");
-            System.out.println(resource);
+//            System.out.println("리소스 접근");
+//            Resource resource = new InputStreamResource(Files.newInputStream(path));
+//            System.out.println("리소스 접근 성공");
+//            System.out.println(resource);
+
+            System.out.println("파일 접근");
+            File file = new File(String.valueOf(path));
+            System.out.println("파일 접근 성공");
+            System.out.println(file);
 
             System.out.println("헤더 작성");
             HttpHeaders headers = new HttpHeaders();
@@ -98,7 +104,7 @@ public class FileController {
             // 헤더가 있으면 다운로드가? 된다?
 
             System.out.println("반환");
-            return new ResponseEntity<>(resource, headers, HttpStatus.OK);
+            return new ResponseEntity<>(file, headers, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(FAILURE,HttpStatus.BAD_REQUEST);
         }

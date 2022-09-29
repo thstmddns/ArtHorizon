@@ -6,9 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -71,30 +69,36 @@ public class FileController {
 
     // 파일 읽어주기
     @GetMapping("/read/{fileRoot}")
-    public ResponseEntity<?> imageRead(@PathVariable String fileRoot){
+    public ResponseEntity<?> imageRead(@PathVariable String fileRoot) throws IOException {
         System.out.println("프로세스 시작");
 
+        System.out.println("파일인풋스트림 생성");
+        System.out.println("목표 주소 : "+ORIGIN_PATH+fileRoot);
+        InputStream inputStream = new FileInputStream(ORIGIN_PATH+fileRoot);
+        System.out.println("파일인풋스트림 생성 성공, IOUtils 접근");
+        byte[] imageByteArray = IOUtils.toByteArray(inputStream);
+        System.out.println("toByteArray성공");
+        inputStream.close();
+
         try {
-            System.out.println("주소 가져오기");
-            Path path = Paths.get(ORIGIN_PATH+fileRoot);
-            System.out.println("주소 가져오기 성공");
-//            String contentType = Files.probeContentType(path);
-            String contentType = "image/jpeg";
-            System.out.println(path);
+//            System.out.println("주소 가져오기");
+//            Path path = Paths.get(ORIGIN_PATH+fileRoot);
+//            System.out.println("주소 가져오기 성공");
+////            String contentType = Files.probeContentType(path);
+//            String contentType = "image/jpeg";
+//            System.out.println(path);
+//
+////            System.out.println("리소스 접근");
+////            Resource resource = new InputStreamResource(Files.newInputStream(path));
+////            System.out.println("리소스 접근 성공");
+////            System.out.println(resource);
+//
+//            System.out.println("파일 접근");
+//            File file = new File(String.valueOf(path));
+//            System.out.println("파일 접근 성공");
+//            System.out.println(file);
 
-//            System.out.println("리소스 접근");
-//            Resource resource = new InputStreamResource(Files.newInputStream(path));
-//            System.out.println("리소스 접근 성공");
-//            System.out.println(resource);
 
-            System.out.println("파일 접근");
-            File file = new File(String.valueOf(path));
-            System.out.println("파일 접근 성공");
-            System.out.println(file);
-
-            InputStream inputStream = new FileInputStream(ORIGIN_PATH+fileRoot);
-            byte[] imageByteArray = IOUtils.toByteArray(inputStream);
-            inputStream.close();
 
 //            System.out.println("바이트 단위로 리딩");
 //            byte[] content = Files.readAllBytes(path);

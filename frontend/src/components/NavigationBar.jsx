@@ -1,17 +1,11 @@
 import React from "react";
-import { Link, redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import Art_Horzion_Logo from "../assets/images/Art_Horizon_Logo.png";
 
 const NavigationBar = () => {
-  const goHelp = () => {
-    return redirect("/help");
-  };
-
-  const goMyPage = () => {
-    return redirect("/mypage");
-  };
+  const Logout = () => {};
 
   return (
     <Container>
@@ -28,8 +22,7 @@ const NavigationBar = () => {
         <NoneLink to="/help">고객센터</NoneLink>
       </ServiceList>
       <RightUser>
-        {/* 유저 관련 아이콘 */}
-        <div onClick={goMyPage}>user</div>
+        <div>여기 드롭박스 들어올 자리</div>
       </RightUser>
     </Container>
   );

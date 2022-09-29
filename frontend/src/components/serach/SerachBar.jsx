@@ -44,13 +44,7 @@ const SearchBar = () => {
   return (
     <Container>
       <SearchWrapperDif>
-        <DropDown>
-          <DropDownButton>Choose One</DropDownButton>
-          <DropDownContent>
-            <DropDownItem>제목</DropDownItem>
-            <DropDownItem>작가이름</DropDownItem>
-          </DropDownContent>
-        </DropDown>
+        <div>여기 검색 타입 넣는 자리</div>
         <ClearInput
           type="text"
           id="search"
@@ -79,39 +73,13 @@ const Container = styled.div`
 
 const SearchWrapperDif = styled(SearchWrapper)`
   padding: 5px 0;
-`;
-
-const DropDown = styled.div`
-  width: auto;
-  margin: 0;
-`;
-
-const DropDownButton = styled.div`
-  padding: 10px;
-  display: flex;
-  align-items: center;
-`;
-
-const DropDownContent = styled.div`
-  position: absolute;
-  top: 15%;
-  padding: 15px;
-  left: 39%;
-  background: #f5f5f5;
-`;
-
-const DropDownItem = styled.div`
-padding 10px;
-transition: all 0.2s;
-cursor: pointer;
-&:hover{
-  background: #fcfcfc;
-}
+  width: 600px;
 `;
 
 const ClearInput = styled(Input)`
   border: none;
   background: transparent;
+  width: 400px;
 `;
 
 const Startsearch = styled.div``;

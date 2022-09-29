@@ -81,10 +81,9 @@ public class FileController {
             System.out.println("주소 가져오기");
             Path path = Paths.get(ORIGIN_PATH+fileRoot);
             System.out.println("주소 가져오기 성공");
-//            String contentType = Files.probeContentType(path);;
+//            String contentType = Files.probeContentType(path);
             String contentType = "image/jpeg";
             System.out.println(path);
-
 
 //            System.out.println("리소스 접근");
 //            Resource resource = new InputStreamResource(Files.newInputStream(path));
@@ -96,6 +95,9 @@ public class FileController {
             System.out.println("파일 접근 성공");
             System.out.println(file);
 
+            System.out.println("MockMultipartFile 생성");
+            byte[] content = Files.readAllBytes(path);
+
             System.out.println("헤더 작성");
             HttpHeaders headers = new HttpHeaders();
             headers.setContentDisposition(ContentDisposition.builder("attachment").filename(fileRoot, StandardCharsets.UTF_8).build());
@@ -106,7 +108,8 @@ public class FileController {
             // 헤더가 있으면 다운로드가? 된다?
 
             System.out.println("반환");
-            return new ResponseEntity<>(file, headers, HttpStatus.OK);
+//            return new ResponseEntity<>(file, headers, HttpStatus.OK);
+            return new ResponseEntity<>(new File(String.valueOf(path)), headers, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(FAILURE,HttpStatus.BAD_REQUEST);
         }

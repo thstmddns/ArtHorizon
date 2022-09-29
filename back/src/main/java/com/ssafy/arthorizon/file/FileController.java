@@ -15,7 +15,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @RestController
-@RequestMapping("/api/file")
+@RequestMapping("/api/my-file")
 public class FileController {
 
     private final String SUCCESS = "SUCCESS";

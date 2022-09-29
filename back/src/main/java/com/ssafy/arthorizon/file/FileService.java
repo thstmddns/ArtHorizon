@@ -29,9 +29,9 @@ public class FileService {
             long now = new Date().getTime();
 
             if(fileType.equals("profile")){
-                fileName = ROOT_PROFILE + now + multipartFile.getOriginalFilename();
+                fileName = ROOT_PROFILE + now;
             } else{
-                fileName = ROOT_USERART + now + multipartFile.getOriginalFilename();
+                fileName = ROOT_USERART + now;
             }
 
             // 밖으로 내보낼 아웃풋스트림을 만들고

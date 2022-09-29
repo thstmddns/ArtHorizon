@@ -1,16 +1,27 @@
 package com.ssafy.arthorizon.file;
 
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 @RestController
-@RequestMapping("file")
+@RequestMapping("/api/file")
 public class FileController {
 
     private final String SUCCESS = "SUCCESS";
     private final String FAILURE = "FAILURE";
+//    private final String ORIGIN_PATH = "/home/ubuntu/Medici_data/images/";
+private final String ORIGIN_PATH = "C:/";
 
     private final FileService fileService;
 
@@ -59,4 +70,31 @@ public class FileController {
 
         }
     }
+
+    // 파일 읽어주기
+    @GetMapping("/read/{fileRoot}")
+    public ResponseEntity<?> imageRead(@PathVariable String fileRoot){
+        try {
+            Path path = Paths.get(ORIGIN_PATH+fileRoot);
+            String contentType = "image/jpg";
+            System.out.println(path);
+
+            Resource resource = new InputStreamResource(Files.newInputStream(path));
+            System.out.println(resource);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentDisposition(ContentDisposition.builder("attachment").filename(fileRoot, StandardCharsets.UTF_8).build());
+            headers.add(HttpHeaders.CONTENT_TYPE, contentType);
+
+            // 헤더가 없으면 조회만 되구
+            // 헤더가 있으면 다운로드가? 된다?
+
+            return new ResponseEntity<>(resource, headers, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(FAILURE,HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+
 }

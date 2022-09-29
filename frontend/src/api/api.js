@@ -73,9 +73,12 @@ export const authApi = {
   unfollow: (targetUserSeq) => api.delete(`/users/follow/${targetUserSeq}`),
   getFollowers: (targetUserSeq) =>
     api.get(`/users/followers/${targetUserSeq}?page=${1}`),
+  setBookmark: (pieceSeq) => api.post(`/users/bookmark/${pieceSeq}`),
+  deleteBookmark: (pieceSeq) => api.delete(`/users/bookmark/${pieceSeq}`),
 };
 
 export const piecesApi = {
   getPiecesRecent: (page) => api.get("/pieces/recent", { params: { page } }),
   getPiecesPopular: (page) => api.get("/pieces/popular", { params: { page } }),
+  getPieceDetail: (pieceSeq) => api.get(`/pieces/${pieceSeq}`),
 };

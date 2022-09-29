@@ -20,7 +20,7 @@ public class FileController {
 
     private final String SUCCESS = "SUCCESS";
     private final String FAILURE = "FAILURE";
-    private final String ORIGIN_PATH = "http://j7d201.p.ssafy.io/images/";
+    private final String ORIGIN_PATH = "/home/ubuntu/Medici_data/images/";
 //private final String ORIGIN_PATH = "C:/";
 
     private final FileService fileService;
@@ -74,21 +74,30 @@ public class FileController {
     // 파일 읽어주기
     @GetMapping("/read/{fileRoot}")
     public ResponseEntity<?> imageRead(@PathVariable String fileRoot){
+        System.out.println("프로세스 시작");
+
         try {
+            System.out.println("주소 가져오기");
             Path path = Paths.get(ORIGIN_PATH+fileRoot);
+            System.out.println("주소 가져오기 성공");
             String contentType = "image/jpg";
             System.out.println(path);
 
+            System.out.println("리소스 접근");
             Resource resource = new InputStreamResource(Files.newInputStream(path));
+            System.out.println("리소스 접근 성공");
             System.out.println(resource);
 
+            System.out.println("헤더 작성");
             HttpHeaders headers = new HttpHeaders();
             headers.setContentDisposition(ContentDisposition.builder("attachment").filename(fileRoot, StandardCharsets.UTF_8).build());
             headers.add(HttpHeaders.CONTENT_TYPE, contentType);
+            System.out.println("헤더 작성 성공");
 
             // 헤더가 없으면 조회만 되구
             // 헤더가 있으면 다운로드가? 된다?
 
+            System.out.println("반환");
             return new ResponseEntity<>(resource, headers, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(FAILURE,HttpStatus.BAD_REQUEST);

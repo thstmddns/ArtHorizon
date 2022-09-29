@@ -62,6 +62,6 @@ async def tag_recommend(img: UploadFile):
 
 
 @app.post("/medici/detection")
-async def objectdetection(img: UploadFile):
-
+async def objectdetection(img: bytes = File()):
+    img = io.BytesIO(img)
     return{"tag" : detection(img)}

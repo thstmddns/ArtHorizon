@@ -74,7 +74,7 @@ public class FileController {
 
         System.out.println("파일인풋스트림 생성");
         System.out.println("목표 주소 : "+ORIGIN_PATH+fileRoot);
-        InputStream inputStream = new FileInputStream(ORIGIN_PATH+fileRoot);
+        InputStream inputStream = new FileInputStream("/back/images/erd.PNG");
         System.out.println("파일인풋스트림 생성 성공, IOUtils 접근");
         byte[] imageByteArray = IOUtils.toByteArray(inputStream);
         System.out.println("toByteArray성공");

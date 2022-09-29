@@ -1,16 +1,12 @@
 package com.ssafy.arthorizon.file;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.tomcat.util.codec.binary.Base64;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.core.io.Resource;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import sun.nio.ch.IOUtil;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -115,9 +111,6 @@ public class FileController {
             String imgStr = new String(byteEnc64, "UTF-8");
             System.out.println(imgStr);
 
-            System.out.println("이미지를 출력 (방법3, 현재 적용)");
-            byte[] media = IOUtils.toByteArray(bis);
-
             System.out.println("헤더 작성");
             HttpHeaders headers = new HttpHeaders();
             headers.setContentDisposition(ContentDisposition.builder("attachment").filename(fileRoot, StandardCharsets.UTF_8).build());
@@ -131,7 +124,7 @@ public class FileController {
 
             System.out.println("반환");
 //            return new ResponseEntity<>(file, headers, HttpStatus.OK);
-            return new ResponseEntity<>(media, headers, HttpStatus.OK);
+            return new ResponseEntity<>(content, headers, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(FAILURE,HttpStatus.BAD_REQUEST);
         }

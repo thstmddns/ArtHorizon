@@ -20,8 +20,8 @@ public class FileController {
 
     private final String SUCCESS = "SUCCESS";
     private final String FAILURE = "FAILURE";
-//    private final String ORIGIN_PATH = "/home/ubuntu/Medici_data/images/";
-private final String ORIGIN_PATH = "C:/";
+    private final String ORIGIN_PATH = "/home/ubuntu/Medici_data/images/";
+//private final String ORIGIN_PATH = "C:/";
 
     private final FileService fileService;
 

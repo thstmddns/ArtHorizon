@@ -5,7 +5,7 @@ import NavBar from "../../components/NavBar";
 import Info from "./components/Info";
 import Arts from "./components/Arts";
 
-const TailwindMyPage = () => {
+const Mypage = () => {
   return (
     <React.Fragment>
       <NavBar />
@@ -19,7 +19,7 @@ const TailwindMyPage = () => {
   );
 };
 
-export default TailwindMyPage;
+export default Mypage;
 
 const Container = styled.div`
   width: 100%;

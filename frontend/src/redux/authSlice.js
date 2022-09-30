@@ -109,19 +109,6 @@ export const changeType = createAsyncThunk(
   }
 );
 
-export const getBookmarks = createAsyncThunk(
-  "authSlice/getBookmarks",
-  async (_, { rejectWithValue }) => {
-    try {
-      const res = await authApi.getBookmarks();
-      console.log(res);
-    } catch (error) {
-      console.error(error);
-      return rejectWithValue(JSON.parse(error.response));
-    }
-  }
-);
-
 const authSlice = createSlice({
   name: "auth",
   initialState,

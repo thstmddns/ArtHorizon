@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const StyleTransfer = () => {
   return (
-    <section className="text-gray-600 body-font border-solid border-gray-50 border-b-2 bg-gray-50">
+    <section className="text-gray-600 body-font border-solid border-gray-50 border-b-2">
       <div className="container px-5 py-48 mx-auto">
         {/* 스타일 트랜스퍼 헤더 */}
         <div className="text-center mb-20">
@@ -95,7 +95,7 @@ const StyleTransfer = () => {
             </div>
           </div>
         </div>
-        <button className="flex mx-auto mt-16 text-white bg-sky-400 border-0 py-2 px-8 focus:outline-none hover:bg-sky-500 active:bg-sky-600 focus:ring focus:ring-sky-300 rounded text-lg transition">
+        <button className="flex mx-auto mt-16 text-white bg-sky-400 border-0 py-2 px-8 focus:outline-none hover:bg-sky-500 active:bg-sky-600 focus:ring focus:ring-sky-300 rounded-lg text-lg transition">
           지금 바로 시작하기!
         </button>
       </div>

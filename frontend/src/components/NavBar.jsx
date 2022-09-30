@@ -69,13 +69,13 @@ const NavBar = () => {
           <div>
             <button
               onClick={() => navigate(`/mypage/${userSeq}`)}
-              className="inline-flex items-center text-amber-500 border-0 py-1 px-3 focus:outline-none hover:text-aber-700 hover:bg-amber-50 hover:drop-shadow-md rounded text-base mt-4 md:mt-0 mr-1 transition"
+              className="inline-flex items-center text-amber-500 py-1 px-3 border-amber-300 focus:outline-none hover:text-white hover:bg-amber-500 hover:drop-shadow-md border border-white hover:border hover:border-amber-200 rounded-lg text-base mt-4 md:mt-0 mr-1 transition"
             >
               {myNickname}
             </button>
             <button
               onClick={() => dispatch(logout())}
-              className="inline-flex items-center bg-zinc-700 text-white border-0 py-1 px-3 focus:outline-none hover:bg-zinc-900 hover:text-zinc-100 hover:drop-shadow-md rounded text-base mt-4 md:mt-0 transition"
+              className="inline-flex items-center bg-sky-700 text-white py-1 px-3 focus:outline-none hover:bg-sky-900 hover:drop-shadow-md rounded-lg text-base mt-4 md:mt-0 transition"
             >
               로그아웃
             </button>

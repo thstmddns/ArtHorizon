@@ -40,7 +40,7 @@ const Intro = () => {
         </div>
 
         <button
-          className="flex mx-auto mt-16 text-white bg-amber-400 border-0 py-4 px-12 focus:outline-none hover:bg-amber-500 active:bg-amber-600 focus:ring focus:ring-amber-300 hover:drop-shadow-md rounded text-xl font-bold transition"
+          className="flex mx-auto mt-16 text-white bg-amber-400 border-0 py-4 px-12 focus:outline-none hover:bg-amber-500 active:bg-amber-600 focus:ring focus:ring-amber-300 hover:drop-shadow-md rounded-lg text-xl font-bold transition"
           onClick={() => navigate("/pieces")}
         >
           원하는 그림 검색하기

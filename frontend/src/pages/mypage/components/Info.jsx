@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -65,143 +64,68 @@ const Info = () => {
   };
 
   return (
-    <Wrapper>
-      <ImageBox>{/* <img /> */}</ImageBox>
+    <div className="flex justify-between border-solid border-b border-gray-200 pb-14 mb-14">
+      <div className="flex ">
+        {/* 프사 */}
+        <div className="w-40 h-40 bg-gray-100 rounded-3xl border-solid border border-gray-200 drop-shadow-md mr-8"></div>
 
-      <ContentBox>
-        <Row>
-          <Nickname>{nickname}</Nickname>
-          <Classification>{userType === "A" ? "화가" : "일반"}</Classification>
-        </Row>
-        <Row>
-          <Email>{email}</Email>
-        </Row>
-        <Row>
-          <Col>나의 그림 {numOfArts}</Col>
-          <Col>팔로워 {numOfFollowers}</Col>
-          <Col>팔로잉 {numOfFollowings}</Col>
-        </Row>
-      </ContentBox>
+        {/* 정보 */}
+        <div className="flex flex-col mt-5">
+          <div className="flex mb-5">
+            <div className="font-bold text-3xl mr-2">{nickname}</div>
+            <div className="text-sky-500 font-bold mt-1">
+              {userType === "A" ? "화가" : "일반"}
+            </div>
+          </div>
+          <div className="mb-5">
+            <div className="text-gray-500">{email}</div>
+          </div>
+          <div className="flex">
+            <div className="flex mr-4">
+              <div className="mr-1">나의 작품</div>
+              <div className="font-bold">{numOfArts}</div>
+            </div>
+            <div className="flex mr-4">
+              <div className="mr-1">팔로워</div>
+              <div className="font-bold">{numOfFollowers}</div>
+            </div>
+            <div className="flex mr-4">
+              <div className="mr-1">팔로잉</div>
+              <div className="font-bold">{numOfFollowings}</div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-      {isMine && (
-        <SecondaryButton onClick={() => navigate("/usermodify")}>
-          프로필 수정
-        </SecondaryButton>
-      )}
-      {!isMine && !isFollowed && (
-        <PrimaryButton onClick={followHandler}>팔로우</PrimaryButton>
-      )}
-      {!isMine && isFollowed && (
-        <SecondaryButton onClick={unfollowHandler}>팔로우 해제</SecondaryButton>
-      )}
-    </Wrapper>
+      {/* 버튼 */}
+      <div className="mt-5">
+        {isMine && (
+          <button
+            onClick={() => navigate("/usermodify")}
+            className="inline-flex items-center text-amber-500 py-3 px-8 border-amber-500 focus:outline-none hover:text-white hover:bg-amber-500 hover:drop-shadow-md border border-white hover:border hover:border-amber-200 rounded-lg transition"
+          >
+            프로필 수정
+          </button>
+        )}
+        {!isMine && !isFollowed && (
+          <button
+            onClick={followHandler}
+            className="py-3 px-8 text-white bg-sky-400 border-sky-400 focus:ring-4 focus:ring-sky-300 hover:bg-sky-500 hover:drop-shadow-md border border-white rounded-lg transition"
+          >
+            팔로우
+          </button>
+        )}
+        {!isMine && isFollowed && (
+          <button
+            onClick={unfollowHandler}
+            className="py-3 px-8 text-sky-400 bg-white border-sky-400 focus:ring-4 focus:ring-sky-300 hover:bg-sky-400 hover:text-white hover:drop-shadow-md border border-white rounded-lg transition"
+          >
+            팔로우 해제
+          </button>
+        )}
+      </div>
+    </div>
   );
 };
 
 export default Info;
-
-const Wrapper = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
-  padding-bottom: 30px;
-  margin-bottom: 30px;
-  border-bottom: 1px solid #d9dee4;
-`;
-
-const ImageBox = styled.div`
-  width: 150px;
-  height: 150px;
-  border-radius: 50px;
-  border: 1px solid #888383;
-  margin-right: 50px;
-  background-color: #f5f5f5;
-`;
-
-const ContentBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  // background-color: wheat;
-`;
-
-const Row = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
-`;
-
-const Nickname = styled.h1`
-  font-size: 2rem;
-  font-weight: bold;
-  margin-top: 20px;
-  margin-right: 10px;
-`;
-
-const Classification = styled.div`
-  color: #6cb6e1;
-  margin-top: 20px;
-`;
-
-const Email = styled.div``;
-
-const Col = styled.div`
-  margin-right: 20px;
-`;
-
-// const Button = styled.button`
-//   cursor: pointer;
-//   background-color: #88c4e6;
-//   border: 1px solid #6cb6e1;
-//   border-radius: 10px;
-//   color: #ffffff;
-//   width: 15rem;
-//   height: 45px;
-//   font-size: 1.2rem;
-//   font-weight: bold;
-//   margin-top: 10px;
-//   margin-bottom: 30px;
-//   &:hover {
-//     background-color: #6cb6e1;
-//     border: 1px solid #88c4e6;
-//   }
-//   margin-left: auto;
-// `;
-
-const PrimaryButton = styled.button`
-  cursor: pointer;
-  background-color: #88c4e6;
-  border: 1px solid #6cb6e1;
-  border-radius: 10px;
-  color: #ffffff;
-  width: 15rem;
-  height: 45px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-top: 10px;
-  margin-bottom: 30px;
-  &:hover {
-    background-color: #6cb6e1;
-    border: 1px solid #88c4e6;
-  }
-  margin-left: auto;
-`;
-
-const SecondaryButton = styled.button`
-  cursor: pointer;
-  background-color: #ffffff;
-  border: 1px solid #88c4e6;
-  border-radius: 10px;
-  color: #6cb6e1;
-  width: 15rem;
-  height: 45px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-top: 10px;
-  margin-bottom: 30px;
-  &:hover {
-    background-color: #88c4e6;
-    border: 1px solid #6cb6e1;
-    color: #ffffff;
-  }
-  margin-left: auto;
-`;

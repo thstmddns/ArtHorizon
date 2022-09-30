@@ -24,7 +24,7 @@ const Artists = () => {
 
         {/* 화가 아이템 */}
         <div
-          className="flex items-center lg:w-3/5 mx-auto border-b p-8 mb-10 border-gray-200 sm:flex-row flex-col bg-gray-50 rounded-xl drop-shadow-md cursor-pointer transition ease-in-out hover:scale-105 duration-200"
+          className="flex items-center lg:w-3/5 mx-auto border-b p-8 mb-10 border-gray-200 sm:flex-row flex-col bg-white rounded-xl drop-shadow-md cursor-pointer transition ease-in-out hover:scale-105 duration-200"
           onClick={() => navigate(`/mypage/1`)}
         >
           <div className="sm:w-32 sm:h-32 h-20 w-20 sm:mr-10 inline-flex items-center justify-center rounded-full bg-sky-100 text-indigo-500 flex-shrink-0">
@@ -52,7 +52,7 @@ const Artists = () => {
 
         {/* 화가 아이템 */}
         <div
-          className="flex items-center lg:w-3/5 mx-auto border-b p-8 mb-10 border-gray-200 sm:flex-row flex-col bg-gray-50 rounded-xl drop-shadow-md cursor-pointer transition ease-in-out hover:scale-105 duration-200"
+          className="flex items-center lg:w-3/5 mx-auto border-b p-8 mb-10 border-gray-200 sm:flex-row flex-col bg-white rounded-xl drop-shadow-md cursor-pointer transition ease-in-out hover:scale-105 duration-200"
           onClick={() => navigate(`/mypage/1`)}
         >
           <div className="flex-grow sm:text-left text-center mt-6 sm:mt-0">
@@ -80,7 +80,7 @@ const Artists = () => {
 
         {/* 화가 아이템 */}
         <div
-          className="flex items-center lg:w-3/5 mx-auto p-8 mb-10 sm:flex-row flex-col bg-gray-50 rounded-xl drop-shadow-md cursor-pointer transition ease-in-out hover:scale-105 duration-200"
+          className="flex items-center lg:w-3/5 mx-auto p-8 mb-10 sm:flex-row flex-col bg-white rounded-xl drop-shadow-md cursor-pointer transition ease-in-out hover:scale-105 duration-200"
           onClick={() => navigate(`/mypage/1`)}
         >
           <div className="sm:w-32 sm:h-32 h-20 w-20 sm:mr-10 inline-flex items-center justify-center rounded-full bg-sky-100 text-indigo-500 flex-shrink-0">

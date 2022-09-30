@@ -2,7 +2,6 @@ import clip
 import torch
 import numpy as np
 from PIL import Image
-import matplotlib.pyplot as plt
 from torch.nn import CosineSimilarity as CosSim
 from fastapi import FastAPI
 

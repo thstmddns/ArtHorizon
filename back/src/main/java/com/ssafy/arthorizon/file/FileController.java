@@ -16,7 +16,7 @@ public class FileController {
 
     private final String SUCCESS = "SUCCESS";
     private final String FAILURE = "FAILURE";
-    private final String ORIGIN_PATH = "/home/ubuntu/S07P22D201/back/docker-volume/images";
+    private final String ORIGIN_PATH = "/home/ubuntu/S07P22D201/back/docker-volume/images/";
 //private final String ORIGIN_PATH = "C:/";
 
     private final FileService fileService;

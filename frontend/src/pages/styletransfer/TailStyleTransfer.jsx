@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState, useEffect, useRef } from "react";
 import baseurl from "../../api/BaseUrl";
 
@@ -7,7 +8,15 @@ const TailStyleTransfer = () => {
   const [resultImg, setResultImg] = useState("");
 
   // fileName을 여기 넣어놓으시오
-  const imageNames = [];
+  const url = "http://j7d201.p.ssafy.io/api/my-file/read/";
+  const imageNames = [
+    "1_Amedeo Modigliani_The Servant Girl.jpg",
+    "105_Diego Rivera_Night of the Rich.jpg",
+    "380_Peter Paul Rubens_Marchesa Brigida Spinola-Doria.jpg",
+    "600_Sandro Botticelli_Portrait of Dante.jpg",
+    "852_Rembrandt_Landscape with the Good Samaritan.jpg",
+    "942_Camille Pissarro_Boulevard Montmartre Afternoon, in the Rain.jpg",
+  ];
 
   const targetInput = useRef();
 
@@ -21,17 +30,58 @@ const TailStyleTransfer = () => {
     reader.readAsDataURL(file);
     return new Promise((resolve) => {
       reader.onload = () => {
-        setTargetImg(reader.result);
+        const encode = reader.result;
+        setTargetImg(encode);
         resolve();
       };
     });
   };
 
   const updateSource = (imageName) => {
-    setSourceImg(imageName);
+    setSourceImg(url + imageName);
+    console.log(url + imageName);
   };
 
-  useEffect(() => {}, []);
+  const aiTransfer = () => {
+    const byteString = atob(targetImg.split(",")[1]);
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([ia], {
+      type: "image/jpeg",
+    });
+    const file = new File([blob], "image.jpg");
+    const url = "http://127.0.0.1:8000/medici/nst";
+    const formData = new FormData();
+    formData.append("filed", file);
+    formData.append("src", sourceImg);
+    const config = {
+      Headers: {
+        "content-type": "multipart/form-data",
+        "Access-Control-Allow-Origin": "*",
+        responseType: "blob",
+      },
+    };
+
+    axios.post(url, formData, config).then((res) => {
+      // console.log(res);
+      // const base64spring = btoa(
+      //   String.fromCharCode(...new Uint8Array(res.data))
+      // );
+      // const contentType = res.headers["content-type"];
+      // setResultImg(`data:${contentType};base64${base64spring}`);
+      const reader = new FileReader();
+      reader.readAsDataURL(res.data);
+      return new Promise((resolve) => {
+        reader.onload = () => {
+          setResultImg(reader.result);
+          resolve();
+        };
+      });
+    });
+  };
 
   return (
     <section className="text-gray-600 body-font">
@@ -71,16 +121,10 @@ const TailStyleTransfer = () => {
             어떤 작품의 스타일로 바꾸고 싶으신가요?
           </h2>
           <div className="grid grid-cols-4 gap-4">
-            {imageNames?.forEach((imageName) => {
-              const imgUrl = baseurl + "/api/file/read/" + imageName;
+            {imageNames.map((imageName) => {
               return (
-                <div
-                  className={`${
-                    imageName === sourceImg ? "border-solid border-2" : ""
-                  }`}
-                  onClick={updateSource(imageName)}
-                >
-                  <img src={imgUrl} alt={imageName} />
+                <div onClick={() => updateSource(imageName)} key={imageName}>
+                  <img src={url + imageName} />
                 </div>
               );
             })}
@@ -88,11 +132,15 @@ const TailStyleTransfer = () => {
         </div>
       </div>
       <div className="flex flex-col items-center justify-center">
-        <button className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 mb-2">
+        <button
+          onClick={() => aiTransfer()}
+          className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 mb-2"
+        >
           Style Transfer
         </button>
         {resultImg && (
           <div>
+            {/* <img src={`data:image/jpeg;base64,${resultImg}`} alt="result" /> */}
             <img src={resultImg} alt="result" />
             <button className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2">
               다운로드 하기

@@ -67,8 +67,13 @@ const PieceDetail = () => {
       <PieceContainer>
         {img ? (
           <PieceImg
-            src={`/home/ubuntu/S07P22D201/frontend/docker-volume/images/${img}`}
-            alt="diplayerror"
+            // src={`/home/ubuntu/S07P22D201/frontend/docker-volume/images/${img}`}
+            src={`http://j7d201.p.ssafy.io/api/my-file/read/${img}`}
+            alt="displayerror"
+            style={{
+              width: "1000px",
+              height: "1000px",
+            }}
           />
         ) : (
           <DefaultImg />

@@ -9,12 +9,14 @@ public class PieceListDto {
     private String pieceTitle;
     private String pieceArtist;
     private String pieceImg;
+    private int piecePrice;
 
     // 생성자
     public PieceListDto(PieceEntity pieceEntity){
         this.pieceSeq=pieceEntity.getPieceSeq();
         this.pieceTitle=pieceEntity.getPieceTitleKr();
         this.pieceImg=pieceEntity.getPieceImg();
+        this.piecePrice=pieceEntity.getPiecePrice();
 
         if(pieceEntity.getPieceType().equals("M")){
             // 명화인 경우

@@ -27,6 +27,7 @@ public class PieceDto {
     private String pieceStyle;
     private String pieceGenre;
     private String pieceScent;
+    private int piecePrice;
 
     private PieceResult result;
 
@@ -52,6 +53,7 @@ public class PieceDto {
         this.pieceStyle=pieceEntity.getPieceStyle();
         this.pieceGenre=pieceEntity.getPieceGenre();
         this.pieceScent=pieceEntity.getPieceScent();
+        this.piecePrice=pieceEntity.getPiecePrice();
     }
 
 

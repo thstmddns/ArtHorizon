@@ -12,5 +12,6 @@ public class UserArtDto {
     private String pieceImg;
     private String pieceTag;
     private String pieceScent;
+    private int piecePrice;
 
 }

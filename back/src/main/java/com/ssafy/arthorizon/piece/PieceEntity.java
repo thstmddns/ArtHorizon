@@ -69,6 +69,9 @@ public class PieceEntity {
     @Column
     private String pieceScent;
 
+    @Column
+    private int piecePrice;
+
     public PieceEntity() {}
 
     public PieceEntity(UserArtDto userArtDto){
@@ -83,6 +86,7 @@ public class PieceEntity {
         this.pieceYear = LocalDate.now().getYear();
         this.pieceCentury = (int) Math.floor(this.pieceYear/100)+1;
         this.pieceScent = userArtDto.getPieceScent();
+        this.piecePrice = userArtDto.getPiecePrice();
     }
 
 

@@ -17,7 +17,12 @@ device = torch.device("cpu")
 
 def style_transfer(source1, source2):
     imsize = 0
-    
+    temp = ''
+    for i in source2:
+        if i == ' ':
+            temp += '%20'
+        else:
+            temp += i
     if torch.cuda.is_available():
         imsize = 512
     else:
@@ -34,7 +39,7 @@ def style_transfer(source1, source2):
         return image.to(device,torch.float)
     
     urllib.request.urlretrieve(
-        source2, "src2.jpg"
+        temp, "src2.jpg"
     )
     # src1 = source1
     # src2 = cv2.imread(source2)

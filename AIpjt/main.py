@@ -1,19 +1,16 @@
-
 from fastapi import FastAPI, File,UploadFile, Form
-
 from ST.styletransfer import style_transfer
 from ST.tag_recommend import get_tag
 from ST.objectdetection import detection
 from pydantic import BaseModel
 import os
 from fastapi.middleware.cors import CORSMiddleware
-
 import io
 from starlette.responses import StreamingResponse
 import PIL.Image as Image
 import torch
 import torchvision
-
+import cv2
 
 app = FastAPI()
 
@@ -44,13 +41,12 @@ async def root():
 
 
 @app.post("/medici/nst")
-
 async def nst(filed: bytes = File(), src : str = Form()):
-    img = torchvision.transforms.ToPILImage()(style_transfer(io.BytesIO(filed),src).squeeze())
-    return_image = io.BytesIO()
-    img.save(return_image, "JPEG")
-    return_image.seek(0)
-    return StreamingResponse(content=return_image, media_type="image/jpeg")
+    # img = torchvision.transforms.ToPILImage()(style_transfer(io.BytesIO(filed),src).squeeze())
+    # return_image = io.BytesIO()
+    # img.save(return_image, "JPEG")
+    # return StreamingResponse(content=return_image, media_type="image/jpeg")
+    return style_transfer(io.BytesIO(filed),src)
     
 
 

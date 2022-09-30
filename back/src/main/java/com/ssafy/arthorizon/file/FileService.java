@@ -12,6 +12,7 @@ public class FileService {
 
     private final String ROOT_PROFILE = "profiles/";
     private final String ROOT_USERART = "userArts/";
+    private final String ORIGIN_PATH = "/home/ubuntu/S07P22D201/back/docker-volume/images/";
 
 //    private final String ROOT_PROFILE = "C:/";
 //    private final String ROOT_USERART = "C:/";
@@ -29,9 +30,9 @@ public class FileService {
             long now = new Date().getTime();
 
             if(fileType.equals("profile")){
-                fileName = ROOT_PROFILE + now;
+                fileName = ORIGIN_PATH + ROOT_PROFILE + now;
             } else{
-                fileName = ROOT_USERART + now;
+                fileName = ORIGIN_PATH + ROOT_USERART + now;
             }
 
             // 밖으로 내보낼 아웃풋스트림을 만들고

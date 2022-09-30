@@ -15,8 +15,6 @@ import PieceDetail from "./pages/piecedetail/PieceDetail";
 
 import NotFound from "./pages/not-found/NotFound";
 
-import TailwindMyPage from "./pages/tailwind-mypage/TailwindMyPage";
-
 import GlobalStyle from "./GlobalStyle";
 import PieceCommit from "./pages/piececommit/PieceCommit";
 import StyleTransfer from "./pages/styletransfer/StyleTransfer";
@@ -40,10 +38,8 @@ const router = createBrowserRouter([
     element: <UserModify />,
   },
   {
-    // path: "/mypage",
     path: "/mypage/:targetUserSeq",
-    // element: <MyPage />,
-    element: <TailwindMyPage />,
+    element: <MyPage />,
   },
   {
     path: "/pieces",

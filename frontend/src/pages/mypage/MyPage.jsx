@@ -5,7 +5,7 @@ import NavBar from "../../components/NavBar";
 import Info from "./components/Info";
 import Arts from "./components/Arts";
 
-const Mypage = () => {
+const MyPage = () => {
   return (
     <React.Fragment>
       <NavBar />
@@ -19,12 +19,11 @@ const Mypage = () => {
   );
 };
 
-export default Mypage;
+export default MyPage;
 
 const Container = styled.div`
   width: 100%;
   height: 100%;
-  // background-color: tomato;
 `;
 
 const Wrapper = styled.div`
@@ -33,5 +32,4 @@ const Wrapper = styled.div`
   margin-top: 5%;
   margin-left: 10%;
   margin-right: 10%;
-  // background-color: wheat;
 `;

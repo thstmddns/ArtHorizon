@@ -1,28 +1,35 @@
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-import torch.optim as optim
-import cv2
+import torch, torch.nn as nn, torch.nn.functional as F, torch.optim as optim
 from PIL import Image
-import torchvision.transforms as transforms
-import torchvision.models as models
-import os
-import copy
-import urllib.request
-import io
-import numpy
-device = torch.device("cpu")
+import torchvision, torchvision.transforms as transforms, torchvision.models as models
+from torchvision.utils import save_image 
+import os, copy, urllib.request, io,numpy, datetime, cv2
+import pyrebase
+
+device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+
+firebaseConfig = {
+  "apiKey": "AIzaSyAE8MStGjmPpGc1APmdSDXD8tXdT-8db84",
+  "authDomain": "art-horizon.firebaseapp.com",
+  "databaseURL" : "https://console.firebase.google.com/u/0/project/art-horizon/firestore/data/~2F",
+  "projectId": "art-horizon",
+  "storageBucket": "art-horizon.appspot.com",
+  "messagingSenderId": "769245386612",
+  "appId": "1:769245386612:web:bf5ff758abd344bb457e21",
+  "measurementId": "G-Y8MPFXX6V8"
+}
 
 
+firebase = pyrebase.initialize_app(firebaseConfig)
+fb_storage = firebase.storage()
 
 def style_transfer(source1, source2):
     imsize = 0
-    temp = ''
+    source_img = ''
     for i in source2:
         if i == ' ':
-            temp += '%20'
+            source_img += '%20'
         else:
-            temp += i
+            source_img += i
     if torch.cuda.is_available():
         imsize = 512
     else:
@@ -39,21 +46,8 @@ def style_transfer(source1, source2):
         return image.to(device,torch.float)
     
     urllib.request.urlretrieve(
-        temp, "src2.jpg"
+        source_img, "src2.jpg"
     )
-    # src1 = source1
-    # src2 = cv2.imread(source2)
-    
-    # dst1 = cv2.resize(src1,(512,512))
-    # dst2 = cv2.resize(src2,(512,512))
-    # cv2.imwrite(source1,dst1)
-    # cv2.imwrite(source2,dst2)
-
-    # mp = image_loader(dst1)
-    # my_img = image_loader(dst2)
-
-    # mp = cv2.resize(mp,(512,512))
-    # my_img = cv2.resize(my_img,(512,512))
     
     mp = image_loader(source1)
     my_img = image_loader("src2.jpg")
@@ -247,5 +241,13 @@ def style_transfer(source1, source2):
                             my_img, mp, input_img)
     
     
+    token = 'fI0YLAvEV3gHsImtGsI8gitY6L82'
     
-    return output
+    # img = torchvision.transforms.ToPILImage()(output.squeeze())
+    
+    # return_image = io.BytesIO()
+    # img.save(return_image, "JPEG")
+    save_image(output,'ST/nst/1234.jpg')
+    fb_storage.child('nst/1234.jpg').put('ST/nst/1234.jpg')
+    return_value = fb_storage.child('nst/1234.jpg').get_url(None)
+    return return_value

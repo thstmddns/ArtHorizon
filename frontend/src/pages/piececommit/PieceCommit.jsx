@@ -131,7 +131,7 @@ const PieceCommit = () => {
             translate.push("사람이 있는 그림");
             break;
           case "plants":
-            translate.push("나무이 있는 그림");
+            translate.push("나무가 있는 그림");
             break;
           case "mountain":
             translate.push("산이 있는 그림");

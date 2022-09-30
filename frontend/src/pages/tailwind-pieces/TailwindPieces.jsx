@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { piecesApi } from "../../api/api";
 
 import TailwindNavBar from "../../components/TailwindNavBar";
-import TailwindFooter from "../../components/TailwindFooter";
 
 // const CARD_SIZE = 10;
 // const PAGE_SIZE = 10 * Math.ceil(visualViewport.width / CARD_SIZE);
@@ -16,39 +15,69 @@ import TailwindFooter from "../../components/TailwindFooter";
 //   };
 // });
 
+// const [page, setPage] = useState(1);
+// const [pieces, setPieces] = useState([]);
+// const [isFetching, setFetching] = useState(false);
+// const [hasNextPage, setNextPage] = useState(true);
+// const fetchPieces = useCallback(async () => {
+//   const { data } = await piecesApi.getPiecesRecent(page);
+//   setPieces((prevState) => [...prevState, ...data.pieceList]);
+//   setPage((prevState) => prevState + 1);
+//   // setNextPage();
+//   setFetching(false);
+// }, [page]);
+// useEffect(() => {
+//   const handleScroll = () => {
+//     const { scrollTop, offsetHeight } = document.documentElement;
+//     if (window.innerHeight + scrollTop >= offsetHeight) {
+//       setFetching(true);
+//     }
+//   };
+//   setFetching(true);
+//   window.addEventListener("scroll", handleScroll);
+//   return () => window.removeEventListener("scroll", handleScroll);
+// }, []);
+// useEffect(() => {
+//   if (isFetching && hasNextPage) fetchPieces();
+//   else if (!hasNextPage) setFetching(false);
+// }, [isFetching]);
+
 const TailwindPieces = () => {
-  // const [recentPiecesList, setRecentPiecesList] = useState([]);
+  const navigate = useNavigate();
+  const [recentPieces, setRecentPieces] = useState([]);
   // const [popularPiecesList, setPopularPiecesList] = useState([]);
 
   const [page, setPage] = useState(1);
-  const [pieces, setPieces] = useState([]);
-  const [isFetching, setFetching] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
   const [hasNextPage, setNextPage] = useState(true);
 
-  const fetchPieces = useCallback(async () => {
+  const fetchRecentPieces = useCallback(async () => {
     const { data } = await piecesApi.getPiecesRecent(page);
-    setPieces((prevState) => [...prevState, ...data.pieceList]);
-    // setPieces(pieces.concat(data.pieceList));
+    console.log("data:", data);
+    setRecentPieces((prevState) => [...prevState, ...data.pieceList]);
     setPage((prevState) => prevState + 1);
     // setNextPage();
-    setFetching(false);
+    setIsFetching(false);
   }, [page]);
 
   useEffect(() => {
     const handleScroll = () => {
       const { scrollTop, offsetHeight } = document.documentElement;
       if (window.innerHeight + scrollTop >= offsetHeight) {
-        setFetching(true);
+        setIsFetching(true);
       }
     };
-    setFetching(true);
+    setIsFetching(true);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
-    if (isFetching && hasNextPage) fetchPieces();
-    else if (!hasNextPage) setFetching(false);
+    if (isFetching && hasNextPage) {
+      fetchRecentPieces();
+    } else if (!hasNextPage) {
+      setIsFetching(false);
+    }
   }, [isFetching]);
 
   // useEffect(() => {
@@ -84,18 +113,19 @@ const TailwindPieces = () => {
     <React.Fragment>
       <TailwindNavBar />
 
-      <section className="text-gray-600 body-font mt-10">
-        <div className="container px-5 pb-24 mx-auto">
+      <section className="text-gray-600 body-font">
+        <div className="pb-24 mx-auto">
           {/* 인트로 */}
-          <section className="text-gray-600 body-font border-solid border-gray-100 border-b-2">
-            <div className="container px-5 py-64 mx-auto">
-              {/* 스타일 트랜스퍼 헤더 */}
+          <section className="text-gray-600 body-font border-solid border-gray-100 border-b-2 bg-slate-100">
+            <div className="container px-5 py-20 mx-auto">
+              {/* 작품 목록 헤더 */}
               <div className="text-center mb-20">
-                <h1 className="text-9xl font-medium title-font text-gray-900 mb-4">
+                <h1 className="text-6xl font-medium title-font text-gray-900 mb-4">
                   작품 목록
                 </h1>
                 <p className="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto text-gray-500">
-                  다양한 작품을들 찾아보세요
+                  Art Horizon의 다양한 화가들의 작품들을 찾아보세요. 불후의 고전
+                  명작들도 찾을 수 있습니다.
                 </p>
                 <div className="flex mt-6 justify-center">
                   <div className="w-16 h-1 rounded-full bg-sky-500 inline-flex"></div>
@@ -104,7 +134,7 @@ const TailwindPieces = () => {
 
               {/* 검색 바 */}
               <section className="text-gray-600 body-font border-solid border-gray-100 border-b-2">
-                <div className="container px-5 py-48 mx-auto">
+                <div className="mx-auto">
                   {/* 검색 */}
                   <label className="relative block">
                     <span className="sr-only">Search</span>
@@ -135,9 +165,21 @@ const TailwindPieces = () => {
 
                   <button
                     type="button"
-                    className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                    className="py-2.5 px-5 mr-2 my-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                   >
-                    Alternative
+                    태그 이름
+                  </button>
+                  <button
+                    type="button"
+                    className="py-2.5 px-5 mr-2 my-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                  >
+                    태그 이름
+                  </button>
+                  <button
+                    type="button"
+                    className="py-2.5 px-5 mr-2 my-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                  >
+                    태그 이름
                   </button>
                 </div>
               </section>
@@ -181,7 +223,7 @@ const TailwindPieces = () => {
 
           {/* 그림 리스트 */}
           {/* <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-1"> */}
-          <section className="text-gray-600 body-font border-solid border-gray-100 border-b-2">
+          <section className="text-gray-600 body-font border-solid border-gray-100 border-b-2 bg-slate-100">
             <div className="container px-5 py-48 mx-auto">
               {/* 헤더 */}
               <div className="flex flex-col text-center w-full mb-20">
@@ -197,18 +239,13 @@ const TailwindPieces = () => {
               </div>
               {/* 그림 리스트 */}
               <div className="lg:columns-4 md:columns-3 sm:columns-2 gap-2">
-                <div className="shadow-md rounded mb-2 drop-shadow-md overflow-hidden">
-                  {/* <img
-                alt="gallery"
-                className="w-full h-full object-cover object-center rounded hover:scale-125 transition ease-in-out duration-300"
-                src="https://dummyimage.com/601x361"
-              /> */}
-                  {/* <img
+                {/* <div className="shadow-md rounded mb-2 drop-shadow-md overflow-hidden">
+                  <img
                     alt="gallery"
                     className="w-full h-full object-cover object-center rounded hover:scale-125 transition ease-in-out duration-300"
-                    src="https://source.unsplash.com/random"
-                  /> */}
-                </div>
+                    src="https://dummyimage.com/601x361"
+                  />
+                </div> */}
 
                 {/* {recentPiecesList.map((piece) => (
                   <div
@@ -240,11 +277,43 @@ const TailwindPieces = () => {
                   </div>
                 ))} */}
 
-                {pieces &&
-                  pieces.map((piece) => (
+                {recentPieces?.map((piece) => (
+                  <div
+                    key={Math.random().toString()}
+                    className="shadow-md rounded mb-2 drop-shadow-md overflow-hidden relative cursor-pointer"
+                    onClick={() => navigate(`${piece.pieceSeq}`)}
+                  >
+                    {/* 그림 */}
                     <div
+                      className="absolute inset-0 bg-cover bg-center z-0"
+                      style={{
+                        backgroundImage: `url('https://source.unsplash.com/random/${piece.pieceSeq}x${piece.pieceSeq}')`,
+                      }}
+                    ></div>
+
+                    {/* 설명 */}
+                    <div className="opacity-0 hover:opacity-90 hover:bg-gray-900 ease-in-out duration-300 absolute inset-0 z-10 flex flex-col justify-center items-center">
+                      <div className="text-1xl text-white font-semibold mb-2">
+                        {piece.pieceArtist}
+                      </div>
+                      <div className="text-1xl text-white font-semibold">
+                        {piece.pieceTitle}
+                      </div>
+                    </div>
+                    <img
+                      alt="gallery"
+                      className="w-full h-full object-cover object-center rounded transition ease-in-out duration-300"
+                      // src={`https://source.unsplash.com/random/${parseInt(
+                      //   (Math.random() * (40 - 10) + 10) * 10
+                      // )}x${parseInt((Math.random() * (50 - 10) + 10) * 10)}`}
+                      src={`https://source.unsplash.com/random/${piece.pieceSeq}x${piece.pieceSeq}`}
+                    />
+                  </div>
+                ))}
+
+                {/* <div
                       key={Math.random().toString()}
-                      className="shadow-md rounded mb-2 drop-shadow-md overflow-hidden"
+                      className="shadow-md rounded mb-2 drop-shadow-md overflow-hidden absolute top-0 left-0"
                     >
                       <img
                         alt="gallery"
@@ -254,8 +323,7 @@ const TailwindPieces = () => {
                         // )}x${parseInt((Math.random() * (50 - 10) + 10) * 10)}`}
                         src={`https://source.unsplash.com/random/${piece.pieceSeq}x${piece.pieceSeq}`}
                       />
-                    </div>
-                  ))}
+                    </div> */}
 
                 {/* 로딩 엘리먼트 */}
                 <div className="border border-blue-300 shadow rounded-md p-4 max-w-sm w-full mx-auto">
@@ -276,8 +344,6 @@ const TailwindPieces = () => {
               </div>
             </div>
           </section>
-
-          <TailwindFooter />
         </div>
       </section>
     </React.Fragment>

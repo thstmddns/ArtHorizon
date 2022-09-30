@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
 
 import { getUser, logout } from "../redux/authSlice";
 
@@ -21,81 +20,71 @@ const NavBar = () => {
   }, [dispatch, isLoggedIn]);
 
   return (
-    <Container>
-      <Left>
-        <Link to="/">
-          <LogoImg src={logoImage} alt="Art-Horizon" />
+    <div className="bg-white fixed inset-x-0 top-0 z-50">
+      <nav
+        className="body-font container px-5 mx-auto flex py-3 flex-col md:flex-row items-center bg-white-100"
+        style={{ height: "70px" }}
+      >
+        <Link
+          to="/"
+          className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
+        >
+          <img src={logoImage} className="w-30 h-10" alt="logoImage" />
         </Link>
-      </Left>
-      <Right>
-        <Links>
-          <ServiceLink to="/pieces">작품 목록</ServiceLink>
-          <ServiceLink to="">Style Transfer</ServiceLink>
-          <ServiceLink to="">그림의향</ServiceLink>
-          <ServiceLink to="/help">고객센터</ServiceLink>
-        </Links>
+        <div className="text-gray-600 md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center">
+          <Link
+            to={"/pieces"}
+            className="mr-5 text-sky-900 underline-offset-4 hover:underline hover:text-sky-400 transition"
+          >
+            작품 목록
+          </Link>
+          <Link className="mr-5 text-sky-900 underline-offset-4 hover:underline hover:text-sky-400 transition">
+            스타일 트랜스퍼
+          </Link>
+          <Link className="mr-5 text-sky-900 underline-offset-4 hover:underline hover:text-sky-400 transition">
+            그림의 향
+          </Link>
+        </div>
+
+        {/* 로그인 x */}
         {!isLoggedIn && (
-          <AuthWrapper>
-            <NeedAuth onClick={() => navigate("/login")}>로그인</NeedAuth>
-            <NeedAuth onClick={() => navigate("/signup")}>회원가입</NeedAuth>
-          </AuthWrapper>
+          <div>
+            <button
+              onClick={() => navigate("/login")}
+              className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0 mr-1"
+            >
+              로그인
+            </button>
+            <button
+              onClick={() => navigate("/signup")}
+              className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0"
+            >
+              회원가입
+            </button>
+          </div>
         )}
+
+        {/* 로그인 o */}
         {isLoggedIn && (
-          <UserLinks>
-            <UserLink onClick={() => navigate(`/mypage/${userSeq}`)}>
-              {myNickname}'s 마이페이지
-            </UserLink>
-            <UserLink onClick={() => dispatch(logout())}>로그아웃</UserLink>
-          </UserLinks>
+          <div>
+            <button
+              onClick={() => navigate(`/mypage/${userSeq}`)}
+              className="inline-flex items-center text-amber-500 border-0 py-1 px-3 focus:outline-none hover:text-aber-700 hover:bg-amber-50 hover:drop-shadow-md rounded text-base mt-4 md:mt-0 mr-1 transition"
+            >
+              {myNickname}
+            </button>
+            <button
+              onClick={() => dispatch(logout())}
+              className="inline-flex items-center bg-zinc-700 text-white border-0 py-1 px-3 focus:outline-none hover:bg-zinc-900 hover:text-zinc-100 hover:drop-shadow-md rounded text-base mt-4 md:mt-0 transition"
+            >
+              로그아웃
+            </button>
+          </div>
         )}
-      </Right>
-    </Container>
+      </nav>
+      <div className="h-px w-full bg-gray-200"></div>
+    </div>
   );
 };
 
 export default NavBar;
-
-const Container = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 50px;
-  padding: 0 10px 0 10px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-`;
-
-const Left = styled.div``;
-
-const Right = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const Links = styled.div`
-  display: flex;
-  align-items: center;
-  margin-right: 40px;
-`;
-
-const UserLinks = styled.div``;
-
-const LogoImg = styled.img`
-  height: 30px;
-`;
-
-const ServiceLink = styled(Link)`
-  cursor: pointer;
-  margin-right: 20px;
-  text-decoration: none;
-`;
-
-const UserLink = styled.div`
-  cursor: pointer;
-`;
-
-const AuthWrapper = styled.div``;
-
-const NeedAuth = styled.div`
-  cursor: pointer;
-`;

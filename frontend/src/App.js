@@ -1,8 +1,7 @@
 import * as React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-// import Main from "./pages/home/Home";
-import TailwindHome from "./pages/tailwind-home/TailwindHome";
+import Home from "./pages/home/Home";
 import TailwindPieces from "./pages/tailwind-pieces/TailwindPieces";
 import TailwindPieceDetail from "./pages/tailwind-piecedetail/TailwindPieceDetail";
 import LogIn from "./pages/login/LogIn";
@@ -14,6 +13,8 @@ import Help from "./pages/help/Help";
 import Filter from "./pages/filter/Filter";
 import PieceDetail from "./pages/piecedetail/PieceDetail";
 
+import NotFound from "./pages/not-found/NotFound";
+
 import TailwindMyPage from "./pages/tailwind-mypage/TailwindMyPage";
 
 import GlobalStyle from "./GlobalStyle";
@@ -24,8 +25,7 @@ import Scent from "./pages/scent/Scent";
 const router = createBrowserRouter([
   {
     path: "/",
-    // element: <Main />,
-    element: <TailwindHome />,
+    element: <Home />,
   },
   {
     path: "/login",
@@ -77,6 +77,10 @@ const router = createBrowserRouter([
   {
     path: "/scent",
     element: <Scent />,
+  },
+  {
+    path: "/*",
+    element: <NotFound />,
   },
 ]);
 

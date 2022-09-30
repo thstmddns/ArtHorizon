@@ -1,14 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 
-import TailwindNavBar from "../../components/TailwindNavBar";
+import NavBar from "../../components/NavBar";
 import Info from "./components/Info";
 import Arts from "./components/Arts";
 
 const TailwindMyPage = () => {
   return (
     <React.Fragment>
-      <TailwindNavBar />
+      <NavBar />
       <Container>
         <Wrapper>
           <Info />

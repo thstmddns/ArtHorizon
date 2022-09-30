@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 
 import { authApi, piecesApi } from "../../api/api";
 
-import TailwindNavBar from "../../components/TailwindNavBar";
+import NavBar from "../../components/NavBar";
 
 const TailwindPieces = () => {
   const { pieceSeq } = useParams();
@@ -32,7 +32,7 @@ const TailwindPieces = () => {
 
   return (
     <React.Fragment>
-      <TailwindNavBar />
+      <NavBar />
       <section className="text-gray-600 body-font">
         {piece && (
           <div

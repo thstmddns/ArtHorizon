@@ -50,13 +50,10 @@ const router = createBrowserRouter([
     // element: <Pieces />,
     element: <TailwindPieces />,
   },
-  // {
-  //   path: "/piece/:pieceSeq",
-  //   element: <PieceDetail />,
-  // },
   {
     path: "/pieces/:pieceSeq",
-    element: <TailwindPieceDetail />,
+    element: <PieceDetail />,
+    // element: <TailwindPieceDetail />,
   },
   {
     path: "/filter",

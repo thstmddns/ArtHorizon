@@ -55,6 +55,6 @@ async def nst(filed: bytes = File(), src : str = Form()):
 
 
 @app.post("/medici/get_tag")
-async def tag_recommend(img: UploadFile):
+async def tag_recommend(img: bytes = File()):
 
-    return {"tag" : get_tag(img)}
+    return {"tag" : get_tag(io.BytesIO(img))}

@@ -1,10 +1,8 @@
 import torch
 import torchvision
 import torchvision.transforms as transforms
-import matplotlib.pyplot as plt
 from torch.utils.data import DataLoader, Dataset
 import numpy as np
-import csv
 import cv2
 from PIL import Image
 import glob
@@ -40,31 +38,28 @@ def get_tag(source1):
     # 옵티마이저 초기화
     optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
 
-    img_list = source1
+    img = source1
     PATH = './first_train.pth'
     model = TheModelClass()
     model.load_state_dict(torch.load(PATH))
     model.eval()
 
     class UserArt(Dataset):
-        def __init__(self, path,train = True, transform=None):
-            self.path = path
-            self.img_list = img_list
+        def __init__(self,image, train = True, transform=None):
+            print(11)
+            self.img = image
             self.transform = transform
             
         
         def __getitem__(self, idx):
-            check = list()
-            mp_path = self.img_list[idx]
-            
-            img = Image.open(mp_path)
+            img = Image.open(self.img)
             if self.transform is not None:
                 img = self.transform(img)
                 img = img.expand(3,*img.shape[1:])
-            return img, mp_path
+            return img
         
         def __len__(self):
-            return len(self.img_list)  
+            return 1  
         
     transform = transforms.Compose([
         transforms.Resize((32,32)),
@@ -78,7 +73,7 @@ def get_tag(source1):
     classes_idx = {j:i for i,j in enumerate(classes)}
     classes_value = {i:j for i,j in enumerate(classes)}
     path = ''
-    user_art = UserArt(path = path, train = False, transform = transform)
+    user_art = UserArt(image = source1, train = False, transform = transform)
 
     test_dataloader = DataLoader(
         dataset = user_art,
@@ -87,16 +82,15 @@ def get_tag(source1):
         drop_last = False
                             )
 
-    dataiter = iter(test_dataloader)
-    images = dataiter.next()
+    
 
 
     with torch.no_grad():
         for data in test_dataloader:
-            images,pat = data
+            images= data
             # calculate outputs by running images through the network
             outputs = model(images)
-            for i,j in enumerate(pat):
+            for i,j in enumerate(images):
                 # the class with the highest energy is what we choose as prediction
                 _, predicted = torch.max(outputs.data, 1)
                 return classes[int(predicted[i])]

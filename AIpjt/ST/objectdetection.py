@@ -17,7 +17,7 @@ def detection(source):
     image = preprocess(img).unsqueeze(0).to(device) 
 
     # 텍스트 데이터셋 
-    text_dataset = ["a animal", "a human", "plants", "mountain", "a building", "water"]
+    text_dataset = ["a human", "plants", "mountain", "a building", "water"]
 
     # CLIP에서 제공하는 토크나이저를 사용(위 코드 참조)합니다.
     text =  clip.tokenize(text_dataset).to(device) 

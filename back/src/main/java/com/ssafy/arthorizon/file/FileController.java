@@ -128,7 +128,7 @@ public class FileController {
 //            // 헤더가 있으면 다운로드가? 된다?
 //
 //            System.out.println("반환");
-            return new ResponseEntity<>(file, HttpStatus.OK);
+            return new ResponseEntity<>(imageByteArray, HttpStatus.OK);
 ////            return new ResponseEntity<>(file, headers, HttpStatus.OK);
 ////            return new ResponseEntity<>(content, headers, HttpStatus.OK);
 //        } catch (Exception e) {

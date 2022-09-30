@@ -3,6 +3,7 @@ from fastapi import FastAPI, File,UploadFile, Form
 
 from ST.styletransfer import style_transfer
 from ST.tag_recommend import get_tag
+from ST.objectdetection import detection
 from pydantic import BaseModel
 import os
 from fastapi.middleware.cors import CORSMiddleware
@@ -55,6 +56,18 @@ async def nst(filed: bytes = File(), src : str = Form()):
 
 
 @app.post("/medici/get_tag")
+<<<<<<< HEAD
 async def tag_recommend(img: bytes = File()):
 
     return {"tag" : get_tag(io.BytesIO(img))}
+=======
+async def tag_recommend(img: UploadFile):
+
+    return {"tag" : get_tag(img)}
+
+
+@app.post("/medici/detection")
+async def objectdetection(img: bytes = File()):
+    img = io.BytesIO(img)
+    return{"tag" : detection(img)}
+>>>>>>> 52df1de80bbc4ce248fa682f44205e260d995c40

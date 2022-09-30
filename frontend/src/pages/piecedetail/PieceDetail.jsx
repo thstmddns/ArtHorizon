@@ -25,6 +25,7 @@ const PieceDetail = () => {
   const [style, setStyle] = useState("");
   const [genre, setGenre] = useState("");
   const [scent, setScent] = useState("");
+  const [price, setPrice] = useState(0);
 
   useEffect(() => {
     const getPieceDetail = async () => {
@@ -39,7 +40,7 @@ const PieceDetail = () => {
             setArtist(res.data.pieceArtistKr);
             setEnArtist(res.data.pieceArtistEn);
             setDesc(res.data.pieceDesc);
-            // setImg(res.data.pieceImg);
+            setImg(res.data.pieceImg);
             setHitCount(res.data.pieceHitCount);
             setBookMark(res.data.pieceBookmarkCount);
             setTags(res.data.pieceTag);
@@ -48,8 +49,7 @@ const PieceDetail = () => {
             setStyle(res.data.pieceStyle);
             setGenre(res.data.pieceGenre);
             setScent(res.data.pieceScent);
-            console.log(Boolean(desc));
-            console.log(`http://j7d201.p.ssafy.io:8081/images/${res.data.pieceImg}`);
+            setPrice(res.data.piecePrice);
           })
           .catch((err) => {
             console.error(err);
@@ -66,7 +66,9 @@ const PieceDetail = () => {
       {/* <NavBar /> */}
       <PieceContainer>
         {img ? (
-          <PieceImg src={`http://j7d201.p.ssafy.io:8081/images/${img}`} />
+          <PieceImg
+            src={`/home/ubuntu/S07P22D201/frontend/docker-volume/images/${img}`}
+          />
         ) : (
           <DefaultImg />
         )}
@@ -101,8 +103,12 @@ const PieceDetail = () => {
               })}
             </Row>
           </Content>
-          <Title></Title>
-          <Content></Content>
+          {price !== 0 && (
+            <div>
+              <Title>가격</Title>
+              <Content>{price}</Content>
+            </div>
+          )}
           <Title></Title>
           <Content></Content>
           <Title></Title>

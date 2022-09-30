@@ -77,7 +77,7 @@ public class FileController {
         InputStream inputStream = new FileInputStream(ORIGIN_PATH + fileRoot);
         System.out.println("파일인풋스트림 생성 성공, IOUtils 접근");
         System.out.println("파일 접근");
-        File file = new File(String.valueOf(ORIGIN_PATH+fileRoot));
+        File file = new File(ORIGIN_PATH+fileRoot);
         System.out.println("파일 접근 성공");
         System.out.println(file);
         byte[] imageByteArray = IOUtils.toByteArray(inputStream);
@@ -128,7 +128,7 @@ public class FileController {
 //            // 헤더가 있으면 다운로드가? 된다?
 //
 //            System.out.println("반환");
-            return new ResponseEntity<>(imageByteArray, HttpStatus.OK);
+            return new ResponseEntity<>(file, HttpStatus.OK);
 ////            return new ResponseEntity<>(file, headers, HttpStatus.OK);
 ////            return new ResponseEntity<>(content, headers, HttpStatus.OK);
 //        } catch (Exception e) {

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -80,7 +81,9 @@ public class FileController {
         File file = new File(ORIGIN_PATH+fileRoot);
         System.out.println("파일 접근 성공");
         System.out.println(file);
-        byte[] imageByteArray = IOUtils.toByteArray(inputStream);
+        Path path = Paths.get(ORIGIN_PATH+fileRoot);
+        byte[] content = Files.readAllBytes(path);
+//        byte[] imageByteArray = IOUtils.toByteArray(inputStream);
         System.out.println("toByteArray성공");
         inputStream.close();
 //
@@ -128,7 +131,7 @@ public class FileController {
 //            // 헤더가 있으면 다운로드가? 된다?
 //
 //            System.out.println("반환");
-            return new ResponseEntity<>(imageByteArray, HttpStatus.OK);
+            return new ResponseEntity<>(content, HttpStatus.OK);
 ////            return new ResponseEntity<>(file, headers, HttpStatus.OK);
 ////            return new ResponseEntity<>(content, headers, HttpStatus.OK);
 //        } catch (Exception e) {

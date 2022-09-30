@@ -44,6 +44,7 @@ const PieceCommit = () => {
 
   const updateImg = (file) => {
     console.log(file);
+    // 파일 자체 보관
     setUploadArt(file);
     setTags([]);
 
@@ -53,6 +54,7 @@ const PieceCommit = () => {
     return new Promise((resolve) => {
       reader.onload = () => {
         const encode = reader.result;
+        // 읽기 처리된 파일 => 이미지 보기 용
         setNewArt(encode);
         const byteString = atob(encode.split(",")[1]);
         const ab = new ArrayBuffer(byteString.length);
@@ -64,11 +66,25 @@ const PieceCommit = () => {
           type: "image/jpeg",
         });
         const file = new File([blob], "image.jpg");
-
+        const url = "http://127.0.0.1:8000/medici/get_tag";
+        const config = {
+          Headers: {
+            "content-type": "multipart/form-data",
+          },
+        };
         const formData = new FormData();
         formData.append("img", file);
-        setBase64(formData);
-        resolve();
+        axios
+          .post(url, formData, config)
+          .then((res) => {
+            console.log(res.data.tag);
+            setScent(res.data.tag);
+            setBase64(formData);
+            resolve();
+          })
+          .catch((err) => {
+            console.error(err);
+          });
       };
     });
   };
@@ -98,7 +114,6 @@ const PieceCommit = () => {
   };
 
   const tagRecommend = () => {
-    console.log(newArt);
     const url = "http://127.0.0.1:8000/medici/detection";
     const config = {
       Headers: {
@@ -108,7 +123,28 @@ const PieceCommit = () => {
     axios.post(url, base64, config).then((res) => {
       const aiRecommend = res.data.tag;
       console.log(aiRecommend);
-      setTags((preState) => preState.concat(aiRecommend));
+      // "a animal", "a human", "plants", "mountain", "a building", "water"
+      const translate = [];
+      aiRecommend.forEach((tag) => {
+        switch (tag) {
+          case "a human":
+            translate.push("사람이 있는 그림");
+            break;
+          case "plants":
+            translate.push("나무이 있는 그림");
+            break;
+          case "mountain":
+            translate.push("산이 있는 그림");
+            break;
+          case "a building":
+            translate.push("건물이 있는 그림");
+            break;
+          case "water":
+            translate.push("물이 있는 그림");
+            break;
+        }
+      });
+      setTags((preState) => preState.concat(translate));
     });
   };
 
@@ -125,10 +161,7 @@ const PieceCommit = () => {
     // 마지막으로 pieceTitleKr, pieceDesc, pieceImg, pieceTag, pieceScent를 JSON으로 보내기
     try {
       const formData1 = new FormData();
-      const formData2 = new FormData();
-      formData1.append("UploadFile", uploadArt);
-      formData2.append("multipartFile", uploadArt);
-      const url1 = "http://localhost:3000/medici/get_tag";
+      formData1.append("multipartFile", uploadArt);
       const url2 = "http://j7d201.p.ssafy.io/api/my-file/user-art";
       const url3 = "http://j7d201.p.ssafy.io/api/user-art";
 
@@ -139,47 +172,31 @@ const PieceCommit = () => {
       };
 
       axios
-        .post(url1, formData1, config1)
+        .post(url2, formData1, config1)
         .then((res) => {
-          console.log(res.data);
-          setScent(res.data);
-
-          const config2 = {
+          setPieceImg(res);
+          const tagString = tags.join();
+          const data = {
+            pieceTitleKr: artTitle,
+            pieceTitleEn: "",
+            pieceDesc: artContent,
+            pieceImg: pieceImg,
+            pieceTag: tagString,
+            pieceScent: scent,
+            piecePrice: price,
+          };
+          const config3 = {
             Headers: {
               jwt: token,
-              "content-type": "multipart/form-data",
+              "content-type": "application/json",
             },
           };
-          axios
-            .post(url2, formData2, config2)
-            .then((res) => {
-              setPieceImg(res);
-              const tagString = tags.join();
-              const data = {
-                pieceTitleKr: artTitle,
-                pieceTitleEn: "",
-                pieceDesc: artContent,
-                pieceImg: pieceImg,
-                pieceTag: tagString,
-                pieceScent: scent,
-                piecePrice: price,
-              };
-              const config3 = {
-                Headers: {
-                  jwt: token,
-                  "content-type": "application/json",
-                },
-              };
-              axios.post(url3, JSON.stringify(data), config3).then((res) => {
-                console.log(res);
-                navigate(`/mypage/${userSeq}`);
-              });
-            })
-            .catch((err) => console.error(err));
+          axios.post(url3, JSON.stringify(data), config3).then((res) => {
+            console.log(res);
+            navigate(`/mypage/${userSeq}`);
+          });
         })
-        .catch((err) => {
-          console.error(err);
-        });
+        .catch((err) => console.error(err));
     } catch {
       console.error("오류가 발생했습니다");
     }

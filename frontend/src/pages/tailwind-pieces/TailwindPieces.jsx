@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { piecesApi } from "../../api/api";
 
-import TailwindNavBar from "../../components/TailwindNavBar";
+import NavBar from "../../components/NavBar";
 
 // const CARD_SIZE = 10;
 // const PAGE_SIZE = 10 * Math.ceil(visualViewport.width / CARD_SIZE);
@@ -111,7 +111,7 @@ const TailwindPieces = () => {
 
   return (
     <React.Fragment>
-      <TailwindNavBar />
+      <NavBar />
 
       <section className="text-gray-600 body-font">
         <div className="pb-24 mx-auto">

@@ -68,6 +68,7 @@ const PieceDetail = () => {
         {img ? (
           <PieceImg
             src={`/home/ubuntu/S07P22D201/frontend/docker-volume/images/${img}`}
+            alt="diplayerror"
           />
         ) : (
           <DefaultImg />

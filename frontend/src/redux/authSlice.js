@@ -1,4 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { authApi } from "../api/api";
 
@@ -14,13 +16,17 @@ const initialState = {
 
 export const getUser = createAsyncThunk(
   "authSlice/getUser",
-  async (_, { rejectWithValue }) => {
+  async (_, { rejectWithValue, getState }) => {
+    // const isLoggedIn = getState().auth.isLoggedIn;
+    // if (!isLoggedIn) {
+    //   return rejectWithValue();
+    // }
     try {
       const res = await authApi.getUser();
       return res.data;
-    } catch (error) {
-      console.error(error);
-      return rejectWithValue(JSON.parse(error));
+    } catch (err) {
+      console.log(err.response.status);
+      return rejectWithValue(JSON.parse(err));
     }
   }
 );
@@ -30,11 +36,10 @@ export const login = createAsyncThunk(
   async (credentials, { rejectWithValue }) => {
     try {
       const res = await authApi.login(credentials);
-      console.log(res);
       localStorage.setItem("access-token", `jwt ${res.data.jwt}`);
       // axios.defaults.headers.common["Authorization"] = `jwt ${res.data}`;
+      console.log("login success");
     } catch (error) {
-      console.error(error);
       return rejectWithValue(JSON.parse(error));
     }
   }
@@ -45,8 +50,8 @@ export const signup = createAsyncThunk(
   async (credentials, { rejectWithValue }) => {
     try {
       const res = await authApi.signup(credentials);
-      console.log(res);
       localStorage.setItem("access-token", `jwt ${res.data.jwt}`);
+      console.log("signup success");
     } catch (error) {
       return rejectWithValue(JSON.parse(error));
     }
@@ -126,6 +131,7 @@ const authSlice = createSlice({
       state.myUserType = "";
       state.myDesc = "";
       localStorage.removeItem("access-token");
+      toast.success("성공적으로 로그아웃했습니다");
     },
   },
   extraReducers: {
@@ -145,15 +151,15 @@ const authSlice = createSlice({
       state.myUserType = userInfo.userType;
       state.myDesc = userInfo.userDesc;
     },
-    [getUser.rejected]: (state, action) => {
-      state.isLoggedIn = false;
-      state.mySeq = 0;
-      state.myEmail = "";
-      state.myNickname = "";
-      state.myImageURL = "";
-      state.myUserType = "";
-      state.myDesc = "";
-    },
+    // [getUser.rejected]: (state, action) => {
+    //   state.isLoggedIn = false;
+    //   state.mySeq = 0;
+    //   state.myEmail = "";
+    //   state.myNickname = "";
+    //   state.myImageURL = "";
+    //   state.myUserType = "";
+    //   state.myDesc = "";
+    // },
   },
 });
 

@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getUser, logout } from "../redux/authSlice";
+import { logout } from "../redux/authSlice";
 
 import logoImage from "../assets/images/Art_Horizon_Logo.png";
 
@@ -14,10 +14,6 @@ const NavBar = () => {
     mySeq: userSeq,
     myNickname,
   } = useSelector((state) => state.auth);
-
-  useEffect(() => {
-    dispatch(getUser());
-  }, [dispatch, isLoggedIn]);
 
   return (
     <div className="bg-white fixed inset-x-0 top-0 z-50">

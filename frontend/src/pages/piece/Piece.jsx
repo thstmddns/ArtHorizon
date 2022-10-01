@@ -35,7 +35,7 @@ const Piece = () => {
     <React.Fragment>
       {!cinema && <NavBarDark />}
       <section
-        className="text-gray-600 body-font relative bg-gray-900"
+        className="text-gray-600 body-font relative bg-gray-800"
         // style={{ marginTop: "71px" }}
         style={{ marginTop: cinema ? "0" : "7vh" }}
       >
@@ -83,21 +83,23 @@ const Piece = () => {
                 {/* 내용 */}
                 <div className="flex flex-col">
                   <div
-                    className="text-white mb-2 font-bold text-2xl"
+                    className="text-white mb-2 font-bold text-3xl"
                     style={{ lineHeight: "1" }}
                   >
                     {piece.pieceTitleKr}
                   </div>
-                  <div className="text-white mb-4 font-bold">
+                  <div className="text-white mb-4 font-bold text-xl">
                     {piece.pieceArtistKr}
                   </div>
-                  <div className="text-white mb-2">
+                  <div className="text-white text-lg">
                     {piece.pieceCentury} C &ndash; {piece.pieceYear}
                   </div>
-                  <div className="text-white mb-2">{piece.pieceGenre}</div>
-                  <div className="text-white mb-2">{piece.pieceStyle}</div>
-                  <div className="text-white mb-2">{piece.pieceScent} 향</div>
-                  <div className="text-white mb-2">
+                  <div className="text-white text-lg">{piece.pieceGenre}</div>
+                  <div className="text-white text-lg">{piece.pieceStyle}</div>
+                  <div className="text-white text-lg">
+                    {piece.pieceScent} 향
+                  </div>
+                  <div className="text-white text-lg">
                     태그: {piece.pieceTag} ..
                   </div>
                 </div>

@@ -1,11 +1,15 @@
 package com.ssafy.arthorizon.piece;
 
 import com.ssafy.arthorizon.piece.dto.PieceDto;
+import com.ssafy.arthorizon.piece.dto.PieceListDto;
 import com.ssafy.arthorizon.piece.dto.PiecePageDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class PieceService {
@@ -68,6 +72,30 @@ public class PieceService {
 
     }
 
+    // 랜덤 작품 조회
+    public PiecePageDto pieceListRandomService(int page) {
+
+        // 중복제거를 위해 set 형태로 고안
+        Set<PieceEntity> pieceSet = new HashSet<>();
+        // 랜덤 추출을 위한 총 개수 생성
+        int lowCount = pieceRepository.countAllBy();
+
+        while(pieceSet.size()<20){
+            int randomIndex = (int) (Math.random()*(lowCount)+1);
+            PieceEntity piece = pieceRepository.findByPieceSeq((long) randomIndex);
+            if(piece!=null){
+                pieceSet.add(piece);
+            }
+        }
+
+        List<PieceEntity> pieceLists = new ArrayList<>(pieceSet);
+
+        PiecePageDto piecePageDto = new PiecePageDto(lowCount, page, pieceLists);
+
+        return piecePageDto;
+
+
+    }
 
 
     // 태그 조회

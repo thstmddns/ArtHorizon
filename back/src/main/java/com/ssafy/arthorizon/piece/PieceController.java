@@ -39,6 +39,17 @@ public class PieceController {
         }
     }
 
+    // 작품 목록 랜덤 조회 페이지네이션 (중복처리 안함)
+    @GetMapping("/random")
+    public ResponseEntity<PiecePageDto> pieceListRandom(@RequestParam("page") int page){
+        PiecePageDto piecePageDto = pieceService.pieceListRandomService(page);
+        if(piecePageDto.getResult()== PieceDto.PieceResult.SUCCESS){
+            return new ResponseEntity<>(piecePageDto, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(piecePageDto, HttpStatus.BAD_REQUEST);
+        }
+    }
+
     // 단일 작품 조회
     @GetMapping("/{pieceSeq}")
     public ResponseEntity<PieceDto> pieceOne(@PathVariable Long pieceSeq){

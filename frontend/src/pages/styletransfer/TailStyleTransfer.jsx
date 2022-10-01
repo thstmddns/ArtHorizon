@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect, useRef } from "react";
-import baseurl from "../../api/BaseUrl";
+import { useCallback } from "react";
 
 const TailStyleTransfer = () => {
   const [targetImg, setTargetImg] = useState("");
@@ -10,12 +10,12 @@ const TailStyleTransfer = () => {
   // fileName을 여기 넣어놓으시오
   const url = "http://j7d201.p.ssafy.io/api/my-file/read/";
   const imageNames = [
-    "1_Amedeo Modigliani_The Servant Girl.jpg",
-    "105_Diego Rivera_Night of the Rich.jpg",
-    "380_Peter Paul Rubens_Marchesa Brigida Spinola-Doria.jpg",
-    "600_Sandro Botticelli_Portrait of Dante.jpg",
-    "852_Rembrandt_Landscape with the Good Samaritan.jpg",
-    "942_Camille Pissarro_Boulevard Montmartre Afternoon, in the Rain.jpg",
+    "150_Diego Rivera_Evening Twilight at Acapulco.jpg",
+    "935_Camille Pissarro_The Roundelay.jpg",
+    "761_Henri Matisse_Fruit and Coffeepot.jpg",
+    "461_Francisco Goya_Dont scream stupid.jpg",
+    "267_Mikhail Vrubel_Pan.jpg",
+    "618_Caravaggio_The Lute Player.jpg",
   ];
 
   const targetInput = useRef();
@@ -61,15 +61,26 @@ const TailStyleTransfer = () => {
       Headers: {
         "content-type": "multipart/form-data",
         "Access-Control-Allow-Origin": "*",
-        responseType: "blob",
+        // responseType: "blob",
       },
     };
 
     axios.post(url, formData, config).then((res) => {
-      console.log(res);
-      setResultImg(res.data);
+      console.log(res.data);
+      // console.log(decodeURIComponent(atob(res.data)));
+      const result = res.data;
+      setResultImg(result);
     });
   };
+
+  const downloadImg = useCallback((resultImg) => {
+    const link = document.createElement("a");
+    link.href = "data:application/octet-stream;base64," + resultImg;
+    link.download = "styletransfer.jpg";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  });
 
   return (
     <section className="text-gray-600 body-font">
@@ -128,9 +139,12 @@ const TailStyleTransfer = () => {
         </button>
         {resultImg && (
           <div>
-            {/* <img src={`data:image/jpeg;base64,${resultImg}`} alt="result" /> */}
-            <img src={resultImg} alt="result" />
-            <button className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2">
+            <img src={`data:image/jpeg;base64,${resultImg}`} alt="result" />
+            {/* <img src={resultImg} alt="result" /> */}
+            <button
+              onClick={() => downloadImg(resultImg)}
+              className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
+            >
               다운로드 하기
             </button>
           </div>

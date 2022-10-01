@@ -24,6 +24,8 @@ const PieceCommit = () => {
   const [artContent, setArtContent] = useState("");
   const [pieceImg, setPieceImg] = useState("");
   const [uploadArt, setUploadArt] = useState(null);
+  const [sendingArt, setSendingArt] = useState(null);
+  const [priceable, setPriceable] = useState(false);
   const [price, setPrice] = useState(0);
   const [tags, setTags] = useState([]);
   const [newTag, setNewTag] = useState("");
@@ -68,7 +70,8 @@ const PieceCommit = () => {
           type: "image/jpeg",
         });
         const file = new File([blob], "image.jpg");
-        const url = "http://127.0.0.1:8000/medici/get_tag";
+        setSendingArt(file);
+        const url = "http://127.0.0.1:8000/medici/tags";
         const config = {
           Headers: {
             "content-type": "multipart/form-data",
@@ -97,6 +100,12 @@ const PieceCommit = () => {
 
   const updateArtContent = (content) => {
     setArtContent(content);
+  };
+
+  const changePriceable = () => {
+    const changeable = !priceable;
+    console.log(changeable);
+    setPriceable(changeable);
   };
 
   const updatePrice = (newPrice) => {
@@ -164,20 +173,27 @@ const PieceCommit = () => {
     // 마지막으로 pieceTitleKr, pieceDesc, pieceImg, pieceTag, pieceScent를 JSON으로 보내기
     try {
       const formData1 = new FormData();
-      formData1.append("multipartFile", uploadArt);
+      formData1.append("multipartFile", sendingArt);
       const url2 = "http://j7d201.p.ssafy.io/api/my-file/user-art";
       const url3 = "http://j7d201.p.ssafy.io/api/user-art";
 
       const config1 = {
         Headers: {
-          "content-type": "multipart/form-data",
+          "Content-Type": "multipart/form-data",
+          jwt: token,
+          crossDomain: true,
+          credentials: "include",
+          withCredentials: true,
+          Accept: "*/*",
+          "Access-Control-Allow-Origin": "*",
         },
       };
 
       axios
         .post(url2, formData1, config1)
         .then((res) => {
-          setPieceImg(res);
+          console.log(res);
+          setPieceImg(res.data);
           const tagString = tags.join();
           const data = {
             pieceTitleKr: artTitle,
@@ -192,11 +208,12 @@ const PieceCommit = () => {
             Headers: {
               jwt: token,
               "content-type": "application/json",
+              Authorziation: token,
             },
           };
           axios.post(url3, JSON.stringify(data), config3).then((res) => {
             console.log(res);
-            navigate(`/mypage/${userSeq}`);
+            // navigate(`/mypage/${userSeq}`);
           });
         })
         .catch((err) => console.error(err));
@@ -238,15 +255,17 @@ const PieceCommit = () => {
         <Allow>
           {/* 스위치 안에 허용/거부 넣으면 될듯 */}
           <AllowCheck>판매 여부를 결정해주세요</AllowCheck>
-          <input type="checkbox" />
+          <input onClick={changePriceable} type="checkbox" value={priceable} />
         </Allow>
-        <PriceInput
-          placeholder="원하는 가격을 입력해주세요"
-          type="number"
-          min="0"
-          step="10000"
-          onChange={(e) => updatePrice(e.target.value)}
-        />
+        {priceable && (
+          <PriceInput
+            min="0"
+            onChange={(e) => updatePrice(e.target.value)}
+            placeholder="원하는 가격을 입력해주세요"
+            step="10000"
+            type="number"
+          />
+        )}
         <RegistItem>태그 추가</RegistItem>
         <TagWrapper>
           <TagInput
@@ -257,8 +276,11 @@ const PieceCommit = () => {
           <BlueButton onClick={onAddTag} value={newTag} name={newTag}>
             태그 추가
           </BlueButton>
-          <WhiteButton onClick={tagRecommend} disabled={tagRecomToggle}>
-            태그 추천받기
+          <WhiteButton
+            onClick={tagRecommend}
+            disabled={tagRecomToggle ? true : false}
+          >
+            {tagRecomToggle ? "이미 추천 받았습니다" : "태그 추천받기"}
           </WhiteButton>
         </TagWrapper>
         <TagContainer>

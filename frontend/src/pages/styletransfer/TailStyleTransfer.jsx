@@ -66,20 +66,8 @@ const TailStyleTransfer = () => {
     };
 
     axios.post(url, formData, config).then((res) => {
-      // console.log(res);
-      // const base64spring = btoa(
-      //   String.fromCharCode(...new Uint8Array(res.data))
-      // );
-      // const contentType = res.headers["content-type"];
-      // setResultImg(`data:${contentType};base64${base64spring}`);
-      const reader = new FileReader();
-      reader.readAsDataURL(res.data);
-      return new Promise((resolve) => {
-        reader.onload = () => {
-          setResultImg(reader.result);
-          resolve();
-        };
-      });
+      console.log(res);
+      setResultImg(res.data);
     });
   };
 

@@ -28,6 +28,7 @@ const PieceCommit = () => {
   const [tags, setTags] = useState([]);
   const [newTag, setNewTag] = useState("");
   const [scent, setScent] = useState("");
+  const [tagRecomToggle, setTagRecomToggle] = useState(false);
 
   const [base64, setBase64] = useState(null);
 
@@ -47,6 +48,7 @@ const PieceCommit = () => {
     // 파일 자체 보관
     setUploadArt(file);
     setTags([]);
+    setTagRecomToggle(false);
 
     // base64형식 파일 만들기
     const reader = new FileReader();
@@ -145,6 +147,7 @@ const PieceCommit = () => {
         }
       });
       setTags((preState) => preState.concat(translate));
+      setTagRecomToggle(true);
     });
   };
 
@@ -254,7 +257,9 @@ const PieceCommit = () => {
           <BlueButton onClick={onAddTag} value={newTag} name={newTag}>
             태그 추가
           </BlueButton>
-          <WhiteButton onClick={tagRecommend}>태그 추천받기</WhiteButton>
+          <WhiteButton onClick={tagRecommend} disabled={tagRecomToggle}>
+            태그 추천받기
+          </WhiteButton>
         </TagWrapper>
         <TagContainer>
           <Row>

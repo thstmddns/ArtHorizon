@@ -2,29 +2,13 @@ import torch, torch.nn as nn, torch.nn.functional as F, torch.optim as optim
 from PIL import Image
 import torchvision, torchvision.transforms as transforms, torchvision.models as models
 from torchvision.utils import save_image 
-import os, copy, urllib.request, io,numpy, datetime, cv2, secrets, base64
-import pyrebase
-from dotenv import load_dotenv
+import os, copy, urllib.request, io,numpy, datetime, cv2, base64
+
 
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
-load_dotenv()
-firebaseConfig =  {
-  "apiKey": os.environ.get('MEDICI_API'),
-  "authDomain": os.environ.get('MEDICI_AUTHDOMAIN'),
-  "databaseURL" : os.environ.get('MEDICI_DBURL'),
-  "projectId": os.environ.get('MEDICI_PJTID'),
-  "storageBucket": os.environ.get('MEDICI_STORAGE'),
-  "messagingSenderId": os.environ.get('MEDICI_MSGSENDER'),
-  "appId": os.environ.get('MEDICI_APPID'),
-  "measurementId": os.environ.get('MEDICI_MEASUREMENTID' )
-}
 
-
-firebase = pyrebase.initialize_app(firebaseConfig)
-fb_storage = firebase.storage()
 
 def style_transfer(source1, source2):
-    imsize = 0
     source_img = ''
     for i in source2:
         if i == ' ':
@@ -242,22 +226,10 @@ def style_transfer(source1, source2):
                             my_img, mp, input_img)
     
     
-    token = 'fI0YLAvEV3gHsImtGsI8gitY6L82'
-    
     img = torchvision.transforms.ToPILImage()(output.squeeze())
-    
     return_image = io.BytesIO()
     img.save(return_image, "JPEG")
     return_value = base64.b64encode(return_image.getvalue())
-    # filename = secrets.token_hex(16)
-    # save_image(output,f'ST/nst/{filename}.jpg')
-    # fb_storage.child(f'nst/{filename}.jpg').put(f'ST/nst/{filename}.jpg')
-    # return_value = fb_storage.child(f'nst/{filename}.jpg').get_url(None)
-    
     
     return return_value
 
-def download(name):
-    storage.child(f"nst/{name}.jpg").download("downloaded.jpg")
-    return secrets.token_hex(16)
-    pass

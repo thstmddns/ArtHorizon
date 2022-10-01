@@ -2,14 +2,12 @@ import * as React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Home from "./pages/home/Home";
-import TailwindPieces from "./pages/tailwind-pieces/TailwindPieces";
-import TailwindPieceDetail from "./pages/tailwind-piecedetail/TailwindPieceDetail";
 import LogIn from "./pages/login/LogIn";
 import SignUp from "./pages/signup/SignUp";
 import MyPage from "./pages/mypage/MyPage";
 import UserModify from "./pages/usermodify/UserModify";
 import Pieces from "./pages/pieces/Pieces";
-import Help from "./pages/help/Help";
+import Piece from "./pages/piece/Piece";
 import Filter from "./pages/filter/Filter";
 import PieceDetail from "./pages/piecedetail/PieceDetail";
 
@@ -43,21 +41,17 @@ const router = createBrowserRouter([
   },
   {
     path: "/pieces",
-    // element: <Pieces />,
-    element: <TailwindPieces />,
+    element: <Pieces />,
   },
   {
     path: "/pieces/:pieceSeq",
-    element: <PieceDetail />,
+    // element: <PieceDetail />,
     // element: <TailwindPieceDetail />,
+    element: <Piece />,
   },
   {
     path: "/filter",
     element: <Filter />,
-  },
-  {
-    path: "/help",
-    element: <Help />,
   },
   {
     path: "/register",

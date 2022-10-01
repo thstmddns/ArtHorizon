@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 import { signup } from "../../redux/authSlice";
 
-const SignupForm = () => {
+const SignUpForm = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [nickname, setNickname] = useState("");
@@ -146,7 +146,7 @@ const SignupForm = () => {
   );
 };
 
-export default SignupForm;
+export default SignUpForm;
 
 const FormWrapper = styled.div`
   width: 420px;

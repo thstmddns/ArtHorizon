@@ -1,13 +1,21 @@
 import * as React from "react";
+import { useDispatch } from "react-redux";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import AOS from "aos";
+import "aos/dist/aos.css";
+
+import { getUser } from "./redux/authSlice";
 
 import Home from "./pages/home/Home";
-import LogIn from "./pages/login/LogIn";
-import SignUp from "./pages/signup/SignUp";
+import Login from "./pages/login/Login";
+import Signup from "./pages/signup/Signup";
 import MyPage from "./pages/mypage/MyPage";
 import UserModify from "./pages/usermodify/UserModify";
 import Pieces from "./pages/pieces/Pieces";
 import Piece from "./pages/piece/Piece";
+import Register from "./pages/register/Register";
 import Filter from "./pages/filter/Filter";
 import PieceDetail from "./pages/piecedetail/PieceDetail";
 
@@ -26,11 +34,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <LogIn />,
+    element: <Login />,
   },
   {
     path: "/signup",
-    element: <SignUp />,
+    element: <Signup />,
   },
   {
     path: "/usermodify",
@@ -56,7 +64,8 @@ const router = createBrowserRouter([
   },
   {
     path: "/register",
-    element: <PieceCommit />,
+    // element: <PieceCommit />,
+    element: <Register />,
   },
   {
     path: "/styletransfer",
@@ -74,10 +83,28 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
+  const dispatch = useDispatch();
+  AOS.init();
+
+  React.useEffect(() => {
+    dispatch(getUser());
+  }, [dispatch]);
+
   return (
     <React.Fragment>
       <GlobalStyle />
       <RouterProvider router={router} />
+      <ToastContainer
+        position="bottom-right"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover={false}
+      />
     </React.Fragment>
   );
 };

@@ -1,22 +1,22 @@
 import React from "react";
 import styled from "styled-components";
 
-import SignupForm from "./SignupForm";
+import SignUpForm from "./SignUpForm";
 
 import loginBackgroundImage from "../../assets/images/loginBackgroundImage.jpg";
 
-const Signup = () => {
+const SignUp = () => {
   return (
     <Container>
       <LeftDiv />
       <RightDiv>
-        <SignupForm />
+        <SignUpForm />
       </RightDiv>
     </Container>
   );
 };
 
-export default Signup;
+export default SignUp;
 
 const Container = styled.div`
   width: 100vw;

@@ -2,20 +2,21 @@ import torch, torch.nn as nn, torch.nn.functional as F, torch.optim as optim
 from PIL import Image
 import torchvision, torchvision.transforms as transforms, torchvision.models as models
 from torchvision.utils import save_image 
-import os, copy, urllib.request, io,numpy, datetime, cv2
+import os, copy, urllib.request, io,numpy, datetime, cv2, secrets, base64
 import pyrebase
+from dotenv import load_dotenv
 
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
-
-firebaseConfig = {
-  "apiKey": "AIzaSyAE8MStGjmPpGc1APmdSDXD8tXdT-8db84",
-  "authDomain": "art-horizon.firebaseapp.com",
-  "databaseURL" : "https://console.firebase.google.com/u/0/project/art-horizon/firestore/data/~2F",
-  "projectId": "art-horizon",
-  "storageBucket": "art-horizon.appspot.com",
-  "messagingSenderId": "769245386612",
-  "appId": "1:769245386612:web:bf5ff758abd344bb457e21",
-  "measurementId": "G-Y8MPFXX6V8"
+load_dotenv()
+firebaseConfig =  {
+  "apiKey": os.environ.get('MEDICI_API'),
+  "authDomain": os.environ.get('MEDICI_AUTHDOMAIN'),
+  "databaseURL" : os.environ.get('MEDICI_DBURL'),
+  "projectId": os.environ.get('MEDICI_PJTID'),
+  "storageBucket": os.environ.get('MEDICI_STORAGE'),
+  "messagingSenderId": os.environ.get('MEDICI_MSGSENDER'),
+  "appId": os.environ.get('MEDICI_APPID'),
+  "measurementId": os.environ.get('MEDICI_MEASUREMENTID' )
 }
 
 
@@ -243,11 +244,20 @@ def style_transfer(source1, source2):
     
     token = 'fI0YLAvEV3gHsImtGsI8gitY6L82'
     
-    # img = torchvision.transforms.ToPILImage()(output.squeeze())
+    img = torchvision.transforms.ToPILImage()(output.squeeze())
     
-    # return_image = io.BytesIO()
-    # img.save(return_image, "JPEG")
-    save_image(output,'ST/nst/1234.jpg')
-    fb_storage.child('nst/1234.jpg').put('ST/nst/1234.jpg')
-    return_value = fb_storage.child('nst/1234.jpg').get_url(None)
+    return_image = io.BytesIO()
+    img.save(return_image, "JPEG")
+    return_value = base64.b64encode(return_image.getvalue())
+    # filename = secrets.token_hex(16)
+    # save_image(output,f'ST/nst/{filename}.jpg')
+    # fb_storage.child(f'nst/{filename}.jpg').put(f'ST/nst/{filename}.jpg')
+    # return_value = fb_storage.child(f'nst/{filename}.jpg').get_url(None)
+    
+    
     return return_value
+
+def download(name):
+    storage.child(f"nst/{name}.jpg").download("downloaded.jpg")
+    return secrets.token_hex(16)
+    pass

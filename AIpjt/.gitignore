@@ -49,3 +49,7 @@ pip-selfcheck.json
 *.code-workspace
 
 # End of https://www.toptal.com/developers/gitignore/api/venv,python,visualstudiocode
+
+.env
+
+__pycache__

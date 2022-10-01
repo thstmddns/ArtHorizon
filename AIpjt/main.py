@@ -1,5 +1,5 @@
 from fastapi import FastAPI, File,UploadFile, Form
-from ST.styletransfer import style_transfer
+from ST.styletransfer import style_transfer, download
 from ST.tag_recommend import get_tag
 from ST.objectdetection import detection
 from pydantic import BaseModel
@@ -48,10 +48,12 @@ async def nst(filed: bytes = File(), src : str = Form()):
     # return StreamingResponse(content=return_image, media_type="image/jpeg")
     return style_transfer(io.BytesIO(filed),src)
     
+@app.post("/medici/nst-download")
+async def nst_download(name : str = Form()):
+    return {"download_url" : download(name)}
 
 
-
-@app.post("/medici/get_tag")
+@app.post("/medici/tags")
 async def tag_recommend(img: bytes = File()):
     return {"tag" : get_tag(io.BytesIO(img))}
 

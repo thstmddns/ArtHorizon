@@ -49,9 +49,7 @@ async def nst(filed: bytes = File(), src : str = Form()):
     return style_transfer(io.BytesIO(filed),src)
     
 
-
-
-@app.post("/medici/get_tag")
+@app.post("/medici/tags")
 async def tag_recommend(img: bytes = File()):
     return {"tag" : get_tag(io.BytesIO(img))}
 

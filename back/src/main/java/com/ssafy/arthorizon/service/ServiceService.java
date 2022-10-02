@@ -1,9 +1,7 @@
 package com.ssafy.arthorizon.service;
 
 import com.ssafy.arthorizon.admin.AdminRepository;
-import com.ssafy.arthorizon.piece.PieceRepository;
 import com.ssafy.arthorizon.service.Entity.ReportEntity;
-import com.ssafy.arthorizon.service.Entity.ReportTypeEntity;
 import com.ssafy.arthorizon.service.Repository.ReportRepository;
 import com.ssafy.arthorizon.service.Repository.ReportTypeRepository;
 import com.ssafy.arthorizon.user.Repository.UserRepository;

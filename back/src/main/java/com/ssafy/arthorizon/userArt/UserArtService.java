@@ -2,7 +2,7 @@ package com.ssafy.arthorizon.userArt;
 
 import com.ssafy.arthorizon.file.FileService;
 import com.ssafy.arthorizon.piece.PieceEntity;
-import com.ssafy.arthorizon.piece.PieceRepository;
+import com.ssafy.arthorizon.piece.Repository.PieceRepository;
 import com.ssafy.arthorizon.user.Repository.UserRepository;
 import com.ssafy.arthorizon.userArt.dto.UserArtDto;
 import org.springframework.beans.factory.annotation.Autowired;

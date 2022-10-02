@@ -2,7 +2,7 @@ package com.ssafy.arthorizon.user;
 
 import com.ssafy.arthorizon.common.CryptoUtil;
 import com.ssafy.arthorizon.piece.PieceEntity;
-import com.ssafy.arthorizon.piece.PieceRepository;
+import com.ssafy.arthorizon.piece.Repository.PieceRepository;
 import com.ssafy.arthorizon.user.Entity.BookmarkEntity;
 import com.ssafy.arthorizon.user.Entity.UserEntity;
 import com.ssafy.arthorizon.user.Repository.BookmarkRepository;

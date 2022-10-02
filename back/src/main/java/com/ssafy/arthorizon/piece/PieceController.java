@@ -2,9 +2,12 @@ package com.ssafy.arthorizon.piece;
 
 import com.ssafy.arthorizon.piece.dto.PieceDto;
 import com.ssafy.arthorizon.piece.dto.PiecePageDto;
+import com.ssafy.arthorizon.piece.dto.TagDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/pieces")
@@ -62,4 +65,9 @@ public class PieceController {
     }
 
     // 태그 조회
+    @GetMapping("/tag")
+    public ResponseEntity<List<TagDto>> tagMain(){
+        List<TagDto> tagDtoList = pieceService.tagMainService();
+        return new ResponseEntity<>(tagDtoList, HttpStatus.OK);
+    }
 }

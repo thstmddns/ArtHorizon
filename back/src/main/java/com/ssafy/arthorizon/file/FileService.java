@@ -30,9 +30,9 @@ public class FileService {
             long now = new Date().getTime();
 
             if(fileType.equals("profile")){
-                fileName = ORIGIN_PATH + ROOT_PROFILE + now;
+                fileName = ORIGIN_PATH + ROOT_PROFILE + now + ".jpg";
             } else{
-                fileName = ORIGIN_PATH + ROOT_USERART + now;
+                fileName = ORIGIN_PATH + ROOT_USERART + now + ".jpg";
             }
 
             // 밖으로 내보낼 아웃풋스트림을 만들고

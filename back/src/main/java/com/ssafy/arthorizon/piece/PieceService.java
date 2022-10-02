@@ -1,11 +1,14 @@
 package com.ssafy.arthorizon.piece;
 
+import com.ssafy.arthorizon.piece.Repository.PieceRepository;
+import com.ssafy.arthorizon.piece.Repository.TagRepository;
 import com.ssafy.arthorizon.piece.dto.PieceDto;
-import com.ssafy.arthorizon.piece.dto.PieceListDto;
 import com.ssafy.arthorizon.piece.dto.PiecePageDto;
+import com.ssafy.arthorizon.piece.dto.TagDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.HTML;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -16,6 +19,9 @@ public class PieceService {
 
     @Autowired
     private PieceRepository pieceRepository;
+
+    @Autowired
+    private TagRepository tagRepository;
 
     private final int LIMIT = 8;
 
@@ -91,13 +97,33 @@ public class PieceService {
         List<PieceEntity> pieceLists = new ArrayList<>(pieceSet);
 
         PiecePageDto piecePageDto = new PiecePageDto(lowCount, page, pieceLists);
+        piecePageDto.setResult(PieceDto.PieceResult.SUCCESS);
 
         return piecePageDto;
 
 
     }
 
+    // 메인화면 태그 조회
+    public List<TagDto> tagMainService() {
 
-    // 태그 조회
+        // 중복제거를 위해 set 형태로 고안
+        Set<TagDto> tagSet = new HashSet<>();
+        // 랜덤 추출을 위한 총 개수 생성
+        int lowCount = 15;
+
+        while(tagSet.size()<8){
+            int randomIndex = (int) (Math.random()*(lowCount)+1);
+            TagDto tagDto = new TagDto(tagRepository.findById((long) randomIndex).get());
+            if(tagDto!=null){
+                tagSet.add(tagDto);
+            }
+        }
+
+        List<TagDto> pieceLists = new ArrayList<>(tagSet);
+
+        return pieceLists;
+
+    }
 
 }

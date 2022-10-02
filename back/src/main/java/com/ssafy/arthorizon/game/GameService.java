@@ -1,6 +1,6 @@
 package com.ssafy.arthorizon.game;
 
-import com.ssafy.arthorizon.piece.PieceRepository;
+import com.ssafy.arthorizon.piece.Repository.PieceRepository;
 import com.ssafy.arthorizon.piece.dto.PieceListDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

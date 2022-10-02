@@ -6,16 +6,10 @@ const Reviews = () => {
       <div className="container px-5 py-48 mx-auto">
         {/* 헤더 */}
         <div className="flex flex-col text-center w-full mb-20">
-          <h1
-            className="text-3xl font-medium title-font mb-4 text-white"
-            data-aos="fade-up"
-          >
+          <h1 className="text-3xl font-medium title-font mb-4 text-white">
             후기
           </h1>
-          <p
-            className="lg:w-2/3 mx-auto leading-relaxed text-base text-gray-100"
-            data-aos="fade-in"
-          >
+          <p className="lg:w-2/3 mx-auto leading-relaxed text-base text-gray-100">
             자신만의 개성으로 무장한 신인 화가들의 작품을 만나보세요. 그들과
             소통하고 공감하세요. 오직 Art Horizon 에서만 가능합니다.
           </p>
@@ -25,7 +19,7 @@ const Reviews = () => {
         </div>
         <div className="flex flex-wrap -m-4">
           {/* 후기 아이템 */}
-          <div className="p-4 lg:w-1/3 md:w-1/2 w-full" data-aos="zoom-in">
+          <div className="p-4 lg:w-1/3 md:w-1/2 w-full">
             <div className="h-full bg-white p-8 rounded-xl hover:drop-shadow-lg hover:-translate-y-6 transition">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -45,7 +39,7 @@ const Reviews = () => {
           </div>
 
           {/* 후기 아이템 */}
-          <div className="p-4 lg:w-1/3 md:w-1/2 w-full" data-aos="zoom-in">
+          <div className="p-4 lg:w-1/3 md:w-1/2 w-full">
             <div className="h-full bg-white p-8 rounded-xl hover:drop-shadow-lg hover:-translate-y-6 transition">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -65,7 +59,7 @@ const Reviews = () => {
           </div>
 
           {/* 후기 아이템 */}
-          <div className="p-4 lg:w-1/3 md:w-1/2 w-full" data-aos="zoom-in">
+          <div className="p-4 lg:w-1/3 md:w-1/2 w-full">
             <div className="h-full bg-white p-8 rounded-xl hover:drop-shadow-lg hover:-translate-y-6 transition">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -85,7 +79,7 @@ const Reviews = () => {
           </div>
 
           {/* 후기 아이템 */}
-          <div className="p-4 lg:w-1/3 md:w-1/2 w-full" data-aos="zoom-in">
+          <div className="p-4 lg:w-1/3 md:w-1/2 w-full">
             <div className="h-full bg-white p-8 rounded-xl hover:drop-shadow-lg hover:-translate-y-6 transition">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -105,7 +99,7 @@ const Reviews = () => {
           </div>
 
           {/* 후기 아이템 */}
-          <div className="p-4 lg:w-1/3 md:w-1/2 w-full" data-aos="zoom-in">
+          <div className="p-4 lg:w-1/3 md:w-1/2 w-full">
             <div className="h-full bg-white p-8 rounded-xl hover:drop-shadow-lg hover:-translate-y-6 transition">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -125,7 +119,7 @@ const Reviews = () => {
           </div>
 
           {/* 후기 아이템 */}
-          <div className="p-4 lg:w-1/3 md:w-1/2 w-full" data-aos="zoom-in">
+          <div className="p-4 lg:w-1/3 md:w-1/2 w-full">
             <div className="h-full bg-white p-8 rounded-xl hover:drop-shadow-lg hover:-translate-y-6 transition">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

@@ -10,18 +10,12 @@ const Artists = () => {
         {/* 화가 소개 헤더 */}
         <div className="flex flex-wrap w-full mb-20">
           <div className="lg:w-1/2 w-full mb-6 lg:mb-0">
-            <h1
-              className="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900"
-              data-aos="fade-right"
-            >
+            <h1 className="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">
               화가 소개
             </h1>
             <div className="h-1 w-20 bg-amber-300 rounded"></div>
           </div>
-          <p
-            className="lg:w-1/2 w-full leading-relaxed text-gray-500"
-            data-aos="fade-left"
-          >
+          <p className="lg:w-1/2 w-full leading-relaxed text-gray-500">
             Art Horizon에서는 누구나 화가가 될 수 있고, 관람객이 될 수 있습니다.
             버튼 클릭 한 번으로 손쉽게 화가로 전환할 수 있고, 본인의 작품을 올려
             다른 사람들에게 즐거움을 줄 수 있습니다. 화가를 찾아보세요.
@@ -29,7 +23,7 @@ const Artists = () => {
         </div>
 
         {/* 화가 아이템 */}
-        <div data-aos="flip-up">
+        <div>
           <div
             className="flex items-center lg:w-3/5 mx-auto border-b p-8 mb-10 border-gray-200 sm:flex-row flex-col bg-white rounded-xl drop-shadow-md cursor-pointer hover:scale-105 transition"
             onClick={() => navigate(`/mypage/1`)}
@@ -59,7 +53,7 @@ const Artists = () => {
         </div>
 
         {/* 화가 아이템 */}
-        <div data-aos="flip-down">
+        <div>
           <div
             className="flex items-center lg:w-3/5 mx-auto border-b p-8 mb-10 border-gray-200 sm:flex-row flex-col bg-white rounded-xl drop-shadow-md cursor-pointer hover:scale-105 transition"
             onClick={() => navigate(`/mypage/1`)}
@@ -89,7 +83,7 @@ const Artists = () => {
         </div>
 
         {/* 화가 아이템 */}
-        <div data-aos="flip-up">
+        <div>
           <div
             className="flex items-center lg:w-3/5 mx-auto p-8 mb-10 sm:flex-row flex-col bg-white rounded-xl drop-shadow-md cursor-pointer hover:scale-105 transition"
             onClick={() => navigate(`/mypage/1`)}

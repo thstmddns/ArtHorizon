@@ -22,18 +22,12 @@ const Tags = () => {
         {/* 태그 소개 헤더 */}
         <div className="flex flex-wrap w-full mb-20">
           <div className="lg:w-1/2 w-full mb-6 lg:mb-0">
-            <h1
-              className="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900"
-              data-aos="fade-right"
-            >
+            <h1 className="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">
               작품 추천 태그
             </h1>
             <div className="h-1 w-20 bg-sky-300 rounded"></div>
           </div>
-          <p
-            className="lg:w-1/2 w-full leading-relaxed text-gray-500"
-            data-aos="fade-left"
-          >
+          <p className="lg:w-1/2 w-full leading-relaxed text-gray-500">
             Art Horizon의 AI가 자사 데이터베이스의 작품을 분석하고, 태그와
             통계를 생성한 것을 바탕으로 태그를 추천합니다. 신기한 태그의 맛을
             보세요.
@@ -46,7 +40,6 @@ const Tags = () => {
               key={Math.random().toString()}
               className="p-4 xl:w-1/4 md:w-1/2 sm:w-1/2 drop-shadow-md transition ease-in-out hover:-translate-y-6 duration-200 cursor-pointer"
               onClick={() => navigate(`/pieces`)}
-              data-aos="flip-down"
             >
               <div className="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden bg-white rounded-lg">
                 <img

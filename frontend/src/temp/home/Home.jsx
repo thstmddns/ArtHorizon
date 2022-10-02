@@ -1,7 +1,4 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-
-import { getUser } from "../../redux/authSlice";
+import React from "react";
 
 import NavBar from "../../components/NavBar";
 import Intro from "./components/Intro";
@@ -13,11 +10,6 @@ import Reviews from "./components/Reviews";
 import Footer from "../../components/Footer";
 
 const Home = () => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getUser());
-  }, []);
-
   return (
     <React.Fragment>
       {/* 내비게이션 바 */}

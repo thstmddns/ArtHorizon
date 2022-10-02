@@ -60,6 +60,9 @@ export const authApi = {
   getUser: () => api.get("/users/info"),
   login: (loginData) => api.post("/users/login", loginData),
   signup: (signupData) => api.post("/users/signup", signupData),
+  checkEmail: (email) => api.get("/users/check", { params: { email } }),
+  checkNickname: (nickname) =>
+    api.get("/users/check", { params: { nickname } }),
   quit: () => api.delete("/users/quit"),
   changeProfile: (profileData) => api.put("/users/change-profile", profileData),
   changePassword: (passwordData) => api.put("/users/password", passwordData),
@@ -77,5 +80,6 @@ export const authApi = {
 export const piecesApi = {
   getPiecesRecent: (page) => api.get("/pieces/recent", { params: { page } }),
   getPiecesPopular: (page) => api.get("/pieces/popular", { params: { page } }),
+  getPiecesRandom: (page) => api.get("/pieces/random", { params: { page } }),
   getPieceDetail: (pieceSeq) => api.get(`/pieces/${pieceSeq}`),
 };

@@ -50,7 +50,6 @@ const Piece = () => {
               // height: "92.95vh",
               width: "100vw",
             }}
-            data-aos="fade-in"
           ></div>
         )}
 
@@ -74,14 +73,12 @@ const Piece = () => {
                 src={`http://j7d201.p.ssafy.io/api/my-file/read/${piece.pieceImg}`}
                 style={{ maxWidth: "73vw", maxHeight: "90vh" }}
                 onClick={() => setCinema(true)}
-                data-aos="zoom-out"
               />
 
               {/* 설명 */}
               <div
                 className="flex flex-col justify-between backdrop-blur-sm p-4"
                 // style={{ width: "23vw", maxHeight: "90vh" }}
-                data-aos="fade-left"
               >
                 {/* 내용 */}
                 <div className="flex flex-col">
@@ -202,7 +199,6 @@ const Piece = () => {
               // height: "92.95vh",
               width: "100vw",
             }}
-            data-aos="fade-in"
           ></div>
         )}
 
@@ -227,7 +223,6 @@ const Piece = () => {
                 src={`http://j7d201.p.ssafy.io/api/my-file/read/${piece.pieceImg}`}
                 style={{ width: "100vw", height: "100vh" }}
                 onClick={() => setCinema(false)}
-                data-aos="zoom-out"
               />
             </div>
           </div>

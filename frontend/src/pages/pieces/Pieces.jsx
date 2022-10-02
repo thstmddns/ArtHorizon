@@ -95,14 +95,11 @@ const Pieces = () => {
   return (
     <React.Fragment>
       <NavBar />
-      <section
-        className="text-gray-600 body-font"
-        style={{ marginTop: "71px" }}
-      >
-        <div className="pb-24 mx-auto">
+      <section className="" style={{ marginTop: "71px" }}>
+        <div className="py-64 mx-auto">
           {/* 인트로 */}
-          <section className="text-gray-600 body-font border-solid border-gray-50 border-b-2 bg-gray-50">
-            <div className="container px-5 py-20 mx-auto">
+          <section className="border-solid border-gray-50 border-b-2">
+            <div className="container mx-auto">
               {/* 작품 목록 헤더 */}
               <div className="text-center mb-20">
                 <h1
@@ -180,6 +177,7 @@ const Pieces = () => {
 
               {/* 작품 생성 버튼 */}
               <Link
+                to="/register"
                 className="block max-w-xs mx-auto rounded-lg p-6 bg-amber-400 drop-shadow-md space-y-3 hover:bg-amber-300 hover:ring-amber-400 focus:ring-4 focus:bg-amber-300 focus:ring-amber-400 transition"
                 data-aos="fade-up"
               >

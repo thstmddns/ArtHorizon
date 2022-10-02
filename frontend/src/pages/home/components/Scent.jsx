@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Reviews = () => {
   return (
@@ -141,12 +142,14 @@ const Reviews = () => {
             </div>
           </div>
         </div>
-        <button
-          className="flex mx-auto mt-16 text-white bg-amber-400 border-0 py-2 px-8 focus:outline-none hover:bg-amber-500 active:bg-amber-600 focus:ring focus:ring-amber-300 rounded-lg text-lg transition"
-          data-aos="fade-down"
-        >
-          그림의 향 찾으러 가기!
-        </button>
+        <Link to="/scent">
+          <button
+            className="flex mx-auto mt-16 text-white bg-amber-400 border-0 py-2 px-8 focus:outline-none hover:bg-amber-500 active:bg-amber-600 focus:ring focus:ring-amber-300 rounded-lg text-lg transition"
+            data-aos="fade-down"
+          >
+            그림의 향 찾으러 가기!
+          </button>
+        </Link>
       </div>
     </section>
   );

@@ -16,9 +16,9 @@ const NavBar = () => {
   } = useSelector((state) => state.auth);
 
   return (
-    <div className="bg-white fixed inset-x-0 top-0 z-50">
+    <div className="fixed inset-x-0 top-0 z-50 backdrop-blur">
       <nav
-        className="body-font container px-5 mx-auto flex py-3 flex-col md:flex-row items-center bg-white-100"
+        className="body-font container px-5 mx-auto flex py-3 flex-col md:flex-row items-center"
         // style={{ height: "70px" }}
         style={{ height: "7vh" }}
       >
@@ -66,7 +66,7 @@ const NavBar = () => {
           <div>
             <button
               onClick={() => navigate(`/mypage/${userSeq}`)}
-              className="inline-flex items-center text-amber-500 py-1 px-3 border-amber-300 focus:outline-none hover:text-white hover:bg-amber-500 hover:drop-shadow-md border border-white hover:border hover:border-amber-200 rounded-lg text-base mt-4 md:mt-0 mr-1 transition"
+              className="inline-flex items-center text-amber-500 py-1 px-3 bg-white border-amber-300 focus:outline-none hover:text-white hover:bg-amber-500 hover:drop-shadow-md border border-white hover:border hover:border-amber-200 rounded-lg text-base mt-4 md:mt-0 mr-1 transition"
             >
               {myNickname}
             </button>

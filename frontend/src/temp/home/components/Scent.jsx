@@ -6,16 +6,10 @@ const Reviews = () => {
       <div className="container px-5 py-48 mx-auto">
         {/* 헤더 */}
         <div className="text-center mb-20">
-          <h1
-            className="sm:text-3xl text-2xl font-medium text-center title-font text-gray-900 mb-4"
-            data-aos="fade-up"
-          >
+          <h1 className="sm:text-3xl text-2xl font-medium text-center title-font text-gray-900 mb-4">
             그림의 향
           </h1>
-          <p
-            className="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto"
-            data-aos="fade-in"
-          >
+          <p className="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto">
             자신만의 개성으로 무장한 신인 화가들의 작품을 만나보세요. 그들과
             소통하고 공감하세요. 오직 Art Horizon 에서만 가능합니다.
           </p>
@@ -26,7 +20,7 @@ const Reviews = () => {
 
         {/* 6개의 어쩌고 */}
         <div className="flex flex-wrap lg:w-4/5 sm:mx-auto sm:mb-2 -mx-2">
-          <div className="p-2 sm:w-1/2 w-full" data-aos="fade-right">
+          <div className="p-2 sm:w-1/2 w-full">
             <div className="bg-sky-300 rounded flex p-4 h-full items-center">
               <svg
                 fill="none"
@@ -45,7 +39,7 @@ const Reviews = () => {
               </span>
             </div>
           </div>
-          <div className="p-2 sm:w-1/2 w-full" data-aos="fade-left">
+          <div className="p-2 sm:w-1/2 w-full">
             <div className="bg-sky-300 rounded flex p-4 h-full items-center">
               <svg
                 fill="none"
@@ -64,7 +58,7 @@ const Reviews = () => {
               </span>
             </div>
           </div>
-          <div className="p-2 sm:w-1/2 w-full" data-aos="fade-right">
+          <div className="p-2 sm:w-1/2 w-full">
             <div className="bg-sky-400 rounded flex p-4 h-full items-center">
               <svg
                 fill="none"
@@ -83,7 +77,7 @@ const Reviews = () => {
               </span>
             </div>
           </div>
-          <div className="p-2 sm:w-1/2 w-full" data-aos="fade-left">
+          <div className="p-2 sm:w-1/2 w-full">
             <div className="bg-sky-400 rounded flex p-4 h-full items-center">
               <svg
                 fill="none"
@@ -102,7 +96,7 @@ const Reviews = () => {
               </span>
             </div>
           </div>
-          <div className="p-2 sm:w-1/2 w-full" data-aos="fade-right">
+          <div className="p-2 sm:w-1/2 w-full">
             <div className="bg-sky-500 rounded flex p-4 h-full items-center">
               <svg
                 fill="none"
@@ -121,7 +115,7 @@ const Reviews = () => {
               </span>
             </div>
           </div>
-          <div className="p-2 sm:w-1/2 w-full" data-aos="fade-left">
+          <div className="p-2 sm:w-1/2 w-full">
             <div className="bg-sky-500 rounded flex p-4 h-full items-center">
               <svg
                 fill="none"
@@ -141,10 +135,7 @@ const Reviews = () => {
             </div>
           </div>
         </div>
-        <button
-          className="flex mx-auto mt-16 text-white bg-amber-400 border-0 py-2 px-8 focus:outline-none hover:bg-amber-500 active:bg-amber-600 focus:ring focus:ring-amber-300 rounded-lg text-lg transition"
-          data-aos="fade-down"
-        >
+        <button className="flex mx-auto mt-16 text-white bg-amber-400 border-0 py-2 px-8 focus:outline-none hover:bg-amber-500 active:bg-amber-600 focus:ring focus:ring-amber-300 rounded-lg text-lg transition">
           그림의 향 찾으러 가기!
         </button>
       </div>

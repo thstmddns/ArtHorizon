@@ -12,7 +12,7 @@ const Intro = () => {
       <div className="container px-5 py-64 mx-auto">
         {/* 스타일 트랜스퍼 헤더 */}
         <div className="text-center mb-20">
-          <div className="flex justify-center" data-aos="fade-down">
+          <div className="flex justify-center">
             <h1 className="text-9xl font-medium title-font text-amber-500 mb-4">
               Art
             </h1>
@@ -26,10 +26,7 @@ const Intro = () => {
           <h1 className="text-9xl font-medium title-font text-gray-900 text-amber-300 mb-4">
             Horizon
           </h1> */}
-          <p
-            className="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto text-gray-500"
-            data-aos="fade-in"
-          >
+          <p className="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto text-gray-500">
             모든 국민은 인간으로서의 존엄과 가치를 가지며, 행복을 추구할 권리를
             가진다. 국가는 개인이 가지는 불가침의 기본적 인권을 확인하고 이를
             보장할 의무를 진다. 모든 국민은 자기의 행위가 아닌 친족의 행위로
@@ -45,7 +42,6 @@ const Intro = () => {
         <button
           className="flex mx-auto mt-16 text-white bg-amber-400 border-0 py-4 px-12 focus:outline-none hover:bg-amber-500 active:bg-amber-600 focus:ring focus:ring-amber-300 hover:drop-shadow-md rounded-lg text-xl font-bold transition"
           onClick={() => navigate("/pieces")}
-          data-aos="fade-up"
         >
           원하는 그림 검색하기
         </button>

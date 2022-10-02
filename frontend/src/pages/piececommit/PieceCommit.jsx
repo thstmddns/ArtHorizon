@@ -4,6 +4,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { Row, Col } from "react-grid-system";
 import { VscChromeClose } from "react-icons/vsc";
+import { toast } from "react-toastify";
 
 import NavigationBar from "../../components/NavigationBar";
 import Input from "../../components/input/Input";
@@ -16,7 +17,6 @@ import { getUser } from "../../redux/authSlice";
 
 const PieceCommit = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { mySeq: userSeq } = useSelector((state) => state.auth);
 
   const [newArt, setNewArt] = useState("");
@@ -71,25 +71,25 @@ const PieceCommit = () => {
         });
         const file = new File([blob], "image.jpg");
         setSendingArt(file);
-        const url = "http://127.0.0.1:8000/medici/tags";
-        const config = {
-          Headers: {
-            "content-type": "multipart/form-data",
-          },
-        };
-        const formData = new FormData();
-        formData.append("img", file);
-        axios
-          .post(url, formData, config)
-          .then((res) => {
-            console.log(res.data.tag);
-            setScent(res.data.tag);
-            setBase64(formData);
-            resolve();
-          })
-          .catch((err) => {
-            console.error(err);
-          });
+        // const url = "http://127.0.0.1:8000/medici/tags";
+        // const config = {
+        //   Headers: {
+        //     "content-type": "multipart/form-data",
+        //   },
+        // };
+        // const formData = new FormData();
+        // formData.append("img", file);
+        // axios
+        //   .post(url, formData, config)
+        //   .then((res) => {
+        //     console.log(res.data.tag);
+        //     setScent(res.data.tag);
+        //     setBase64(formData);
+        //     resolve();
+        //   })
+        //   .catch((err) => {
+        //     console.error(err);
+        //   });
       };
     });
   };
@@ -153,6 +153,8 @@ const PieceCommit = () => {
           case "water":
             translate.push("물이 있는 그림");
             break;
+          default:
+            break;
         }
       });
       setTags((preState) => preState.concat(translate));
@@ -168,29 +170,31 @@ const PieceCommit = () => {
   };
 
   const submitPiece = () => {
-    // 먼저 사진을 보내서 향을 받아오고
     // 이후 먼저 사진을 보내고 pieceImg를 받고 <= 여기서 이제 토큰을 가져와야하는데 어디서 가져옴? <= 해결
     // 마지막으로 pieceTitleKr, pieceDesc, pieceImg, pieceTag, pieceScent를 JSON으로 보내기
+    // console.log(token);
+    if (artTitle === "") {
+      alert("제목을 적어주세요");
+      return;
+    } else if (tags.length === 0) {
+      alert("태그는 적어도 하나 이상 있어야합니다");
+      return;
+    }
     try {
-      const formData1 = new FormData();
-      formData1.append("multipartFile", sendingArt);
-      const url2 = "http://j7d201.p.ssafy.io/api/my-file/user-art";
-      const url3 = "http://j7d201.p.ssafy.io/api/user-art";
+      const formData2 = new FormData();
+      formData2.append("multipartFile", uploadArt);
+      const url1 = "http://j7d201.p.ssafy.io/api/my-file/user-art";
+      const url2 = "http://j7d201.p.ssafy.io/api/user-art";
 
       const config1 = {
-        Headers: {
-          "Content-Type": "multipart/form-data",
+        headers: {
           jwt: token,
-          crossDomain: true,
-          credentials: "include",
-          withCredentials: true,
-          Accept: "*/*",
-          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "multipart/form-data",
         },
       };
 
       axios
-        .post(url2, formData1, config1)
+        .post(url1, formData2, config1)
         .then((res) => {
           console.log(res);
           setPieceImg(res.data);
@@ -199,22 +203,24 @@ const PieceCommit = () => {
             pieceTitleKr: artTitle,
             pieceTitleEn: "",
             pieceDesc: artContent,
-            pieceImg: pieceImg,
+            pieceImg: res.data,
             pieceTag: tagString,
             pieceScent: scent,
             piecePrice: price,
           };
-          const config3 = {
-            Headers: {
+          const config2 = {
+            headers: {
+              "Content-Type": "application/json",
               jwt: token,
-              "content-type": "application/json",
-              Authorziation: token,
             },
           };
-          axios.post(url3, JSON.stringify(data), config3).then((res) => {
-            console.log(res);
-            // navigate(`/mypage/${userSeq}`);
-          });
+          axios
+            .post(url2, JSON.stringify(data), config2)
+            .then((res) => {
+              console.log(res);
+              // navigate(`/mypage/${userSeq}`);
+            })
+            .catch((err) => console.error(err));
         })
         .catch((err) => console.error(err));
     } catch {

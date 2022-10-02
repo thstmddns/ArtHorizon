@@ -64,8 +64,8 @@ const router = createBrowserRouter([
   },
   {
     path: "/register",
-    // element: <PieceCommit />,
-    element: <Register />,
+    element: <PieceCommit />,
+    // element: <Register />,
   },
   {
     path: "/styletransfer",

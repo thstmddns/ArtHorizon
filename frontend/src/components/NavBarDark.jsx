@@ -34,15 +34,21 @@ const NavBar = () => {
         </Link>
         <div className="text-gray-600 md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-900	flex flex-wrap items-center text-base justify-center">
           <Link
-            to={"/pieces"}
+            to="/pieces"
             className="mr-5 text-gray-500 underline-offset-4 hover:underline hover:text-gray-300 transition"
           >
             작품 목록
           </Link>
-          <Link className="mr-5 text-gray-500 underline-offset-4 hover:underline hover:text-gray-300 transition">
+          <Link
+            to="/style"
+            className="mr-5 text-gray-500 underline-offset-4 hover:underline hover:text-gray-300 transition"
+          >
             스타일 트랜스퍼
           </Link>
-          <Link className="mr-5 text-gray-500 underline-offset-4 hover:underline hover:text-gray-300 transition">
+          <Link
+            to="/scent"
+            className="mr-5 text-gray-500 underline-offset-4 hover:underline hover:text-gray-300 transition"
+          >
             그림의 향
           </Link>
         </div>

@@ -10,7 +10,7 @@ const Intro = () => {
       style={{ marginTop: "71px" }}
     >
       <div className="container px-5 py-64 mx-auto">
-        {/* 스타일 트랜스퍼 헤더 */}
+        {/* 인트로 헤더 */}
         <div className="text-center mb-20">
           <div className="flex justify-center" data-aos="fade-down">
             <h1 className="text-9xl font-medium title-font text-amber-500 mb-4">

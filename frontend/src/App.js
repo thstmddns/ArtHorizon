@@ -8,6 +8,8 @@ import "aos/dist/aos.css";
 
 import { getUser } from "./redux/authSlice";
 
+import GlobalStyle from "./GlobalStyle";
+
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import Signup from "./pages/signup/Signup";
@@ -17,15 +19,11 @@ import Pieces from "./pages/pieces/Pieces";
 import Piece from "./pages/piece/Piece";
 import Register from "./pages/register/Register";
 import Filter from "./pages/filter/Filter";
-import PieceDetail from "./pages/piecedetail/PieceDetail";
+import PieceCommit from "./pages/piececommit/PieceCommit";
+import StyleTransfer from "./pages/style-transfer/StyleTransfer";
+import Scent from "./pages/scent/Scent";
 
 import NotFound from "./pages/not-found/NotFound";
-
-import GlobalStyle from "./GlobalStyle";
-import PieceCommit from "./pages/piececommit/PieceCommit";
-import StyleTransfer from "./pages/styletransfer/StyleTransfer";
-import Scent from "./pages/scent/Scent";
-import TailStyleTransfer from "./pages/styletransfer/TailStyleTransfer";
 
 const router = createBrowserRouter([
   {
@@ -41,7 +39,7 @@ const router = createBrowserRouter([
     element: <Signup />,
   },
   {
-    path: "/usermodify",
+    path: "/modify",
     element: <UserModify />,
   },
   {
@@ -54,8 +52,6 @@ const router = createBrowserRouter([
   },
   {
     path: "/pieces/:pieceSeq",
-    // element: <PieceDetail />,
-    // element: <TailwindPieceDetail />,
     element: <Piece />,
   },
   {
@@ -68,9 +64,8 @@ const router = createBrowserRouter([
     // element: <Register />,
   },
   {
-    path: "/styletransfer",
-    // element: <StyleTransfer />,
-    element: <TailStyleTransfer />,
+    path: "/style",
+    element: <StyleTransfer />,
   },
   {
     path: "/scent",

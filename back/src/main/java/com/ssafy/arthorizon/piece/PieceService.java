@@ -6,14 +6,13 @@ import com.ssafy.arthorizon.piece.dto.PieceDto;
 import com.ssafy.arthorizon.piece.dto.PieceListDto;
 import com.ssafy.arthorizon.piece.dto.PiecePageDto;
 import com.ssafy.arthorizon.piece.dto.TagDto;
+import com.ssafy.arthorizon.user.Entity.BookmarkEntity;
+import com.ssafy.arthorizon.user.Repository.BookmarkRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.HTML;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class PieceService {
@@ -23,6 +22,9 @@ public class PieceService {
 
     @Autowired
     private TagRepository tagRepository;
+
+    @Autowired
+    private BookmarkRepository bookmarkRepository;
 
     private final int LIMIT = 8;
 
@@ -64,7 +66,7 @@ public class PieceService {
     }
 
     // 단일 작품 조회
-    public PieceDto pieceOne(Long pieceSeq) {
+    public PieceDto pieceOne(Long pieceSeq, Long userSeq) {
         PieceEntity pieceEntity = pieceRepository.findByPieceSeq(pieceSeq);
 
         if(pieceEntity==null){
@@ -74,6 +76,22 @@ public class PieceService {
         } else {
             PieceDto pieceDto = new PieceDto(pieceEntity);
             pieceDto.setResult(PieceDto.PieceResult.SUCCESS);
+
+            // 정상적으로 작품을 가져왔으므로, 북마크 검사
+            if(userSeq == 0) {
+                // 비로그인 상태의 유저라는 의미이므로 userBookmarkYn은 N으로 나간다
+                pieceDto.setPieceBookmarkYn('N');
+            } else {
+                // 로그인 상태의 유저라는 의미이므로 북마크 되어있는지 검사한다
+                Optional<BookmarkEntity> bookmarkEntityOptional =
+                        bookmarkRepository.findAllByBookmarker_UserSeqAndBookmarking_PieceSeq(userSeq, pieceEntity.getPieceSeq());
+                if(bookmarkEntityOptional.isPresent()) {
+                    pieceDto.setPieceBookmarkYn('Y');
+                } else {
+                    pieceDto.setPieceBookmarkYn('N');
+                }
+            }
+
             return pieceDto;
         }
 

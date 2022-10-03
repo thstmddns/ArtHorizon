@@ -29,6 +29,8 @@ public class PieceDto {
     private String pieceScent;
     private int piecePrice;
 
+    private char pieceBookmarkYn;
+
     private PieceResult result;
 
     public PieceDto(){}

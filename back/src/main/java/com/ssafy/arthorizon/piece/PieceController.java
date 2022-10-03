@@ -4,6 +4,7 @@ import com.ssafy.arthorizon.piece.dto.PieceDto;
 import com.ssafy.arthorizon.piece.dto.PieceListDto;
 import com.ssafy.arthorizon.piece.dto.PiecePageDto;
 import com.ssafy.arthorizon.piece.dto.TagDto;
+import com.ssafy.arthorizon.user.JwtService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +16,11 @@ import java.util.List;
 public class PieceController {
 
     private final PieceService pieceService;
+    private final JwtService jwtService;
 
-    public PieceController(PieceService pieceService) {
+    public PieceController(PieceService pieceService, JwtService jwtService) {
         this.pieceService = pieceService;
+        this.jwtService = jwtService;
     }
 
     // 작품 목록 최신순 조회 페이지네이션
@@ -56,13 +59,23 @@ public class PieceController {
 
     // 단일 작품 조회
     @GetMapping("/{pieceSeq}")
-    public ResponseEntity<PieceDto> pieceOne(@PathVariable Long pieceSeq){
-        PieceDto pieceDto = pieceService.pieceOne(pieceSeq);
-        if(pieceDto.getResult()== PieceDto.PieceResult.SUCCESS){
+    public ResponseEntity<PieceDto> pieceOne(@RequestHeader("jwt") String jwt, @PathVariable Long pieceSeq){
+
+        PieceDto pieceDto;
+
+        if (jwt.isEmpty()) {
+            pieceDto = pieceService.pieceOne(pieceSeq, (long) 0);
+        } else {
+            Long userSeq = jwtService.getUserSeq(jwt);
+            pieceDto = pieceService.pieceOne(pieceSeq, userSeq);
+        }
+
+        if(pieceDto.getResult() == PieceDto.PieceResult.SUCCESS){
             return new ResponseEntity<>(pieceDto,HttpStatus.OK);
         } else {
             return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
         }
+
     }
 
     // 태그 조회

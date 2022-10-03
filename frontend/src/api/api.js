@@ -82,4 +82,9 @@ export const piecesApi = {
   getPiecesPopular: (page) => api.get("/pieces/popular", { params: { page } }),
   getPiecesRandom: (page) => api.get("/pieces/random", { params: { page } }),
   getPieceDetail: (pieceSeq) => api.get(`/pieces/${pieceSeq}`),
+  getMainTags: () => api.get("pieces/tag"),
+};
+
+export const artistApi = {
+  getRandomArtists: () => api.get("/users/artist"),
 };

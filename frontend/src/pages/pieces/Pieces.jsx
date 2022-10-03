@@ -28,25 +28,26 @@ const Pieces = () => {
   const [isFetching, setIsFetching] = useState(false);
   const [hasNextPage, setNextPage] = useState(true);
 
-  const fetchRecentPieces = useCallback(async () => {
-    // setIsLoading(true);
-    const { data } = await piecesApi.getPiecesRecent(page);
+  // const fetchRecentPieces = useCallback(async () => {
+  //   // setIsLoading(true);
+  //   const { data } = await piecesApi.getPiecesRecent(page);
+  //   console.log("data:", data);
+  //   setRecentPieces((prevState) => [...prevState, ...data.pieceList]);
+  //   setPage((prevState) => prevState + 1);
+  //   // setNextPage();
+  //   setIsFetching(false);
+  //   setIsLoading(false);
+  // }, [page]);
+
+  const fetchRandomPieces = useCallback(async () => {
+    const { data } = await piecesApi.getPiecesRandom(page);
     console.log("data:", data);
-    setRecentPieces((prevState) => [...prevState, ...data.pieceList]);
+    setRandomPieces((prevState) => [...prevState, ...data.pieceList]);
     setPage((prevState) => prevState + 1);
     // setNextPage();
     setIsFetching(false);
     setIsLoading(false);
   }, [page]);
-
-  // const fetchRandomPieces = useCallback(async () => {
-  //   const { data } = await piecesApi.getPiecesRandom(page);
-  //   console.log("data:", data);
-  //   setRandomPieces((prevState) => [...prevState, ...data.pieceList]);
-  //   setPage((prevState) => prevState + 1);
-  //   // setNextPage();
-  //   setIsFetching(false);
-  // }, [page]);
 
   // // 무한스크롤
   // useEffect(() => {
@@ -84,13 +85,14 @@ const Pieces = () => {
   useEffect(() => {
     if (isFetching && hasNextPage) {
       setIsLoading(true);
-      setTimeout(fetchRecentPieces, 1000);
+      // setTimeout(fetchRecentPieces, 1000);
+      setTimeout(fetchRandomPieces, 1000);
       // fetchRecentPieces();
       // fetchRandomPieces();
     } else if (!hasNextPage) {
       setIsFetching(false);
     }
-  }, [isFetching, fetchRecentPieces, hasNextPage]);
+  }, [isFetching, fetchRandomPieces, hasNextPage]);
 
   return (
     <React.Fragment>
@@ -215,7 +217,7 @@ const Pieces = () => {
 
               {/* 그림 리스트 */}
               <div className="lg:columns-4 md:columns-3 sm:columns-2 gap-2">
-                {recentPieces?.map((piece) => (
+                {randomPieces?.map((piece) => (
                   <div
                     key={Math.random().toString()}
                     className={`shadow-md rounded mb-2 drop-shadow-md overflow-hidden relative cursor-pointer ${

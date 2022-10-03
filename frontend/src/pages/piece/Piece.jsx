@@ -99,12 +99,14 @@ const Piece = () => {
                   </div>
                   <div className="text-white text-lg">{piece.pieceGenre}</div>
                   <div className="text-white text-lg">{piece.pieceStyle}</div>
-                  <div className="text-white text-lg">
-                    {piece.pieceScent} 향
+                  <div className="mt-4">
+                    <div className="inline text-white text-lg font-bold bg-gray-900 rounded-lg drop-shadow-md p-2">
+                      # {piece.pieceScent}
+                    </div>
                   </div>
-                  <div className="text-white text-lg">
+                  {/* <div className="text-white text-lg">
                     태그: {piece.pieceTag} ..
-                  </div>
+                  </div> */}
                 </div>
 
                 {/* 버튼 */}
@@ -202,7 +204,7 @@ const Piece = () => {
               // height: "92.95vh",
               width: "100vw",
             }}
-            data-aos="fade-in"
+            // data-aos="fade-in"
           ></div>
         )}
 
@@ -227,7 +229,8 @@ const Piece = () => {
                 src={`http://j7d201.p.ssafy.io/api/my-file/read/${piece.pieceImg}`}
                 style={{ width: "100vw", height: "100vh" }}
                 onClick={() => setCinema(false)}
-                data-aos="zoom-out"
+                // data-aos="zoom-out"
+                data-aos="fade-in"
               />
             </div>
           </div>

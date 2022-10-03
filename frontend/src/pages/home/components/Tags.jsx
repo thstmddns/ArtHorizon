@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
+import { piecesApi } from "../../../api/api";
 
 // style={{
 //   backgroundImage: "url(https://source.unsplash.com/1920x1080)",
@@ -9,12 +11,21 @@ import { useNavigate } from "react-router-dom";
 //   backgroundImage: "url(https://picsum.photos/1920/1080/?blur=10​)",
 // }}
 
-const tagItems = new Array(8).fill(0).map(() => {
-  return { tagName: Math.random().toString(36).substring(2, 12) };
-});
+// const tagItems = new Array(8).fill(0).map(() => {
+//   return { tagName: Math.random().toString(36).substring(2, 12) };
+// });
 
 const Tags = () => {
   const navigate = useNavigate();
+  const [tags, setTags] = useState([]);
+
+  useEffect(() => {
+    const fetchTags = async () => {
+      const res = await piecesApi.getMainTags();
+      setTags(res.data);
+    };
+    fetchTags();
+  }, []);
 
   return (
     <section className="text-gray-600 body-font border-solid border-gray-50 border-b-2 bg-gray-50">
@@ -41,9 +52,9 @@ const Tags = () => {
         </div>
         <div className="flex flex-wrap -m-4">
           {/* 태그 아이템 */}
-          {tagItems.map((item) => (
+          {tags.map((tag) => (
             <div
-              key={Math.random().toString()}
+              key={tag.tagSeq}
               className="p-4 xl:w-1/4 md:w-1/2 sm:w-1/2 drop-shadow-md transition ease-in-out hover:-translate-y-6 duration-200 cursor-pointer"
               onClick={() => navigate(`/pieces`)}
               data-aos="flip-down"
@@ -51,9 +62,7 @@ const Tags = () => {
               <div className="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden bg-white rounded-lg">
                 <img
                   className="lg:h-64 md:h-48 w-full object-cover object-center"
-                  src={`https://source.unsplash.com/${parseInt(
-                    Math.random() * 100 * 5
-                  )}x${parseInt(Math.random() * 100 * 5)}`}
+                  src={`http://j7d201.p.ssafy.io/api/my-file/read/${tag.tagImg}`}
                   alt="blog"
                 />
                 <div className="p-6">
@@ -61,10 +70,10 @@ const Tags = () => {
                     TAG
                   </h2>
                   <h1 className="title-font text-lg font-medium text-gray-700 mb-3 text-xl font-bold">
-                    {item.tagName}
+                    {tag.tagTitle}
                   </h1>
                   <p className="leading-relaxed mb-3 text-gray-400">
-                    이 태그는 어쩌고 배가 고프다 버거킹 오랜만에 와퍼 와퍼
+                    {tag.tagDesc}
                   </p>
                   <div className="flex items-center flex-wrap ">
                     <div className="text-sky-500 inline-flex items-center md:mb-2 lg:mb-0">

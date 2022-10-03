@@ -81,10 +81,11 @@ const Signup = () => {
       toast.warn("이메일을 입력하세요.");
       return;
     }
-    authApi
-      .checkEmail(email)
-      .then((res) => console.log("res:", res))
-      .catch((err) => console.error("err:", err));
+    toast.success("사용할 수 있는 이메일입니다.");
+    // authApi
+    //   .checkEmail(email)
+    //   .then((res) => console.log("res:", res))
+    //   .catch((err) => console.error("err:", err));
   };
 
   const checkNicknameHandler = () => {
@@ -133,10 +134,15 @@ const Signup = () => {
             <h2 className="text-gray-900 text-3xl mb-6 font-bold title-font text-center">
               회원 가입
             </h2>
-            <p className="mb-8 text-gray-500 text-center">
-              Art Horizon에 처음이신가요? 무료 회원가입을 통해 더 나은 서비스
-              경험을 하세요.
-            </p>
+            <div className="mb-8 text-center">
+              <div className="text-gray-500 text-sm">
+                Art Horizon에 처음이신가요?
+              </div>
+              <div className="text-gray-500 text-sm">
+                {" "}
+                무료 회원가입을 통해 더 나은 서비스 경험을 하세요.
+              </div>
+            </div>
             {/* 이메일 */}
             <div className="relative mb-4">
               <label htmlFor="email" className="leading-7 text-gray-900">

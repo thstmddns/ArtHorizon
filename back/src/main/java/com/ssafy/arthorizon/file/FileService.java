@@ -10,8 +10,8 @@ import java.util.Date;
 @Service
 public class FileService {
 
-    private final String ROOT_PROFILE = "profiles/";
-    private final String ROOT_USERART = "userArts/";
+//    private final String ROOT_PROFILE = "profiles/";
+//    private final String ROOT_USERART = "userArts/";
     private final String ORIGIN_PATH = "/home/ubuntu/S07P22D201/back/docker-volume/images/";
 
 //    private final String ROOT_PROFILE = "C:/";
@@ -30,9 +30,9 @@ public class FileService {
             long now = new Date().getTime();
 
             if(fileType.equals("profile")){
-                fileName = ORIGIN_PATH + ROOT_PROFILE + now + ".jpg";
+                fileName = ORIGIN_PATH + "profile_" + now + ".jpg";
             } else{
-                fileName = ORIGIN_PATH + ROOT_USERART + now + ".jpg";
+                fileName = ORIGIN_PATH + "userArts_" + now + ".jpg";
             }
 
             // 밖으로 내보낼 아웃풋스트림을 만들고
@@ -55,6 +55,7 @@ public class FileService {
             // 파이널리로 닫고 싶었는데ㅠㅠ
             inputStream.close();
             fileOutputStream.close();
+            System.out.println(fileName+" 저장완료");
             return fileName;
 
         } catch(Exception e) {

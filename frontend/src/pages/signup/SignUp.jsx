@@ -77,6 +77,10 @@ const Signup = () => {
   };
 
   const checkEmailHandler = () => {
+    if (!email.trim()) {
+      toast.warn("이메일을 입력하세요.");
+      return;
+    }
     authApi
       .checkEmail(email)
       .then((res) => console.log("res:", res))
@@ -84,10 +88,23 @@ const Signup = () => {
   };
 
   const checkNicknameHandler = () => {
+    if (!nickname.trim()) {
+      toast.warn("닉네임을 입력하세요.");
+      return;
+    }
     authApi
       .checkNickname(nickname)
-      .then((res) => console.log("res:", res))
-      .catch((err) => console.error("err:", err));
+      .then((res) => {
+        console.log("res:", res);
+        if (res.data === "SUCCESS") {
+          toast.success("사용할 수 있는 닉네임입니다.");
+        } else if (res.data === "FAILURE") {
+          toast.error("사용할 수 없는 닉네임입니다.");
+        }
+      })
+      .catch((err) => {
+        console.error("err:", err);
+      });
   };
 
   return (

@@ -73,10 +73,15 @@ const Login = () => {
             <h2 className="text-gray-900 text-3xl mb-6 font-bold title-font text-center">
               로그인
             </h2>
-            <p className="mb-8 text-gray-500 text-center">
-              Art Horizon에 오신 것을 환영합니다. 더 많은 서비스 이용을 위해
-              로그인해주세요.
-            </p>
+            <div className="mb-8 text-center">
+              <div className="text-gray-500 text-sm">
+                Art Horizon에 오신 것을 환영합니다.
+              </div>
+              <div className="text-gray-500 text-sm">
+                {" "}
+                더 많은 서비스 이용을 위해 로그인해주세요.
+              </div>
+            </div>
             {/* 이메일 */}
             <div className="relative mb-4">
               <label htmlFor="email" className="leading-7 text-gray-900">

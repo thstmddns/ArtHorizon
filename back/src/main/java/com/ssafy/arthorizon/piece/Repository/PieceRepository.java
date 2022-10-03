@@ -35,4 +35,7 @@ public interface PieceRepository extends JpaRepository<PieceEntity,Long> {
     // 입력받은 향에 대해서 모든 작품을 뽑아오기
     List<PieceEntity> findPieceEntitiesByPieceScent(String scent);
 
+    // 입력받은 종류인(명화인) 향에 대해서 모든 작품을 뽑아오기
+    List<PieceEntity> findPieceEntitiesByPieceType(String type);
+
 }

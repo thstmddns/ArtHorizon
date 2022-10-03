@@ -14,13 +14,13 @@ const TailwindFooter = () => {
               className="text-gray-600 ml-1"
               target="_blank"
             >
-              @knyttneve
+              @J7D201
             </Link>
           </p>
           <span className="inline-flex sm:ml-auto sm:mt-0 mt-2 justify-center sm:justify-start">
             <Link className="text-gray-500">
               <svg
-                fill="currentColor"
+                fill="gray"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="2"
@@ -32,7 +32,7 @@ const TailwindFooter = () => {
             </Link>
             <Link className="ml-3 text-gray-500">
               <svg
-                fill="currentColor"
+                fill="gray"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="2"
@@ -45,7 +45,7 @@ const TailwindFooter = () => {
             <Link className="ml-3 text-gray-500">
               <svg
                 fill="none"
-                stroke="currentColor"
+                stroke="gray"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="2"
@@ -56,7 +56,7 @@ const TailwindFooter = () => {
                 <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zm1.5-4.87h.01"></path>
               </svg>
             </Link>
-            <Link className="ml-3 text-gray-500">
+            {/* <Link className="ml-3 text-gray-500">
               <svg
                 fill="currentColor"
                 stroke="currentColor"
@@ -72,7 +72,7 @@ const TailwindFooter = () => {
                 ></path>
                 <circle cx="4" cy="4" r="2" stroke="none"></circle>
               </svg>
-            </Link>
+            </Link> */}
           </span>
         </div>
       </div>

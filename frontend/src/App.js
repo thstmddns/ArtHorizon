@@ -1,6 +1,10 @@
 import * as React from "react";
 import { useDispatch } from "react-redux";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+} from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AOS from "aos";
@@ -22,8 +26,9 @@ import Filter from "./pages/filter/Filter";
 import PieceCommit from "./pages/piececommit/PieceCommit";
 import StyleTransfer from "./pages/style-transfer/StyleTransfer";
 import Scent from "./pages/scent/Scent";
-
 import NotFound from "./pages/not-found/NotFound";
+
+const isLogin = () => !!localStorage.getItem("access-token");
 
 const router = createBrowserRouter([
   {
@@ -32,15 +37,15 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <Login />,
+    element: isLogin() ? <Navigate to="/" replace /> : <Login />,
   },
   {
     path: "/signup",
-    element: <Signup />,
+    element: isLogin() ? <Navigate to="/" replace /> : <Signup />,
   },
   {
-    path: "/modify",
-    element: <UserModify />,
+    path: "/usermodify",
+    element: isLogin() ? <UserModify /> : <Navigate to="/" replace />,
   },
   {
     path: "/mypage/:targetUserSeq",
@@ -60,7 +65,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/register",
-    element: <PieceCommit />,
+    element: isLogin() ? <PieceCommit /> : <Navigate to="/" replace />,
     // element: <Register />,
   },
   {

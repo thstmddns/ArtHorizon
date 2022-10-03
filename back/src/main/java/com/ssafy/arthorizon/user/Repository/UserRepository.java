@@ -14,6 +14,9 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     Optional<UserEntity> findByUserNickname(String nickName);
 
+    // 아티스트 회원 뽑아내기 어라 어떻게 하지
+    int countUserEntitiesByUserTypeEquals(char type);
+
 
 
 

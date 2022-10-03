@@ -3,6 +3,7 @@ package com.ssafy.arthorizon.piece;
 import com.ssafy.arthorizon.piece.Repository.PieceRepository;
 import com.ssafy.arthorizon.piece.Repository.TagRepository;
 import com.ssafy.arthorizon.piece.dto.PieceDto;
+import com.ssafy.arthorizon.piece.dto.PieceListDto;
 import com.ssafy.arthorizon.piece.dto.PiecePageDto;
 import com.ssafy.arthorizon.piece.dto.TagDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,4 +127,26 @@ public class PieceService {
 
     }
 
+    // 향으로 랜덤 세 개 뽑아주지
+    public List<PieceListDto> pieceByScent(String scent) {
+        Set<PieceListDto> pieceSet = new HashSet<>();
+
+        // 리스트로 받아오고
+        List<PieceEntity> pieceEntityList = pieceRepository.findPieceEntitiesByPieceScent(scent);
+        // 그 사이즈를 파악하고
+        int size = pieceEntityList.size();
+
+        while(pieceSet.size()<3) {
+            // 사이즈 안에서 랜덤
+            int randomIndex = (int) (Math.random()*(size));
+            PieceEntity pieceEntity = pieceEntityList.get(randomIndex);
+            PieceListDto pieceListDto = new PieceListDto(pieceEntity);
+            pieceSet.add(pieceListDto);
+        }
+
+        List<PieceListDto> pieceLists = new ArrayList<>(pieceSet);
+
+        return pieceLists;
+
+    }
 }

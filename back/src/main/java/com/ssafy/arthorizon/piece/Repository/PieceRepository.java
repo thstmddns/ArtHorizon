@@ -32,4 +32,7 @@ public interface PieceRepository extends JpaRepository<PieceEntity,Long> {
     @Query(value="select * from pieceTb limit 10", nativeQuery = true)
     List<PieceEntity> findList();
 
+    // 입력받은 향에 대해서 모든 작품을 뽑아오기
+    List<PieceEntity> findPieceEntitiesByPieceScent(String scent);
+
 }

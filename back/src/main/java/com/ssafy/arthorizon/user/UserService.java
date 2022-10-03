@@ -10,6 +10,7 @@ import com.ssafy.arthorizon.user.Repository.UserRepository;
 import com.ssafy.arthorizon.user.dto.*;
 import com.ssafy.arthorizon.user.Entity.FollowEntity;
 import com.ssafy.arthorizon.user.Repository.FollowRepository;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -357,5 +358,26 @@ public class UserService {
         } else {
             return "success";
         }
+    }
+
+    public List<ArtistDto> randomArtistService() {
+        // 중복제거를 위해 set 형태로 고안
+        Set<ArtistDto> userSet = new HashSet<>();
+        // 랜덤 추출을 위한 총 개수 생성
+        int lowCount = userRepository.countUserEntitiesByUserTypeEquals('A');
+        System.out.println(lowCount);
+
+        while(userSet.size()<3){
+            int randomIndex = (int) (Math.random()*(lowCount)+1);
+            Optional<UserEntity> user = userRepository.findById((long) randomIndex);
+            System.out.println("존재하고");
+            ArtistDto artistDto = new ArtistDto(user.get());
+            userSet.add(artistDto);
+            System.out.println(userSet.size());
+        }
+
+        List<ArtistDto> pieceLists = new ArrayList<>(userSet);
+
+        return pieceLists;
     }
 }

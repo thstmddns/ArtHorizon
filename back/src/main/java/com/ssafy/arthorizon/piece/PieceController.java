@@ -1,6 +1,7 @@
 package com.ssafy.arthorizon.piece;
 
 import com.ssafy.arthorizon.piece.dto.PieceDto;
+import com.ssafy.arthorizon.piece.dto.PieceListDto;
 import com.ssafy.arthorizon.piece.dto.PiecePageDto;
 import com.ssafy.arthorizon.piece.dto.TagDto;
 import org.springframework.http.HttpStatus;
@@ -69,5 +70,12 @@ public class PieceController {
     public ResponseEntity<List<TagDto>> tagMain(){
         List<TagDto> tagDtoList = pieceService.tagMainService();
         return new ResponseEntity<>(tagDtoList, HttpStatus.OK);
+    }
+
+    // 향으로 랜덤 세 개 뽑아주기
+    @GetMapping("/scent/{scent}")
+    public ResponseEntity<List<PieceListDto>> pieceByScent(@PathVariable String scent) {
+        List<PieceListDto> listDtos = pieceService.pieceByScent(scent);
+        return new ResponseEntity<>(listDtos, HttpStatus.OK);
     }
 }

@@ -361,23 +361,24 @@ public class UserService {
     }
 
     public List<ArtistDto> randomArtistService() {
-        // 중복제거를 위해 set 형태로 고안
         Set<ArtistDto> userSet = new HashSet<>();
-        // 랜덤 추출을 위한 총 개수 생성
-        int lowCount = userRepository.countUserEntitiesByUserTypeEquals('A');
-        System.out.println(lowCount);
 
-        while(userSet.size()<3){
-            int randomIndex = (int) (Math.random()*(lowCount)+1);
-            Optional<UserEntity> user = userRepository.findById((long) randomIndex);
-            System.out.println("존재하고");
-            ArtistDto artistDto = new ArtistDto(user.get());
+        // 리스트로 받아오고
+        List<UserEntity> userEntityList = userRepository.findUserEntitiesByUserType('A');
+        // 그 사이즈를 파악하고
+        int size = userEntityList.size();
+
+        while (userSet.size()<3) {
+            // 사이즈 안에서 랜덤
+            int randomIndex = (int) (Math.random()*(size));
+            UserEntity userEntity = userEntityList.get(randomIndex);
+            ArtistDto artistDto = new ArtistDto(userEntity);
             userSet.add(artistDto);
-            System.out.println(userSet.size());
         }
 
-        List<ArtistDto> pieceLists = new ArrayList<>(userSet);
+        List<ArtistDto> artistDtos = new ArrayList<>(userSet);
 
-        return pieceLists;
+        return artistDtos;
+
     }
 }

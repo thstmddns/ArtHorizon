@@ -53,7 +53,7 @@ public class PieceService {
             int totalPage = (int) Math.ceil((pieceRepository.countAllBy())/LIMIT);
 
             // 반환할 페이지 dto를 작성
-            PiecePageDto piecePageDto = new PiecePageDto(totalPage, page,pieceEntity);
+            PiecePageDto piecePageDto = new PiecePageDto(totalPage, page, pieceEntity);
 
             // 반환 상태에 대해서 result 기록
             piecePageDto.setResult(PieceDto.PieceResult.SUCCESS);

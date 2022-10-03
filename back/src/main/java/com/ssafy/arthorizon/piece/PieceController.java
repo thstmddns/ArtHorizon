@@ -27,7 +27,7 @@ public class PieceController {
         if(piecePageDto.getResult()== PieceDto.PieceResult.SUCCESS){
             return new ResponseEntity<>(piecePageDto, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(piecePageDto, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -39,7 +39,7 @@ public class PieceController {
         if(piecePageDto.getResult()== PieceDto.PieceResult.SUCCESS){
             return new ResponseEntity<>(piecePageDto, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(piecePageDto, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -50,7 +50,7 @@ public class PieceController {
         if(piecePageDto.getResult()== PieceDto.PieceResult.SUCCESS){
             return new ResponseEntity<>(piecePageDto, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(piecePageDto, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -61,7 +61,7 @@ public class PieceController {
         if(pieceDto.getResult()== PieceDto.PieceResult.SUCCESS){
             return new ResponseEntity<>(pieceDto,HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(pieceDto,HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
         }
     }
 

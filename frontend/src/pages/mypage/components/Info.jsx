@@ -12,6 +12,7 @@ const Info = () => {
   const { isLoggedIn } = useSelector((state) => state.auth);
   const [nickname, setNickname] = useState("");
   const [userType, setUserType] = useState("N");
+  const [picture, setPicture] = useState("");
   const [email, setEmail] = useState("");
   const [numOfArts, setNumOfArts] = useState(0);
   const [numOfFollowers, setNumOfFollowers] = useState(0);
@@ -23,8 +24,10 @@ const Info = () => {
     const getMyPageInfo = async () => {
       try {
         const res = await authApi.getMyPage(targetUserSeq);
+        console.log(res.data);
         setNickname(res.data.userNickname);
         setUserType(res.data.userType);
+        setPicture(res.data.userImg);
         setEmail(res.data.userEmail);
         setNumOfArts(res.data.userArtCount);
         setNumOfFollowers(res.data.userFollowerCount);
@@ -67,7 +70,9 @@ const Info = () => {
     <div className="flex justify-between border-solid border-b border-gray-200 pb-14 mb-14">
       <div className="flex ">
         {/* 프사 */}
-        <div className="w-40 h-40 bg-gray-100 rounded-3xl border-solid border border-gray-200 drop-shadow-md mr-8"></div>
+        <div className="w-40 h-40 bg-gray-100 rounded-3xl border-solid border border-gray-200 drop-shadow-md mr-8">
+          <img src={picture} />
+        </div>
 
         {/* 정보 */}
         <div className="flex flex-col mt-5">

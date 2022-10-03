@@ -6,10 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 //@CrossOrigin(origins = "*")
 @RestController
@@ -189,6 +186,13 @@ public class UserController {
         } else {
             return new ResponseEntity<>(FAILURE, HttpStatus.OK);
         }
+    }
+
+    // 랜덤 작가 세 명 조회
+    @GetMapping("/artist")
+    public ResponseEntity<List<ArtistDto>> randomArtist() {
+        List<ArtistDto> artistDtos = userService.randomArtistService();
+        return new ResponseEntity<>(artistDtos, HttpStatus.OK);
     }
 
 

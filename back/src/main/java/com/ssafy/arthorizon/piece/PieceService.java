@@ -128,7 +128,7 @@ public class PieceService {
     }
 
     // 향으로 랜덤 세 개 뽑아주지
-    public List<PieceListDto> pieceByScent(String scent) {
+    public List<PieceListDto> pieceByScentService(String scent) {
         Set<PieceListDto> pieceSet = new HashSet<>();
 
         // 리스트로 받아오고
@@ -147,6 +147,24 @@ public class PieceService {
         List<PieceListDto> pieceLists = new ArrayList<>(pieceSet);
 
         return pieceLists;
+
+    }
+
+    // 메인 화면에 쓰알 하나의 작품 뽑기
+    public PieceListDto pieceForMainService() {
+        // 검사해서 뽑고 고르는 거랑 거랑 다 고르고 검사하는 것 중에 뭐가 더 나은 방법일까요
+        // 지금은 다 뽑고 검사하는 중
+
+        // 리스트로 받아오고
+        List<PieceEntity> pieceEntityList = pieceRepository.findPieceEntitiesByPieceType("M");
+        // 그 사이즈를 파악하고
+        int size = pieceEntityList.size();
+
+        int randomIndex = (int) (Math.random()*(size));
+        PieceEntity pieceEntity = pieceEntityList.get(randomIndex);
+        PieceListDto pieceListDto = new PieceListDto(pieceEntity);
+
+        return pieceListDto;
 
     }
 }

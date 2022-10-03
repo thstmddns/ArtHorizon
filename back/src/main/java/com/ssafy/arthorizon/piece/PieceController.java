@@ -75,7 +75,14 @@ public class PieceController {
     // 향으로 랜덤 세 개 뽑아주기
     @GetMapping("/scent/{scent}")
     public ResponseEntity<List<PieceListDto>> pieceByScent(@PathVariable String scent) {
-        List<PieceListDto> listDtos = pieceService.pieceByScent(scent);
+        List<PieceListDto> listDtos = pieceService.pieceByScentService(scent);
         return new ResponseEntity<>(listDtos, HttpStatus.OK);
+    }
+
+    // 메인 화면에 쓰일 하나의 작품 뽑기
+    @GetMapping("/main")
+    public ResponseEntity<PieceListDto> pieceForMain() {
+        PieceListDto pieceListDto = pieceService.pieceForMainService();
+        return new ResponseEntity<>(pieceListDto, HttpStatus.OK);
     }
 }

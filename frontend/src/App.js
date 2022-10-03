@@ -46,6 +46,7 @@ const router = createBrowserRouter([
   {
     path: "/usermodify",
     element: isLogin() ? <UserModify /> : <Navigate to="/" replace />,
+    // element: <UserModify />,
   },
   {
     path: "/mypage/:targetUserSeq",

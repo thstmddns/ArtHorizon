@@ -4,11 +4,52 @@ import styled from "styled-components";
 import FormTitle from "../../../components/form/FormTitle";
 import BaseLabel from "../../../components/input/Label";
 import BaseInput from "../../../components/input/Input";
+import axios from "axios";
 
 const ProfileImage = (props) => {
   const [imageSrc, setImageSrc] = useState("");
 
+  const token = localStorage.getItem("access-token").slice(4);
+
   const encodeFileToBase64 = (fileBlob) => {
+    // 이미지 서버 등록
+    const url = "http://j7d201.p.ssafy.io/api/my-file/profile";
+    const formData = new FormData();
+    formData.append("multipartFile", fileBlob);
+    const config = {
+      headers: {
+        jwt: token,
+        "Content-Type": "multipart/form-data",
+      },
+    };
+    axios
+      .post(url, formData, config)
+      .then((res) => {
+        const getString = res.data;
+        console.log(getString);
+        const url2 = "http://j7d201.p.ssafy.io/api/users/profile-img";
+        const data = JSON.stringify({
+          userImg: getString,
+        });
+        const config2 = {
+          headers: {
+            "content-type": "application/json",
+            jwt: token,
+          },
+        };
+        axios
+          .put(url2, data, config2)
+          .then(() => {
+            alert("정상적으로 변경되었습니다");
+          })
+          .catch(() => alert("문제가 발생했습니다 다시 시도해주십시오"));
+      })
+      .catch((err) => {
+        console.error(err);
+        alert("문제가 발생했습니다 다시 시도해주십시오");
+      });
+
+    // 프론트단 이미지 출력
     const reader = new FileReader();
     reader.readAsDataURL(fileBlob);
     return new Promise((resolve) => {

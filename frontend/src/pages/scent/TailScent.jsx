@@ -1,3 +1,4 @@
+import axios from "axios";
 import React from "react";
 import { useRef } from "react";
 import { useState } from "react";
@@ -18,7 +19,38 @@ const TailScent = () => {
     reader.readAsDataURL(file);
     return new Promise((resolve) => {
       reader.onload = () => {
-        setImage(reader.result);
+        const encode = reader.result;
+        setImage(encode);
+        const byteString = atob(encode.split(",")[1]);
+        const ab = new ArrayBuffer(byteString.length);
+        const ia = new Uint8Array(ab);
+        for (let i = 0; i < byteString.length; i++) {
+          ia[i] = byteString.charCodeAt(i);
+        }
+        const blob = new Blob([ia], {
+          type: "image/jpeg",
+        });
+        const file = new File([blob], "image.jpg");
+        setSendingArt(file);
+        const url = "http://127.0.0.1:8000/medici/tags";
+        const config = {
+          Headers: {
+            "content-type": "multipart/form-data",
+          },
+        };
+        const formData = new FormData();
+        formData.append("img", file);
+        axios
+          .post(url, formData, config)
+          .then((res) => {
+            const getScent = res.data.tag;
+            console.log(getScent);
+            setScent(getScent);
+            // 여기서 이 향을 가진 다른 그림을 호출하는 axios가 있어야할듯?
+          })
+          .catch((err) => {
+            console.error(err);
+          });
         resolve();
       };
     });

@@ -71,25 +71,25 @@ const PieceCommit = () => {
         });
         const file = new File([blob], "image.jpg");
         setSendingArt(file);
-        // const url = "http://127.0.0.1:8000/medici/tags";
-        // const config = {
-        //   Headers: {
-        //     "content-type": "multipart/form-data",
-        //   },
-        // };
-        // const formData = new FormData();
-        // formData.append("img", file);
-        // axios
-        //   .post(url, formData, config)
-        //   .then((res) => {
-        //     console.log(res.data.tag);
-        //     setScent(res.data.tag);
-        //     setBase64(formData);
-        //     resolve();
-        //   })
-        //   .catch((err) => {
-        //     console.error(err);
-        //   });
+        const url = "http://127.0.0.1:8000/medici/tags";
+        const config = {
+          Headers: {
+            "content-type": "multipart/form-data",
+          },
+        };
+        const formData = new FormData();
+        formData.append("img", file);
+        axios
+          .post(url, formData, config)
+          .then((res) => {
+            console.log(res.data.tag);
+            setScent(res.data.tag);
+            setBase64(formData);
+            resolve();
+          })
+          .catch((err) => {
+            console.error(err);
+          });
       };
     });
   };

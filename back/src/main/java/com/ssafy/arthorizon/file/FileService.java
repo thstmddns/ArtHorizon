@@ -27,16 +27,19 @@ public class FileService {
 
         try{
             String fileName;
+            String filePath;
             long now = new Date().getTime();
 
             if(fileType.equals("profile")){
-                fileName = ORIGIN_PATH + "profile_" + now + ".jpg";
+                fileName = "profile_" + now + ".jpg";
+                filePath = ORIGIN_PATH + fileName;
             } else{
-                fileName = ORIGIN_PATH + "userArts_" + now + ".jpg";
+                fileName = "userArts_" + now + ".jpg";
+                filePath = ORIGIN_PATH + fileName;
             }
 
             // 밖으로 내보낼 아웃풋스트림을 만들고
-            FileOutputStream fileOutputStream = new FileOutputStream(fileName);
+            FileOutputStream fileOutputStream = new FileOutputStream(filePath);
             // 입력받은 파일을 하나씩 읽을 인풋스트림을 만들고
             InputStream inputStream = multipartFile.getInputStream();
 
@@ -55,7 +58,7 @@ public class FileService {
             // 파이널리로 닫고 싶었는데ㅠㅠ
             inputStream.close();
             fileOutputStream.close();
-            System.out.println(fileName+" 저장완료");
+            System.out.println(filePath+" 저장완료");
             return fileName;
 
         } catch(Exception e) {

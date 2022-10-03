@@ -1,25 +1,57 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import axios from "axios";
+import { CgSpinner } from "react-icons/cg";
 
 import NavBar from "../../components/NavBar";
+
+// fileName을 여기 넣어놓으시오
+const url = "http://j7d201.p.ssafy.io/api/my-file/read/";
+const imageNames = [
+  "150_Diego Rivera_Evening Twilight at Acapulco.jpg",
+  "935_Camille Pissarro_The Roundelay.jpg",
+  "761_Henri Matisse_Fruit and Coffeepot.jpg",
+  "461_Francisco Goya_Dont scream stupid.jpg",
+  "267_Mikhail Vrubel_Pan.jpg",
+  "618_Caravaggio_The Lute Player.jpg",
+];
+
+const initialTestImages = [
+  {
+    imgName: "150_Diego Rivera_Evening Twilight at Acapulco.jpg",
+    isSelected: false,
+  },
+  {
+    imgName: "935_Camille Pissarro_The Roundelay.jpg",
+    isSelected: false,
+  },
+  {
+    imgName: "761_Henri Matisse_Fruit and Coffeepot.jpg",
+    isSelected: false,
+  },
+  {
+    imgName: "461_Francisco Goya_Dont scream stupid.jpg",
+    isSelected: false,
+  },
+  {
+    imgName: "267_Mikhail Vrubel_Pan.jpg",
+    isSelected: false,
+  },
+  {
+    imgName: "618_Caravaggio_The Lute Player.jpg",
+    isSelected: false,
+  },
+];
 
 const StyleTransfer = () => {
   const [targetImg, setTargetImg] = useState("");
   const [sourceImg, setSourceImg] = useState("");
   const [resultImg, setResultImg] = useState("");
-
-  // fileName을 여기 넣어놓으시오
-  const url = "http://j7d201.p.ssafy.io/api/my-file/read/";
-  const imageNames = [
-    "150_Diego Rivera_Evening Twilight at Acapulco.jpg",
-    "935_Camille Pissarro_The Roundelay.jpg",
-    "761_Henri Matisse_Fruit and Coffeepot.jpg",
-    "461_Francisco Goya_Dont scream stupid.jpg",
-    "267_Mikhail Vrubel_Pan.jpg",
-    "618_Caravaggio_The Lute Player.jpg",
-  ];
+  const [isLoading, setIsLoading] = useState(false);
+  const [selectedImgName, setSelectedImgName] = useState("");
 
   const targetInput = useRef();
+
+  const [testImages, setTestImages] = useState(initialTestImages);
 
   const targetSelect = () => {
     targetInput.current.click();
@@ -111,21 +143,31 @@ const StyleTransfer = () => {
             </div>
           </div>
 
-          <div className="container flex flex-wrap px-5 pt-24 pb-10 mx-auto items-center">
-            <div className="flex flex-col items-center justify-center w-1/2">
-              <h2 className="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">
-                Style Transfer할 사진을 골라주세요
+          <div className="container px-5 py-48 mx-auto mb-16">
+            <div className="flex flex-col items-center justify-center pb-32 mb-32 border-solid border-b border-gray-200">
+              <h2 className="text-3xl mb-10">
+                스타일 트랜스퍼를 적용할 사진을 고르세요.
               </h2>
-              {targetImg ? (
+              {targetImg && (
                 <img
-                  className="mt-10 max-w-xl max-h-xl"
+                  className="max-w-xl max-h-xl rounded-lg drop-shadow-md mb-10"
                   src={targetImg}
                   alt="targetImage"
                 />
-              ) : (
-                <div className="box-border h-96 w-96 p-4 border-4 bg-gray-500 mt-10 rounded-md"></div>
               )}
-              <div className="mt-10">
+              {!targetImg && (
+                <div
+                  className={`flex justify-center items-center h-96 w-96 p-4 bg-gray-200 rounded-lg drop-shadow-md mb-10 ${"animate-pulse"}`}
+                >
+                  {/* <div className="bg-gray-200">
+                    <div className="flex justify-center items-center">
+                      <div className="w-16 h-16 border-4 border-dashed rounded-full animate-spin text-sky-300"></div>
+                    </div>
+                  </div> */}
+                </div>
+              )}
+
+              <div className="">
                 <input
                   className="hidden"
                   type="file"
@@ -134,7 +176,7 @@ const StyleTransfer = () => {
                   onChange={(e) => updateTarget(e.target.files[0])}
                 />
                 <button
-                  className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                  className="flex mx-auto text-white bg-sky-400 border-0 py-2 px-8 focus:outline-none hover:bg-sky-500 active:bg-sky-600 focus:ring focus:ring-sky-300 rounded-lg text-lg transition"
                   type="button"
                   onClick={targetSelect}
                 >
@@ -142,21 +184,44 @@ const StyleTransfer = () => {
                 </button>
               </div>
             </div>
-            <div className="flex flex-col items-center justify-center w-1/2">
-              <h2 className="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">
+
+            <div className="flex flex-col items-center justify-center">
+              <h2 className="text-3xl mb-10">
                 어떤 작품의 스타일로 바꾸고 싶으신가요?
               </h2>
-              <div className="grid grid-cols-4 gap-4">
-                {imageNames.map((imageName) => {
-                  return (
-                    <div
-                      onClick={() => updateSource(imageName)}
-                      key={imageName}
-                    >
-                      <img src={url + imageName} />
-                    </div>
-                  );
-                })}
+
+              <div className="grid md:grid-cols-3 gap-2">
+                {initialTestImages.map((image) => (
+                  <div
+                    onClick={() => {
+                      updateSource(image.imgName);
+                      setSelectedImgName(image.imgName);
+                    }}
+                    key={image.imgName}
+                    className={`relative cursor-pointer rounded-lg xl:w-96 xl:h-96 w-56 h-56 bg-cover bg-center bg-gray-100 flex justify-center items-center ${
+                      image.imgName === selectedImgName && "opacity-60"
+                    }`}
+                    style={{
+                      backgroundImage: `url('http://j7d201.p.ssafy.io/api/my-file/read/${image.imgName}')`,
+                    }}
+                  >
+                    {image.imgName === selectedImgName && (
+                      <svg
+                        fill="none"
+                        stroke="#0284c7"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="3"
+                        className="text-sky-500 w-6 h-6 flex-shrink-0 mr-4"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path>
+                        <path d="M22 4L12 14.01l-3-3"></path>
+                      </svg>
+                    )}
+                    {/* <img src={`${url}${imageName}`} alt="exampleImg" /> */}
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -164,8 +229,12 @@ const StyleTransfer = () => {
           <div className="flex flex-col items-center justify-center">
             <button
               onClick={() => aiTransfer()}
-              className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 mb-2"
+              className="flex mx-auto text-white bg-amber-400 border-0 py-2 px-8 items-center focus:outline-none hover:bg-amber-500 active:bg-amber-600 focus:ring focus:ring-amber-300 rounded-lg text-lg transition"
             >
+              <CgSpinner
+                className={`animate-spin`}
+                style={{ color: "white", marginRight: "5px" }}
+              />
               Style Transfer
             </button>
             {resultImg && (
@@ -180,6 +249,9 @@ const StyleTransfer = () => {
                 </button>
               </div>
             )}
+            <div
+              className={`flex justify-center items-center h-96 w-96 p-4 bg-gray-200 rounded-lg drop-shadow-md mb-10 ${"animate-pulse"}`}
+            ></div>
           </div>
         </div>
       </section>

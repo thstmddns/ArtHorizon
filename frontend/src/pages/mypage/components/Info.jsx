@@ -71,7 +71,7 @@ const Info = () => {
       <div className="flex ">
         {/* 프사 */}
         <div className="w-40 h-40 bg-gray-100 rounded-3xl border-solid border border-gray-200 drop-shadow-md mr-8">
-          <img src={picture} />
+          <img src={`http://j7d201.p.ssafy.io/api/my-file/read/${picture}`} />
         </div>
 
         {/* 정보 */}

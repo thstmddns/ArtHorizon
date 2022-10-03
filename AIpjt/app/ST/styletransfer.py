@@ -18,7 +18,7 @@ def style_transfer(source1, source2):
     if torch.cuda.is_available():
         imsize = 1024
     else:
-        imsize = 1024
+        imsize = 128
         
     loader = transforms.Compose([
         transforms.Resize((imsize,imsize)),

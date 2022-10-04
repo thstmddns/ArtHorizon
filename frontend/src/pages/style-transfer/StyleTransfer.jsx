@@ -58,7 +58,7 @@ const StyleTransfer = () => {
   };
 
   const updateTarget = async (file) => {
-    console.log(file);
+    // console.log(file);
     const reader = new FileReader();
     reader.readAsDataURL(file);
     return new Promise((resolve) => {
@@ -97,7 +97,6 @@ const StyleTransfer = () => {
       Headers: {
         "content-type": "multipart/form-data",
         "Access-Control-Allow-Origin": "*",
-        jwt: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX3NlcSI6IjQiLCJ1c2VyX2VtYWlsIjoibGp5MTIxMEBzc2FmeS5jb20ifQ==.1cc714a84c5a817f9934b26e9b6146834ff232a8f980a0bc8f618c401da4c842",
         withCredentials: true,
         crossDomain: true,
         credentials: "include",

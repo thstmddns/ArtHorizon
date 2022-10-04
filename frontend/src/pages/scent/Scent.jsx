@@ -33,7 +33,9 @@ const TailScent = () => {
           type: "image/jpeg",
         });
         const file = new File([blob], "image.jpg");
+        // const url = "http://127.0.0.1:8000/medici/tags";
         const url = "http://j7d201.p.ssafy.io:8000/medici/tags";
+
         const config = {
           headers: {
             "content-type": "multipart/form-data",

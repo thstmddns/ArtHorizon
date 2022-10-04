@@ -3,6 +3,7 @@ import axios from "axios";
 import { CgSpinner } from "react-icons/cg";
 
 import NavBar from "../../components/NavBar";
+import Footer from "../../components/Footer";
 
 // fileName을 여기 넣어놓으시오
 const url = "http://j7d201.p.ssafy.io/api/my-file/read/";
@@ -278,6 +279,7 @@ const StyleTransfer = () => {
           </div>
         </div>
       </section>
+      <Footer />
     </React.Fragment>
   );
 };

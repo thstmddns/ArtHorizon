@@ -52,7 +52,7 @@ public class PieceService {
         } else {
             // 제대로 되어있으면
             // 전체 작품 목록의 수를 뽑아옴
-            int totalPage = (int) Math.ceil((pieceRepository.countAllBy())/LIMIT);
+            int totalPage = (int) Math.ceil((pieceRepository.countAllBy())/LIMIT) +1;
 
             // 반환할 페이지 dto를 작성
             PiecePageDto piecePageDto = new PiecePageDto(totalPage, page, pieceEntity);

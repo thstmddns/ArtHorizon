@@ -43,12 +43,12 @@ public class SearchController {
 
 
     // 사용자 검색
-//    @PostMapping("/users")
-//    public ResponseEntity<ArtistPageDto> searchByNickname(@RequestBody Map<String, String> keyword, @RequestParam int page) {
-//        ArtistPageDto artistPageDto = searchService.searchByNicknameService(keyword.get("userNickname"), page);
-//        // 별도의 예외처리 생략
-//        return new ResponseEntity<>(artistPageDto, HttpStatus.OK);
-//    }
+    @PostMapping("/users")
+    public ResponseEntity<ArtistPageDto> searchByNickname(@RequestBody Map<String, String> keyword, @RequestParam int page) {
+        ArtistPageDto artistPageDto = searchService.searchByNicknameService(keyword.get("userNickname"), page);
+        // 별도의 예외처리 생략
+        return new ResponseEntity<>(artistPageDto, HttpStatus.OK);
+    }
 
     // 태그 검색
     @PostMapping("/tags")

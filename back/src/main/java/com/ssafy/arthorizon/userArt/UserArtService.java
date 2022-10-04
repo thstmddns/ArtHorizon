@@ -100,7 +100,7 @@ public class UserArtService {
             // 작품이 없는 작가일 수도 있으니까 비어있는 것은 오류로 잡아내지 않음
 
             // 전체 작품 목록의 수를 뽑아옴
-            int totalPage = (int) Math.ceil((pieceRepository.countAllByPieceArtist_UserSeq(artistSeq))/LIMIT);
+            int totalPage = (int) Math.ceil((pieceRepository.countAllByPieceArtist_UserSeq(artistSeq))/LIMIT) +1;
 
             // 반환할 페이지 dto를 작성
             PiecePageDto piecePageDto = new PiecePageDto(totalPage, page, pieceEntityList);

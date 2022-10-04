@@ -121,7 +121,7 @@ const Arts = () => {
               />
             </div>
           ))}
-        {selectedTab === "나의 아트" && userArts.length === 0 && (
+        {selectedTab === "나의 아트" && userArts?.length === 0 && (
           <div data-aos="fade-in">나의 아트가 없습니다.</div>
         )}
 
@@ -166,7 +166,7 @@ const Arts = () => {
               />
             </div>
           ))}
-        {selectedTab === "북마크한 아트" && bookmarks.length === 0 && (
+        {selectedTab === "북마크한 아트" && bookmarks?.length === 0 && (
           <div data-aos="fade-in">북마크 아트가 없습니다.</div>
         )}
       </div>

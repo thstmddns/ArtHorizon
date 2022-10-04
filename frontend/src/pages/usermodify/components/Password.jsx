@@ -46,6 +46,7 @@ const Password = () => {
     setPassword2("");
     setPassword3("");
     dispatch(changePassword(passwordData));
+    toast.success("비밀번호 변경에 성공했습니다.");
   };
 
   return (

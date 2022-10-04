@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-import FormTitle from "../../../components/form/FormTitle";
 import BaseLabel from "../../../components/input/Label";
 import BaseInput from "../../../components/input/Input";
 import axios from "axios";
 
-const ProfileImage = (props) => {
+const ProfileImage = () => {
   const [imageSrc, setImageSrc] = useState("");
 
   const token = localStorage.getItem("access-token").slice(4);
@@ -39,10 +40,8 @@ const ProfileImage = (props) => {
         };
         axios
           .put(url2, data, config2)
-          .then(() => {
-            alert("정상적으로 변경되었습니다");
-          })
-          .catch(() => alert("문제가 발생했습니다 다시 시도해주십시오"));
+          .then(() => toast.success("프로필 사진이 변경되었습니다."))
+          .catch(() => toast.error("프로필 사진 변경에 실패했습니다."));
       })
       .catch((err) => {
         console.error(err);
@@ -61,38 +60,51 @@ const ProfileImage = (props) => {
   };
 
   return (
-    <form>
-      <TabTitle>프로필 사진 변경</TabTitle>
-      <Row>
-        <ImageBox>{imageSrc && <Img src={imageSrc} alt="" />}</ImageBox>
-        <Label htmlFor="profileImage">
-          <Button>변경하기</Button>
-        </Label>
-        <Input
+    <React.Fragment>
+      <div
+        className="text-2xl text-gray-700 font-bold border-solid border-b border-gray-300 mb-8"
+        data-aos="fade-left"
+      >
+        프로필 사진 변경
+      </div>
+
+      {/* <ImageBox>{imageSrc && <Img src={imageSrc} alt="" />}</ImageBox>
+      <Label htmlFor="profileImage">
+        <Button>변경하기</Button>
+      </Label>
+      <Input
+        type="file"
+        accept=".jpg"
+        id="profileImage"
+        name="profileImage"
+        onChange={(e) => encodeFileToBase64(e.target.files[0])}
+      /> */}
+
+      <div className="flex flex-col" data-aos="fade-up">
+        <div className="w-40 h-40 bg-gray-100 rounded-3xl drop-shadow-md mb-8">
+          {imageSrc && (
+            <img src={imageSrc} alt="" className="w-40 h-40 rounded-3xl" />
+          )}
+        </div>
+        <label htmlFor="profileImage">
+          <button className="flex text-white bg-amber-400 border-0 py-2 px-8 focus:outline-none hover:bg-amber-500 active:bg-amber-600 focus:ring focus:ring-amber-300 rounded-lg text-lg transition">
+            변경하기
+          </button>
+        </label>
+        <input
           type="file"
           accept=".jpg"
           id="profileImage"
           name="profileImage"
+          style={{ display: "none" }}
           onChange={(e) => encodeFileToBase64(e.target.files[0])}
         />
-      </Row>
-    </form>
+      </div>
+    </React.Fragment>
   );
 };
 
 export default ProfileImage;
-
-const TabTitle = styled(FormTitle)`
-  font-size: 1.6rem;
-  padding-bottom: 5px;
-  border-bottom: 1px solid #222529;
-`;
-
-const Row = styled.div`
-  display: flex;
-  justify-content: start;
-  align-items: end;
-`;
 
 const ImageBox = styled.div`
   width: 150px;

@@ -1,85 +1,79 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { Link, useNavigate } from "react-router-dom";
-// import { FaArrowAltCircleDown } from "react-icons/fa";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useCallback } from "react";
 import { IoArrowDown } from "react-icons/io5";
-
-import { piecesApi } from "../../api/api";
-
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import NavBar from "../../components/NavBar";
-// import axios from "axios";
 
-// const CARD_SIZE = 10;
-// const PAGE_SIZE = 10 * Math.ceil(visualViewport.width / CARD_SIZE);
-
-// const DUMMY = new Array(20).fill(0).map(() => {
-//   return {
-//     title: Math.random().toString(),
-//     content: Math.random().toString(),
-//   };
-// });
-
-const Pieces = () => {
+const Searchpieces = () => {
   const navigate = useNavigate();
-  // const [recentPieces, setRecentPieces] = useState([]);
-  const [randomPieces, setRandomPieces] = useState([]);
-  // const [popularPiecesList, setPopularPiecesList] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const location = useLocation();
+
+  const getType = location.state.type;
+  const getSearch = location.state.search;
+  let showType = "";
+  if (getType === "pieces") {
+    showType = "작품명";
+  } else if (getType === "artists") {
+    showType = "명화작가명";
+  } else if (getType === "users") {
+    showType = "유저작가명";
+  } else {
+    showType = "태그";
+  }
+
   // 검색 타입
-  const [type, setType] = useState("");
+  const [type, setType] = useState(getType);
   // 검색 단어
-  const [search, setSerach] = useState("");
+  const [search, setSerach] = useState(getSearch);
 
   const [page, setPage] = useState(1);
+  const [searchPieces, setSearchPieces] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
   const [hasNextPage, setNextPage] = useState(true);
 
-  // const fetchRecentPieces = useCallback(async () => {
-  //   // setIsLoading(true);
-  //   const { data } = await piecesApi.getPiecesRecent(page);
-  //   console.log("data:", data);
-  //   setRecentPieces((prevState) => [...prevState, ...data.pieceList]);
-  //   setPage((prevState) => prevState + 1);
-  //   // setNextPage();
-  //   setIsFetching(false);
-  //   setIsLoading(false);
-  // }, [page]);
-
-  const fetchRandomPieces = useCallback(async () => {
-    const { data } = await piecesApi.getPiecesRandom(page);
-    // console.log("data:", data);
-    setRandomPieces((prevState) => [...prevState, ...data.pieceList]);
-    if (page + 1 > data.totalPage) {
-      setNextPage(false);
-      setIsLoading(false);
+  const fetchSearchPieces = useCallback(async () => {
+    const url = `http://j7d201.p.ssafy.io/api/search/${getType}?page=${page}`;
+    let data = JSON.stringify({});
+    if (getType === "pieces") {
+      data = JSON.stringify({
+        pieceTitle: getSearch,
+      });
+    } else if (getType === "artists") {
+      data = JSON.stringify({
+        artistName: getSearch,
+      });
+    } else if (getType === "users") {
+      data = JSON.stringify({
+        userNickname: getSearch,
+      });
+    } else {
+      data = JSON.stringify({
+        tags: getSearch,
+      });
     }
-    setPage((prevState) => prevState + 1);
-    // setNextPage();
-    setIsFetching(false);
-    setIsLoading(false);
-  }, [page]);
+    const config = {
+      headers: {
+        "content-type": "application/json",
+      },
+    };
+    console.log(url, data, config);
+    axios
+      .post(url, data, config)
+      .then((res) => {
+        // console.log("get it", res.data);
+        const result = res.data;
+        if (page + 1 > res.data.totalPage) {
+          setNextPage(false);
+          setIsLoading(false);
+        }
+        setPage((prevState) => prevState + 1);
+        setSearchPieces((prevState) => [...prevState, ...result.pieceList]);
+      })
+      .catch((err) => console.error("get error", err));
+  }, [page, getSearch, getType]);
 
-  // // 무한스크롤
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     const { scrollTop, offsetHeight } = document.documentElement;
-  //     if (window.innerHeight + scrollTop >= offsetHeight) {
-  //       setIsFetching(true);
-  //     }
-  //   };
-  //   setIsFetching(true);
-  //   window.addEventListener("scroll", handleScroll);
-  //   return () => window.removeEventListener("scroll", handleScroll);
-  // }, []);
-  // useEffect(() => {
-  //   if (isFetching && hasNextPage) {
-  //     fetchRecentPieces();
-  //     // fetchRandomPieces();
-  //   } else if (!hasNextPage) {
-  //     setIsFetching(false);
-  //   }
-  // }, [isFetching, fetchRecentPieces, hasNextPage]);
-
-  // 무한스크롤
   useEffect(() => {
     const handleScroll = () => {
       const { scrollTop, offsetHeight } = document.documentElement;
@@ -94,16 +88,12 @@ const Pieces = () => {
   useEffect(() => {
     if (isFetching && hasNextPage) {
       setIsLoading(true);
-      // setTimeout(fetchRecentPieces, 1000);
-      setTimeout(fetchRandomPieces, 1000);
-      // fetchRecentPieces();
-      // fetchRandomPieces();
+      setTimeout(fetchSearchPieces, 1000);
     } else if (!hasNextPage) {
       setIsFetching(false);
     }
-  }, [isFetching, fetchRandomPieces, hasNextPage]);
+  }, [isFetching, fetchSearchPieces, hasNextPage]);
 
-  // 검색 태그 설정
   const columnChange = (type) => {
     // console.log(type);
     setType(type);
@@ -142,14 +132,16 @@ const Pieces = () => {
                   className="text-6xl font-medium title-font text-gray-900 mb-4"
                   data-aos="fade-down"
                 >
-                  작품 목록
+                  검색 작품 목록
                 </h1>
                 <p
                   className="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto text-gray-500"
                   data-aos="fade-in"
                 >
-                  Art Horizon의 다양한 화가들의 작품들을 찾아보세요. 불후의 고전
-                  명작들도 찾을 수 있습니다.
+                  <strong className="font-bold">
+                    {showType} {getSearch}
+                  </strong>
+                  에 대한 검색결과입니다.
                 </p>
                 <div className="flex mt-6 justify-center">
                   <div className="w-16 h-1 rounded-full bg-sky-500 inline-flex"></div>
@@ -264,7 +256,7 @@ const Pieces = () => {
 
               {/* 그림 리스트 */}
               <div className="lg:columns-4 md:columns-3 sm:columns-2 gap-2">
-                {randomPieces?.map((piece) => (
+                {searchPieces?.map((piece) => (
                   <div
                     key={Math.random().toString()}
                     className={`shadow-md rounded mb-2 drop-shadow-md overflow-hidden relative cursor-pointer ${
@@ -299,7 +291,7 @@ const Pieces = () => {
               </div>
 
               {/* 로딩 완료 */}
-              {!isLoading && (
+              {(isLoading || hasNextPage) && (
                 <div className="flex justify-center items-center mt-20">
                   <IoArrowDown
                     className="animate-bounce"
@@ -310,10 +302,10 @@ const Pieces = () => {
                     }}
                   />
                   {/* <div className="flex items-center justify-center space-x-2">
-                    <div className="w-4 h-4 rounded-full animate-pulse bg-sky-300"></div>
-                    <div className="w-4 h-4 rounded-full animate-pulse bg-sky-400"></div>
-                    <div className="w-4 h-4 rounded-full animate-pulse bg-sky-500"></div>
-                  </div> */}
+                  <div className="w-4 h-4 rounded-full animate-pulse bg-sky-300"></div>
+                  <div className="w-4 h-4 rounded-full animate-pulse bg-sky-400"></div>
+                  <div className="w-4 h-4 rounded-full animate-pulse bg-sky-500"></div>
+                </div> */}
                 </div>
               )}
 
@@ -333,71 +325,4 @@ const Pieces = () => {
   );
 };
 
-export default Pieces;
-
-
-  /* <div
-key={Math.random().toString()}
-className="shadow-md rounded mb-2 drop-shadow-md overflow-hidden absolute top-0 left-0"
->
-<img
-  alt="gallery"
-  className="w-full h-full object-cover object-center rounded hover:scale-125 hover:blur transition ease-in-out duration-300"
-  // src={`https://source.unsplash.com/random/${parseInt(
-  //   (Math.random() * (40 - 10) + 10) * 10
-  // )}x${parseInt((Math.random() * (50 - 10) + 10) * 10)}`}
-  src={`https://source.unsplash.com/random/${piece.pieceSeq}x${piece.pieceSeq}`}
-/>
-</div> */
-
-
-// {/* 그림 리스트 */}
-// <div className="lg:columns-4 md:columns-3 sm:columns-2 gap-2">
-//   {recentPieces?.map((piece) => (
-//     <div
-//       key={Math.random().toString()}
-//       className="shadow-md rounded mb-2 drop-shadow-md overflow-hidden relative cursor-pointer"
-//       onClick={() => navigate(`${piece.pieceSeq}`)}
-//     >
-//       {/* 그림 */}
-//       <div
-//         className="absolute inset-0 bg-cover bg-center z-0"
-//         style={{
-//           backgroundImage: `url('http://j7d201.p.ssafy.io/api/my-file/read/${piece.pieceImg}')`,
-//         }}
-//       ></div>
-
-//       {/* 설명 */}
-//       <div className="opacity-0 hover:opacity-90 hover:bg-gray-900 ease-in-out duration-300 absolute inset-0 z-10 flex flex-col justify-center items-center p-4">
-//         <div className="text-2xl text-white font-semibold mb-6 text-center">
-//           {piece.pieceTitle}
-//         </div>
-//         <div className="text-1xl text-white text-center">
-//           {piece.pieceArtist}
-//         </div>
-//       </div>
-//       <img
-//         alt="gallery"
-//         className="w-full h-full object-cover object-center rounded transition ease-in-out duration-300"
-//         src={`http://j7d201.p.ssafy.io/api/my-file/read/${piece.pieceImg}`}
-//       />
-//     </div>
-//   ))}
-
-//   {/* 로딩 엘리먼트 */}
-//   <div className="border border-blue-300 shadow rounded-md p-4 max-w-sm w-full mx-auto">
-//     <div className="animate-pulse flex space-x-4">
-//       <div className="rounded-full bg-slate-200 h-10 w-10"></div>
-//       <div className="flex-1 space-y-6 py-1">
-//         <div className="h-2 bg-slate-200 rounded"></div>
-//         <div className="space-y-3">
-//           <div className="grid grid-cols-3 gap-4">
-//             <div className="h-2 bg-slate-200 rounded col-span-2"></div>
-//             <div className="h-2 bg-slate-200 rounded col-span-1"></div>
-//           </div>
-//           <div className="h-2 bg-slate-200 rounded"></div>
-//         </div>
-//       </div>
-//     </div>
-//   </div>
-// </div>
+export default Searchpieces;

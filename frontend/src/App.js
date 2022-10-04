@@ -27,6 +27,7 @@ import PieceCommit from "./pages/piececommit/PieceCommit";
 import StyleTransfer from "./pages/style-transfer/StyleTransfer";
 import Scent from "./pages/scent/Scent";
 import NotFound from "./pages/not-found/NotFound";
+import Searchpieces from "./pages/pieces/Searchpieces";
 
 const isLogin = () => !!localStorage.getItem("access-token");
 
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
   {
     path: "/pieces",
     element: <Pieces />,
+  },
+  {
+    path: "/pieces/search",
+    element: <Searchpieces />
   },
   {
     path: "/pieces/:pieceSeq",

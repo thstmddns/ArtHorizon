@@ -39,7 +39,7 @@ def get_tag(source1):
     optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
 
     img = source1
-    PATH = './first_train.pth'
+    PATH = '/prod/app/first_train.pth'
     model = TheModelClass()
     model.load_state_dict(torch.load(PATH))
     model.eval()

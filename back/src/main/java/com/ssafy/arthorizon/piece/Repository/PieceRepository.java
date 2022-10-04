@@ -21,8 +21,10 @@ public interface PieceRepository extends JpaRepository<PieceEntity,Long> {
     int countAllByPieceTitleKrContainsOrPieceTitleEnContains(String keyword1, String keyword2);
 
     // 작가명으로 검색 개수 조회
+    int countAllByPieceArtistKrContainsOrPieceArtistEnContains(String keyword1, String keyword2);
 
     // 태그로 검색 개수 조회
+    int countAllByPieceTagContains(String keyword);
 
 //    // 페이징 테스트
 //    @Query(value="select * from pieceTb limit 10", nativeQuery = true)
@@ -56,9 +58,13 @@ public interface PieceRepository extends JpaRepository<PieceEntity,Long> {
                                   @Param(value="keyword") String keyword);
 
     // 작가명으로 검색 (명화 한정)
-    List<PieceEntity> findPieceEntitiesByPieceArtistKrContainsOrPieceArtistEnContains(String keyword1, String Keyword2);
+    @Query(value="select * from pieceTb where pieceArtistKr LIKE %:keyword% or pieceArtistEn LIKE %:keyword% order by pieceSeq desc limit :limit offset :offset", nativeQuery = true)
+    List<PieceEntity> findByPieceArtist(@Param(value="limit") int limit, @Param(value="offset") int offset,
+                                  @Param(value="keyword") String keyword);
 
     // 태그 내용으로 검색
-    List<PieceEntity> findPieceEntitiesByPieceTagContains(String keyword);
+    @Query(value="select * from pieceTb where pieceTag LIKE %:keyword% order by pieceSeq desc limit :limit offset :offset", nativeQuery = true)
+    List<PieceEntity> findByTag(@Param(value="limit") int limit, @Param(value="offset") int offset,
+                                        @Param(value="keyword") String keyword);
 
 }

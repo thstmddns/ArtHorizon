@@ -32,10 +32,17 @@ const TailScent = () => {
           type: "image/jpeg",
         });
         const file = new File([blob], "image.jpg");
-        const url = "http://127.0.0.1:8000/medici/tags";
+        // const url = "http://127.0.0.1:8000/medici/tags";
+        const url = "http://j7d201.p.ssafy.io:8000/medici/tags";
+
         const config = {
           Headers: {
             "content-type": "multipart/form-data",
+            jwt: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX3NlcSI6IjQiLCJ1c2VyX2VtYWlsIjoibGp5MTIxMEBzc2FmeS5jb20ifQ==.1cc714a84c5a817f9934b26e9b6146834ff232a8f980a0bc8f618c401da4c842",
+            withCredentials: true,
+            crossDomain: true,
+            credentials: "include",
+            "Access-Control-Allow-Origin": "*",
           },
         };
         const formData = new FormData();

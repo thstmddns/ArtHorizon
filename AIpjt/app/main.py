@@ -1,4 +1,10 @@
+
+
 from fastapi import FastAPI, File,UploadFile, Form
+import sys
+sys.path.append('/ST/styletransfer')
+sys.path.append('/ST/tag_recommend')
+sys.path.append('/ST/objectdetection')
 from styletransfer import style_transfer
 from tag_recommend import get_tag
 from objectdetection import detection

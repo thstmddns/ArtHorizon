@@ -38,7 +38,7 @@ class Style_transfer(BaseModel):
 
 
 
-@app.get("/")
+@app.get("/medici/")
 async def root():
     return {"message" : "Hello World"}
 

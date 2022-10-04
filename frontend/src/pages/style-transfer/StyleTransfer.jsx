@@ -86,7 +86,9 @@ const StyleTransfer = () => {
       type: "image/jpeg",
     });
     const file = new File([blob], "image.jpg");
-    const url = "http://127.0.0.1:8000/medici/nst";
+    // const url = "http://127.0.0.1:8000/medici/nst";
+    const url = "http://j7d201.p.ssafy.io:8000/medici/nst";
+
     const formData = new FormData();
     formData.append("filed", file);
     formData.append("src", sourceImg);
@@ -94,6 +96,10 @@ const StyleTransfer = () => {
       Headers: {
         "content-type": "multipart/form-data",
         "Access-Control-Allow-Origin": "*",
+        jwt: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX3NlcSI6IjQiLCJ1c2VyX2VtYWlsIjoibGp5MTIxMEBzc2FmeS5jb20ifQ==.1cc714a84c5a817f9934b26e9b6146834ff232a8f980a0bc8f618c401da4c842",
+        withCredentials: true,
+        crossDomain: true,
+        credentials: "include",
         // responseType: "blob",
       },
     };
@@ -228,7 +234,7 @@ const StyleTransfer = () => {
 
           <div className="flex flex-col items-center justify-center">
             <button
-              onClick={() => aiTransfer()}
+              onClick={aiTransfer}
               className="flex mx-auto text-white bg-amber-400 border-0 py-2 px-8 items-center focus:outline-none hover:bg-amber-500 active:bg-amber-600 focus:ring focus:ring-amber-300 rounded-lg text-lg transition"
             >
               <CgSpinner

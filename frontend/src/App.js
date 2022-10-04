@@ -31,10 +31,10 @@ import NotFound from "./pages/not-found/NotFound";
 const isLogin = () => !!localStorage.getItem("access-token");
 
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Home />,
-  },
+  // {
+  //   path: "/",
+  //   element: <Home />,
+  // },
   {
     path: "/login",
     element: isLogin() ? <Navigate to="/" replace /> : <Login />,
@@ -43,40 +43,39 @@ const router = createBrowserRouter([
     path: "/signup",
     element: isLogin() ? <Navigate to="/" replace /> : <Signup />,
   },
-  {
-    path: "/usermodify",
-    element: isLogin() ? <UserModify /> : <Navigate to="/" replace />,
-    // element: <UserModify />,
-  },
-  {
-    path: "/mypage/:targetUserSeq",
-    element: <MyPage />,
-  },
-  {
-    path: "/pieces",
-    element: <Pieces />,
-  },
-  {
-    path: "/pieces/:pieceSeq",
-    element: <Piece />,
-  },
-  {
-    path: "/filter",
-    element: <Filter />,
-  },
-  {
-    path: "/register",
-    element: isLogin() ? <PieceCommit /> : <Navigate to="/" replace />,
-    // element: <Register />,
-  },
-  {
-    path: "/style",
-    element: <StyleTransfer />,
-  },
-  {
-    path: "/scent",
-    element: <Scent />,
-  },
+  // {
+  //   path: "/usermodify",
+  //   element: isLogin() ? <UserModify /> : <Navigate to="/" replace />,
+  // },
+  // {
+  //   path: "/mypage/:targetUserSeq",
+  //   element: <MyPage />,
+  // },
+  // {
+  //   path: "/pieces",
+  //   element: <Pieces />,
+  // },
+  // {
+  //   path: "/pieces/:pieceSeq",
+  //   element: <Piece />,
+  // },
+  // {
+  //   path: "/filter",
+  //   element: <Filter />,
+  // },
+  // {
+  //   path: "/register",
+  //   element: isLogin() ? <PieceCommit /> : <Navigate to="/" replace />,
+  //   // element: <Register />,
+  // },
+  // {
+  //   path: "/style",
+  //   element: <StyleTransfer />,
+  // },
+  // {
+  //   path: "/scent",
+  //   element: <Scent />,
+  // },
   {
     path: "/*",
     element: <NotFound />,

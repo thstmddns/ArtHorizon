@@ -30,12 +30,12 @@ const Intro = () => {
             className="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto text-gray-500"
             data-aos="fade-in"
           >
-            모든 국민은 인간으로서의 존엄과 가치를 가지며, 행복을 추구할 권리를
-            가진다. 국가는 개인이 가지는 불가침의 기본적 인권을 확인하고 이를
-            보장할 의무를 진다. 모든 국민은 자기의 행위가 아닌 친족의 행위로
-            인하여 불이익한 처우를 받지 아니한다. 국회의원의 선거구와 비례대표제
-            기타 선거에 관한 사항은 법률로 정한다. 제2항과 제3항의 처분에
-            대하여는 법원에 제소할 수 없다. 군사법원의
+            바다와 하늘의 지평선처럼 화가와 관람객을 이어주는{" "}
+            <strong>ArtHorzion</strong>. <br /> 화가 여러분들은 이곳에
+            올림으로써 당신의 작품이 전세계 누구나 볼 수 있을겁니다. <br />{" "}
+            작품을 보러 오신 여러분, 이곳에서 처음 만나는 작가의 작품을
+            관람해보세요. <br /> 아직 많이 낯설으시다고요? 그런 분들을 위한
+            재미있는 서비스도 있으니 즐겨주시기 바랍니다.
           </p>
           <div className="flex mt-6 justify-center">
             <div className="w-16 h-1 rounded-full bg-sky-300 inline-flex"></div>

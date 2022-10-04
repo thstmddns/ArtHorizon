@@ -72,10 +72,11 @@ const StyleTransfer = () => {
 
   const updateSource = (imageName) => {
     setSourceImg(url + imageName);
-    console.log(url + imageName);
+    // console.log(url + imageName);
   };
 
   const aiTransfer = () => {
+    setIsLoading(true);
     const byteString = atob(targetImg.split(",")[1]);
     const ab = new ArrayBuffer(byteString.length);
     const ia = new Uint8Array(ab);
@@ -104,12 +105,16 @@ const StyleTransfer = () => {
       },
     };
 
-    axios.post(url, formData, config).then((res) => {
-      console.log(res.data);
-      // console.log(decodeURIComponent(atob(res.data)));
-      const result = res.data;
-      setResultImg(result);
-    });
+    axios
+      .post(url, formData, config)
+      .then((res) => {
+        // console.log(res.data);
+        // console.log(decodeURIComponent(atob(res.data)));
+        const result = res.data;
+        setResultImg(result);
+        setIsLoading(false);
+      })
+      .catch((err) => console.error(err));
   };
 
   const downloadImg = useCallback((resultImg) => {
@@ -237,14 +242,16 @@ const StyleTransfer = () => {
               onClick={aiTransfer}
               className="flex mx-auto text-white bg-amber-400 border-0 py-2 px-8 items-center focus:outline-none hover:bg-amber-500 active:bg-amber-600 focus:ring focus:ring-amber-300 rounded-lg text-lg transition"
             >
-              <CgSpinner
-                className={`animate-spin`}
-                style={{ color: "white", marginRight: "5px" }}
-              />
+              {isLoading && (
+                <CgSpinner
+                  className={`animate-spin`}
+                  style={{ color: "white", marginRight: "5px" }}
+                />
+              )}
               Style Transfer
             </button>
-            {resultImg && (
-              <div>
+            {resultImg ? (
+              <div className="mt-10">
                 <img src={`data:image/jpeg;base64,${resultImg}`} alt="result" />
                 {/* <img src={resultImg} alt="result" /> */}
                 <button
@@ -254,10 +261,11 @@ const StyleTransfer = () => {
                   다운로드 하기
                 </button>
               </div>
+            ) : (
+              <div
+                className={`flex justify-center items-center mt-10 h-96 w-96 p-4 bg-gray-200 rounded-lg drop-shadow-md mb-10 ${"animate-pulse"}`}
+              ></div>
             )}
-            <div
-              className={`flex justify-center items-center h-96 w-96 p-4 bg-gray-200 rounded-lg drop-shadow-md mb-10 ${"animate-pulse"}`}
-            ></div>
           </div>
         </div>
       </section>

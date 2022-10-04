@@ -46,7 +46,7 @@ const PieceCommit = () => {
   };
 
   const updateImg = (file) => {
-    console.log(file);
+    // console.log(file);
     // 파일 자체 보관
     setUploadArt(file);
     setTags([]);
@@ -71,7 +71,7 @@ const PieceCommit = () => {
         });
         const file = new File([blob], "image.jpg");
         setSendingArt(file);
-        const url = "http://127.0.0.1:8000/medici/tags";
+        const url = "http://j7d201.p.ssafy.io:8000/medici/tags";
         const config = {
           Headers: {
             "content-type": "multipart/form-data",
@@ -125,41 +125,45 @@ const PieceCommit = () => {
   };
 
   const tagRecommend = () => {
-    const url = "http://127.0.0.1:8000/medici/detection";
+    console.log("추천받기 시작");
+    const url = "http://j7d201.p.ssafy.io:8000/medici/detection";
     const config = {
       Headers: {
         "content-type": "multipart/form-data",
       },
     };
-    axios.post(url, base64, config).then((res) => {
-      const aiRecommend = res.data.tag;
-      console.log(aiRecommend);
-      // "a animal", "a human", "plants", "mountain", "a building", "water"
-      const translate = [];
-      aiRecommend.forEach((tag) => {
-        switch (tag) {
-          case "a human":
-            translate.push("사람이 있는 그림");
-            break;
-          case "plants":
-            translate.push("나무가 있는 그림");
-            break;
-          case "mountain":
-            translate.push("산이 있는 그림");
-            break;
-          case "a building":
-            translate.push("건물이 있는 그림");
-            break;
-          case "water":
-            translate.push("물이 있는 그림");
-            break;
-          default:
-            break;
-        }
-      });
-      setTags((preState) => preState.concat(translate));
-      setTagRecomToggle(true);
-    });
+    axios
+      .post(url, base64, config)
+      .then((res) => {
+        const aiRecommend = res.data.tag;
+        console.log(aiRecommend);
+        // "a animal", "a human", "plants", "mountain", "a building", "water"
+        const translate = [];
+        aiRecommend.forEach((tag) => {
+          switch (tag) {
+            case "a human":
+              translate.push("사람이 있는 그림");
+              break;
+            case "plants":
+              translate.push("나무가 있는 그림");
+              break;
+            case "mountain":
+              translate.push("산이 있는 그림");
+              break;
+            case "a building":
+              translate.push("건물이 있는 그림");
+              break;
+            case "water":
+              translate.push("물이 있는 그림");
+              break;
+            default:
+              break;
+          }
+        });
+        setTags((preState) => preState.concat(translate));
+        setTagRecomToggle(true);
+      })
+      .catch((err) => console.error(err));
   };
 
   const deleteTag = (index) => {

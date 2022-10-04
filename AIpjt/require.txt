@@ -70,5 +70,7 @@ typing_extensions==4.3.0
 unicorn==2.0.0
 urllib3==1.26.12
 uvicorn==0.18.3
+git+https://github.com/openai/CLIP.git
 wcwidth==0.2.5
 Werkzeug==2.2.2
+

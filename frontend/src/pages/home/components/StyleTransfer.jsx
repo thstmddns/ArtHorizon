@@ -44,11 +44,13 @@ const StyleTransfer = () => {
               </svg>
             </div>
             <div className="flex-grow">
-              <h2 className="text-gray-900 text-xl mb-3">화풍</h2>
+              <h2 className="text-gray-900 text-xl mb-3">
+                어떤 것을 바꾸고 싶으신가요?
+              </h2>
               <p className="leading-relaxed text-base text-gray-500">
-                Blue bottle crucifix vinyl post-ironic four dollar toast vegan
-                taxidermy. Gastropub indxgo juice poutine, ramps microdosing
-                banh mi pug VHS try-hard.
+                어떤 이미지를 바꾸고 싶으신가요? 유명한 작품? 당신의 소장품?
+                아니면 추억에 남은 사진? 어떤 것이든 다 가능합니다. 사진을
+                가져와주세요
               </p>
             </div>
           </div>
@@ -73,11 +75,12 @@ const StyleTransfer = () => {
               </svg>
             </div>
             <div className="flex-grow">
-              <h2 className="text-gray-900 text-xl mb-3">사물</h2>
+              <h2 className="text-gray-900 text-xl mb-3">
+                명화를 선택해주세요
+              </h2>
               <p className="leading-relaxed text-base text-gray-500">
-                Blue bottle crucifix vinyl post-ironic four dollar toast vegan
-                taxidermy. Gastropub indxgo juice poutine, ramps microdosing
-                banh mi pug VHS try-hard.
+                저희 DB에 저장된 명화들을 제공해드립니다. 여기서 마음에 드는
+                작풍의 작품을 골라주세요. 선택은 언제든지 가능합니다.
               </p>
             </div>
           </div>
@@ -101,11 +104,12 @@ const StyleTransfer = () => {
               </svg>
             </div>
             <div className="flex-grow">
-              <h2 className="text-gray-900 text-xl mb-3">인물</h2>
+              <h2 className="text-gray-900 text-xl mb-3">결과</h2>
               <p className="leading-relaxed text-base text-gray-500">
-                Blue bottle crucifix vinyl post-ironic four dollar toast vegan
-                taxidermy. Gastropub indxgo juice poutine, ramps microdosing
-                banh mi pug VHS try-hard.
+                이미지들을 고르셨으면, 실행을 해보세요! 저희의 AI가 여러분이
+                선택한 이미지들을 받아 새로운 작품을 만들어내 가져올겁니다. 혹시
+                마음에 드시나요? 그렇다면 이미지를 다운로드까지 해 직접
+                가져보세요.
               </p>
             </div>
           </div>

@@ -2,6 +2,7 @@ import axios from "axios";
 import React from "react";
 import { useRef } from "react";
 import { useState } from "react";
+import NavBar from "../../components/NavBar";
 
 const TailScent = () => {
   const [image, setImage] = useState("");
@@ -32,10 +33,11 @@ const TailScent = () => {
           type: "image/jpeg",
         });
         const file = new File([blob], "image.jpg");
-        const url = "http://127.0.0.1:8000/medici/tags";
+        const url = "http://j7d201.p.ssafy.io:8000/medici/tags";
         const config = {
-          Headers: {
+          headers: {
             "content-type": "multipart/form-data",
+            "Access-Control-Allow-Origin": "*",
           },
         };
         const formData = new FormData();
@@ -67,12 +69,28 @@ const TailScent = () => {
   };
 
   return (
-    <section className="text-gray-600 body-font">
-      <div className="container flex flex-wrap px-5 pt-24 pb-10 mx-auto items-center justify-center">
-        <div className="flex flex-col items-center justify-center min-w-[50%]">
-          <h2 className="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">
-            당신의 그림은 어떤 향일까요?
-          </h2>
+    <React.Fragment>
+      <NavBar />
+      <section className="text-gray-600 body-font">
+        <div className="text-center mb-20" style={{ marginTop: "71px" }}>
+          <h1
+            className="text-6xl font-medium title-font text-gray-900 mb-4"
+            data-aos="fade-down"
+          >
+            그림의 향
+          </h1>
+          <p
+            className="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto text-gray-500"
+            data-aos="fade-in"
+          >
+            당신이 올린 이미지는 어떤 향을 가지고 있을까요? <br />
+            확인하고 같은 향을 가진 작품들도 함께 보세요.
+          </p>
+          <div className="flex mt-6 justify-center">
+            <div className="w-16 h-1 rounded-full bg-sky-500 inline-flex"></div>
+          </div>
+        </div>
+        <div className="flex flex-col items-center justify-center pb-32 mb-3">
           {image ? (
             <img
               className="mt-10 max-w-xl max-h-xl"
@@ -98,33 +116,30 @@ const TailScent = () => {
           </button>
         </div>
         {scent !== "당신의 향은?" && (
-          <div className="border-l-4 border-indigo-500 w-1/2">
-            <h2 className="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">
+          <div className="flex flex-col items-center justify-center mx-auto">
+            <h1 className="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">
               {scent}
-            </h2>
+            </h1>
             {/* 여기 이제 향 별 대표 이미지 들어갈 예정 */}
-            <div>
-              <div>같은 향을 가진 그림</div>
-              {/* 비슷한 이미지 호출(api가 있나...?) */}
-              <div>
-                {randomImgs?.map((img) => (
-                  // <div
-                  //   className="object-contain rounded drop-shadow-md mr-8 cursor-pointer hover:opacity-80 transition"
-                  //   style={{
-                  //     backgroundImage: `url('http://j7d201.p.ssafy.io/api/my-file/read/${img.pieceImg}')`,
-                  //   }}
-                  // ></div>
-                  <img
-                    src={`http://j7d201.p.ssafy.io/api/my-file/read/${img.pieceImg}`}
-                    alt="picture here"
-                  />
-                ))}
-              </div>
+            <h2>같은 향을 가진 그림</h2>
+            {/* 비슷한 이미지 호출(api가 있나...?) */}
+            <div className="flex flex-row mb-10">
+              {randomImgs?.map((img) => (
+                <img
+                  className="mx-auto"
+                  src={`http://j7d201.p.ssafy.io/api/my-file/read/${img.pieceImg}`}
+                  alt="pic here"
+                  key={img.pieceImg}
+                  style={{
+                    maxWidth: "400px",
+                  }}
+                />
+              ))}
             </div>
           </div>
         )}
-      </div>
-    </section>
+      </section>
+    </React.Fragment>
   );
 };
 

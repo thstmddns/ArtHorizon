@@ -19,4 +19,9 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     // 아티스트 회원 뽑아내기
     List<UserEntity> findUserEntitiesByUserType(char type);
 
+    // 사용자 검색
+    List<UserEntity> findUserEntitiesByUserNicknameContains(String keyword);
+
+    // 사용자 검색 개수 조회
+
 }

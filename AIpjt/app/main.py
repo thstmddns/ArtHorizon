@@ -2,9 +2,9 @@ from fastapi import FastAPI, File,UploadFile, Form
 import sys
 sys.path.append('/S07P22D201/AIPJT/app')
 
-from ST.styletransfer import style_transfer
-from ST.tag_recommend import get_tag
-from ST.objectdetection import detection
+from styletransfer import style_transfer
+from tag_recommend import get_tag
+from objectdetection import detection
 from pydantic import BaseModel
 import os
 from fastapi.middleware.cors import CORSMiddleware

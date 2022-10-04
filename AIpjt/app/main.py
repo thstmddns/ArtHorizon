@@ -1,7 +1,7 @@
 from fastapi import FastAPI, File,UploadFile, Form
 import sys
-sys.path.append('/home/ubuntu/S07P22D201/AIpjt/app')
-sys.path.append('/home/ubuntu/S07P22D201/AIpjt/app/')
+sys.path.append('/prod/app')
+# sys.path.append('/home/ubuntu/S07P22D201/AIpjt/app/')
 from styletransfer import style_transfer
 from tag_recommend import get_tag
 from objectdetection import detection

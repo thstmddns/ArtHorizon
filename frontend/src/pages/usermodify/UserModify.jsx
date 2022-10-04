@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 
 import NavBar from "../../components/NavBar";
+import Footer from "../../components/Footer";
 
 import Info from "./components/Info";
 import Password from "./components/Password";
@@ -12,123 +12,73 @@ import Withdrawal from "./components/Withdrawal";
 const UserModify = () => {
   const [selectedTab, setSelectedTab] = useState("기본정보 변경");
 
-  // switch (selectedTab) {
-  //   case "기본정보 변경":
-  //     break;
-  //   case "비밀번호 변경":
-  //     break;
-  //   case "프사 변경":
-  //     break;
-  //   case "화가로 전환":
-  //     break;
-  //   case "회원 탈퇴":
-  //     break;
-  //   default:
-  //     break;
-  // }
-
   return (
     <React.Fragment>
       <NavBar />
-      <Container>
-        <Left>
-          <TabLinks>
-            <TabLink
-              isSelected={"기본정보 변경" === selectedTab}
+      <section
+        className="border-solid border-gray-50 border-b-2"
+        style={{ marginTop: "71px", minHeight: "87.5vh" }}
+      >
+        <div className="flex container py-24 mx-auto" data-aos="fade-in">
+          <div className="flex flex-col mr-20">
+            <div
+              key={"1"}
+              className={`flex cursor-pointer w-40 px-5 py-4 border-solid border-r-4 text-gray-600 border-gray-200 transition ${
+                selectedTab === "기본정보 변경" && "font-bold border-sky-400"
+              }`}
               onClick={() => setSelectedTab("기본정보 변경")}
             >
               기본정보 변경
-            </TabLink>
-            <TabLink
-              isSelected={"비밀번호 변경" === selectedTab}
+            </div>
+            <div
+              key={"2"}
+              className={`flex cursor-pointer w-40 px-5 py-4 border-solid border-r-4 text-gray-600 border-gray-200 transition ${
+                selectedTab === "비밀번호 변경" && "font-bold border-sky-400"
+              }`}
               onClick={() => setSelectedTab("비밀번호 변경")}
             >
               비밀번호 변경
-            </TabLink>
-            <TabLink
-              isSelected={"프사 변경" === selectedTab}
+            </div>
+            <div
+              key={"3"}
+              className={`flex cursor-pointer w-40 px-5 py-4 border-solid border-r-4 text-gray-600 border-gray-200 transition ${
+                selectedTab === "프사 변경" && "font-bold border-sky-400"
+              }`}
               onClick={() => setSelectedTab("프사 변경")}
             >
               프사 변경
-            </TabLink>
-            <TabLink
-              isSelected={"화가로 전환" === selectedTab}
+            </div>
+            <div
+              key={"4"}
+              className={`flex cursor-pointer w-40 px-5 py-4 border-solid border-r-4 text-gray-600 border-gray-200 transition ${
+                selectedTab === "화가로 전환" && "font-bold border-sky-400"
+              }`}
               onClick={() => setSelectedTab("화가로 전환")}
             >
               화가로 전환
-            </TabLink>
-            <TabLink
-              isSelected={"회원 탈퇴" === selectedTab}
+            </div>
+            <div
+              key={"5"}
+              className={`flex cursor-pointer w-40 px-5 py-4 border-solid border-r-4 text-gray-600 border-gray-200 transition ${
+                selectedTab === "회원 탈퇴" && "font-bold border-sky-400"
+              }`}
               onClick={() => setSelectedTab("회원 탈퇴")}
             >
               회원 탈퇴
-            </TabLink>
-          </TabLinks>
-        </Left>
-        <Right>
-          <TabContainer>
+            </div>
+          </div>
+          <div className="container mx-auto">
             {selectedTab === "기본정보 변경" && <Info />}
             {selectedTab === "비밀번호 변경" && <Password />}
             {selectedTab === "프사 변경" && <ProfileImage />}
             {selectedTab === "화가로 전환" && <Convert />}
             {selectedTab === "회원 탈퇴" && <Withdrawal />}
-          </TabContainer>
-        </Right>
-      </Container>
+          </div>
+        </div>
+      </section>
+      <Footer />
     </React.Fragment>
   );
 };
 
 export default UserModify;
-
-const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-`;
-
-const Left = styled.div`
-  width: 25rem;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  align-items: center;
-`;
-
-const TabLinks = styled.div`
-  margin-top: 60px;
-`;
-
-const TabLink = styled.div`
-  font-size: 1.5rem;
-  font-weight: ${(props) => (props.isSelected ? "bold" : "normal")};
-  text-decoration: ${(props) => (props.isSelected ? "underline" : "none")};
-  background-color: ${(props) => (props.isSelected ? "#f2f2f0" : "ffffff")};
-  cursor: pointer;
-  border-radius: 10px;
-  padding: 15px;
-  margin-bottom: 30px;
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
-const Right = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const TabContainer = styled.div`
-  width: 80%;
-  height: 80%;
-  align-items: start;
-  border-radius: 10px;
-  padding: 30px 50px 30px 50px;
-  border: 1px solid #d1d7de;
-  background-color: #f9f9f7;
-`;

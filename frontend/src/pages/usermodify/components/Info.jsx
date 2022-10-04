@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 
 import { changeProfile, getUser } from "../../../redux/authSlice";
 
-import Modal from "../../../components/modal/Modal";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const Info = (props) => {
+const Info = () => {
   const dispatch = useDispatch();
   const originNickname = useSelector((state) => state.auth.nickname);
   const originDesc = useSelector((state) => state.auth.desc);
   const [nickname, setNickname] = useState("");
   const [description, setDescription] = useState("");
-  const [errorNicknameMessage, setErrorNicknameMessage] = useState("");
-  const [modal, setModal] = useState(false);
 
   useEffect(() => {
     dispatch(getUser());
@@ -24,10 +22,8 @@ const Info = (props) => {
   const submitHandler = (e) => {
     e.preventDefault();
 
-    setErrorNicknameMessage("");
-
     if (!nickname.trim()) {
-      setErrorNicknameMessage("닉네임을 입력하세요");
+      toast.warn("닉네임을 입력하세요");
       return;
     }
 
@@ -38,119 +34,61 @@ const Info = (props) => {
 
     setNickname("");
     setDescription("");
-    setErrorNicknameMessage("");
+
     // dispatch(getUser());
     // dispatch(changeProfile(profileData));
 
     dispatch(changeProfile(profileData));
-    setModal(true);
   };
 
   return (
     <React.Fragment>
-      {modal && (
-        <Modal content={"일단 전송 완료"} onConfirm={() => setModal(false)} />
-      )}
-      <form method="post" onSubmit={submitHandler}>
-        <TabTitle>기본정보 변경</TabTitle>
-        <FormControl>
-          <Label htmlFor="nickname">닉네임</Label>
-          <Input
+      <div
+        className="text-2xl text-gray-700 font-bold border-solid border-b border-gray-300 mb-8"
+        data-aos="fade-left"
+      >
+        기본 정보 변경
+      </div>
+      <form method="post" onSubmit={submitHandler} data-aos="fade-up">
+        <div className="relative mb-4">
+          <label htmlFor="nickname" className="leading-7 text-gray-900">
+            닉네임
+          </label>
+          <input
             type="text"
             id="nickname"
             name="nickname"
-            placeholder="변경할 닉네임을 입력하세요"
+            className="w-full bg-gray-50 rounded-lg border border-gray-300 focus:border-amber-500 focus:bg-white focus:ring-2 focus:ring-amber-200 outline-none text-gray-700 py-1 px-3 leading-8 transition"
+            placeholder="닉네임을 입력하세요"
             value={nickname}
             onChange={(e) => setNickname(e.target.value)}
           />
-          <ErrorMessage>{errorNicknameMessage}</ErrorMessage>
-        </FormControl>
-        <FormControl>
-          <Label htmlFor="statusMessage">상태 메시지</Label>
-          <Textarea
-            id="statusMessage"
-            name="statusMessage"
+        </div>
+
+        <div className="relative mb-4">
+          <label htmlFor="description" className="leading-7 text-gray-900">
+            상태 메시지
+          </label>
+          <textarea
+            id="description"
+            name="description"
+            className="w-full bg-gray-50 rounded-lg border border-gray-300 focus:border-amber-500 focus:bg-white focus:ring-2 focus:ring-amber-200 outline-none text-gray-700 py-1 px-3 leading-6 h-32 transition"
             placeholder="상태 메시지를 입력하세요"
-            rows="7"
-            value={description}
+            defaultValue={description}
             onChange={(e) => setDescription(e.target.value)}
-          ></Textarea>
-        </FormControl>
-        <Button type="submit">변경하기</Button>
+          ></textarea>
+        </div>
+        <div className="flex justify-end">
+          <button
+            type="submit"
+            className="flex text-white bg-amber-400 border-0 py-2 px-8 focus:outline-none hover:bg-amber-500 active:bg-amber-600 focus:ring focus:ring-amber-300 rounded-lg text-lg transition"
+          >
+            변경하기
+          </button>
+        </div>
       </form>
     </React.Fragment>
   );
 };
 
 export default Info;
-
-const FormControl = styled.div`
-  width: 100%;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 15px;
-`;
-
-const Label = styled.label`
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-bottom: 15px;
-`;
-
-const Input = styled.input`
-  height: 2rem;
-  border-radius: 10px;
-  border: 1px solid #d1d7de;
-  padding: 3px 12px 3px 12px;
-  background-color: #ffffff;
-  &::placeholder {
-    color: #d9d9d9;
-  }
-`;
-
-const Textarea = styled.textarea`
-  height: 2rem;
-  border-radius: 10px;
-  border: 1px solid #d1d7de;
-  padding: 12px;
-  background-color: #ffffff;
-  &::placeholder {
-    color: #d9d9d9;
-  }
-`;
-
-const ErrorMessage = styled.span`
-  font-size: 0.8rem;
-  height: 20px;
-  display: inline-flex;
-  align-items: center;
-  margin-left: 12px;
-  color: #db5858;
-`;
-
-const Button = styled.button`
-  cursor: pointer;
-  background-color: #88c4e6;
-  border: 1px solid #6cb6e1;
-  border-radius: 10px;
-  color: #ffffff;
-  width: 15rem;
-  height: 45px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-top: 10px;
-  margin-bottom: 30px;
-  &:hover {
-    background-color: #6cb6e1;
-    border: 1px solid #88c4e6;
-  }
-`;
-
-const TabTitle = styled.h1`
-  font-size: 1.6rem;
-  font-weight: bold;
-  margin-bottom: 60px;
-  padding-bottom: 5px;
-  border-bottom: 1px solid #222529;
-`;

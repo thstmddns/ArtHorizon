@@ -67,12 +67,19 @@ const Info = () => {
   };
 
   return (
-    <div className="flex justify-between border-solid border-b border-gray-200 pb-14 mb-14">
+    <div className="flex justify-between pb-10 mb-10" data-aos="fade-in">
       <div className="flex ">
         {/* 프사 */}
-        <div className="w-40 h-40 bg-gray-100 rounded-3xl border-solid border border-gray-200 drop-shadow-md mr-8">
-          <img src={`http://j7d201.p.ssafy.io/api/my-file/read/${picture}`} />
-        </div>
+        {!picture && (
+          <div className="w-40 h-40 bg-gray-100 rounded-3xl border-solid border border-gray-200 drop-shadow-md mr-8"></div>
+        )}
+        {picture && (
+          <img
+            src={`http://j7d201.p.ssafy.io/api/my-file/read/${picture}`}
+            alt="profile-img"
+            className="w-40 h-40 rounded-3xl drop-shadow-md mr-8"
+          />
+        )}
 
         {/* 정보 */}
         <div className="flex flex-col mt-5">

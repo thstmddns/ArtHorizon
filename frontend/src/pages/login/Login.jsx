@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import NavBar2 from "../../components/NavBar2";
+
+import { piecesApi } from "../../api/api";
 
 import { login, getUser } from "../../redux/authSlice";
 
@@ -15,6 +17,16 @@ const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [backgroundImg, setBackgroundImg] = useState();
+
+  useEffect(() => {
+    const fetchBackgroundImg = async () => {
+      const res = await piecesApi.getBackgroundImage();
+      console.log("res:", res);
+      setBackgroundImg(res.data.pieceImg);
+    };
+    fetchBackgroundImg();
+  }, []);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -54,13 +66,17 @@ const Login = () => {
       <section className="relative">
         {/* 배경 */}
         <div
-          className="absolute inset-0 bg-center bg-cover"
+          className="absolute bg-gray-700 -z-50"
+          style={{ width: "100vw", height: "100vh" }}
+        ></div>
+        <div
+          className="absolute inset-0 bg-center bg-cover blur"
           style={{
             width: "100vw",
             height: "100vh",
-            backgroundImage: `url('https://source.unsplash.com/random')`,
+            // backgroundImage: `url('https://source.unsplash.com/random')`,
+            backgroundImage: `url('http://j7d201.p.ssafy.io/api/my-file/read/${backgroundImg}')`,
           }}
-          data-aos="fade-in"
         ></div>
 
         {/* 로그인 폼 */}

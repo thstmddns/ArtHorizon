@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import NavBar2 from "../../components/NavBar2";
 
-import { authApi } from "../../api/api";
+import { authApi, piecesApi } from "../../api/api";
 import { signup } from "../../redux/authSlice";
 
 import loginBackgroundImage from "../../assets/images/loginBackgroundImage.jpg";
@@ -18,6 +18,16 @@ const Signup = () => {
   const [nickname, setNickname] = useState("");
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
+  const [backgroundImg, setBackgroundImg] = useState();
+
+  useEffect(() => {
+    const fetchBackgroundImg = async () => {
+      const res = await piecesApi.getBackgroundImage();
+      console.log("res:", res);
+      setBackgroundImg(res.data.pieceImg);
+    };
+    fetchBackgroundImg();
+  }, []);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -115,13 +125,17 @@ const Signup = () => {
       <section className="relative">
         {/* 배경 */}
         <div
-          className="absolute inset-0 bg-center bg-cover"
+          className="absolute bg-gray-700 -z-50"
+          style={{ width: "100vw", height: "100vh" }}
+        ></div>
+        <div
+          className="absolute inset-0 bg-center bg-cover blur"
           style={{
             width: "100vw",
             height: "100vh",
-            backgroundImage: `url('https://source.unsplash.com/random')`,
+            // backgroundImage: `url('https://source.unsplash.com/random')`,
+            backgroundImage: `url('http://j7d201.p.ssafy.io/api/my-file/read/${backgroundImg}')`,
           }}
-          data-aos="fade-in"
         ></div>
 
         {/* 회원가입 폼 */}

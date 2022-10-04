@@ -250,20 +250,30 @@ const StyleTransfer = () => {
               )}
               Style Transfer
             </button>
+            {isLoading && (
+              <div
+                className={`flex justify-center items-center mt-10 h-96 w-96 p-4 bg-gray-200 rounded-lg drop-shadow-md mb-10 ${"animate-pulse"} transition`}
+              ></div>
+            )}
             {resultImg ? (
-              <div className="mt-10">
-                <img src={`data:image/jpeg;base64,${resultImg}`} alt="result" />
+              <div className="flex flex-col justify-center items-center mt-10">
+                <img
+                  src={`data:image/jpeg;base64,${resultImg}`}
+                  alt="result"
+                  className="rounded-lg mb-2"
+                />
                 {/* <img src={resultImg} alt="result" /> */}
                 <button
                   onClick={() => downloadImg(resultImg)}
-                  className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
+                  className="flex mx-auto text-white bg-sky-400 border-0 py-2 px-8 focus:outline-none hover:bg-sky-500 active:bg-sky-600 focus:ring focus:ring-sky-300 rounded-lg text-lg transition"
+                  type="button"
                 >
                   다운로드 하기
                 </button>
               </div>
             ) : (
               <div
-                className={`flex justify-center items-center mt-10 h-96 w-96 p-4 bg-gray-200 rounded-lg drop-shadow-md mb-10 ${"animate-pulse"}`}
+              // className={`flex justify-center items-center mt-10 h-96 w-96 p-4 bg-gray-200 rounded-lg drop-shadow-md mb-10 ${"animate-pulse"}`}
               ></div>
             )}
           </div>

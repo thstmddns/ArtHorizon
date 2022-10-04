@@ -24,10 +24,41 @@ const Piece = () => {
     fetchPieceDetail();
   }, [pieceSeq]);
 
-  const handleBookmark = () => {
+  const setBookmark = () => {
     authApi
       .setBookmark(pieceSeq)
-      .then((res) => console.log("북마크완료"))
+      .then((res) => {
+        console.log("북마크완료");
+        const fetchPieceDetail = async () => {
+          try {
+            const { data } = await piecesApi.getPieceDetail(pieceSeq);
+            setPiece(data);
+            console.log("data:", data);
+          } catch (error) {
+            console.error("what");
+          }
+        };
+        fetchPieceDetail();
+      })
+      .catch((err) => console.error("에러뭐임:", err));
+  };
+
+  const cancelBookmark = () => {
+    authApi
+      .deleteBookmark(pieceSeq)
+      .then((res) => {
+        console.log("북마크해제완료");
+        const fetchPieceDetail = async () => {
+          try {
+            const { data } = await piecesApi.getPieceDetail(pieceSeq);
+            setPiece(data);
+            console.log("data:", data);
+          } catch (error) {
+            console.error("what");
+          }
+        };
+        fetchPieceDetail();
+      })
       .catch((err) => console.error("에러뭐임:", err));
   };
 
@@ -111,12 +142,22 @@ const Piece = () => {
 
                 {/* 버튼 */}
                 <div className="flex">
-                  <button
-                    className="flex text-white bg-amber-700 border-0 py-3 px-6 focus:outline-none hover:bg-amber-500 active:bg-amber-600 focus:ring focus:ring-amber-300 rounded-lg transition mr-2"
-                    onClick={handleBookmark}
-                  >
-                    북마크 {piece.pieceBookmarkCount}
-                  </button>
+                  {piece.pieceBookmarkYn === "Y" && (
+                    <button
+                      className="flex text-white bg-amber-700 border-0 py-3 px-6 focus:outline-none hover:bg-amber-500 active:bg-amber-600 focus:ring focus:ring-amber-300 rounded-lg transition mr-2"
+                      onClick={cancelBookmark}
+                    >
+                      북마크 해제 {piece.pieceBookmarkCount}
+                    </button>
+                  )}
+                  {piece.pieceBookmarkYn === "N" && (
+                    <button
+                      className="flex text-white bg-amber-700 border-0 py-3 px-6 focus:outline-none hover:bg-amber-500 active:bg-amber-600 focus:ring focus:ring-amber-300 rounded-lg transition mr-2"
+                      onClick={setBookmark}
+                    >
+                      북마크 {piece.pieceBookmarkCount}
+                    </button>
+                  )}
                   <button className="flex text-white bg-sky-700 border-0 py-3 px-6 focus:outline-none hover:bg-sky-500 active:bg-sky-600 focus:ring focus:ring-sky-300 rounded-lg transition">
                     작품 결제
                   </button>
@@ -178,10 +219,7 @@ const Piece = () => {
 
                 {/* 버튼 */}
                 <div className="flex">
-                  <button
-                    className="flex text-white bg-amber-700 border-0 py-3 px-6 focus:outline-none hover:bg-amber-500 active:bg-amber-600 focus:ring focus:ring-amber-300 rounded-lg transition mr-2"
-                    onClick={handleBookmark}
-                  >
+                  <button className="flex text-white bg-amber-700 border-0 py-3 px-6 focus:outline-none hover:bg-amber-500 active:bg-amber-600 focus:ring focus:ring-amber-300 rounded-lg transition mr-2">
                     북마크 {piece.pieceBookmarkCount}
                   </button>
                   <button className="flex text-white bg-sky-700 border-0 py-3 px-6 focus:outline-none hover:bg-sky-500 active:bg-sky-600 focus:ring focus:ring-sky-300 rounded-lg transition">

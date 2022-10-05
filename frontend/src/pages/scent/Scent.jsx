@@ -5,11 +5,12 @@ import { useState } from "react";
 import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const TailScent = () => {
   const navigate = useNavigate();
   const [image, setImage] = useState("");
-  const [scent, setScent] = useState("당신의 향은?");
+  const [scent, setScent] = useState("");
   const [randomImgs, setRandomImgs] = useState([]);
   const ImageInput = useRef();
 
@@ -19,7 +20,6 @@ const TailScent = () => {
   };
 
   const updateImg = (file) => {
-    // console.log(file);
     const reader = new FileReader();
     reader.readAsDataURL(file);
     return new Promise((resolve) => {
@@ -51,23 +51,19 @@ const TailScent = () => {
           .post(url, formData, config)
           .then((res) => {
             const getScent = res.data.tag;
-            // console.log(getScent);
             setScent(getScent);
             // 여기서 이 향을 가진 다른 그림을 호출하는 axios가 있어야할듯?
             const nextUrl = `http://j7d201.p.ssafy.io/api/pieces/scent/${getScent}`;
+            toast.success("향을 찾았습니다");
             axios
               .get(nextUrl)
               .then((res) => {
                 const result = res.data;
-                console.log(result);
-                // setRandomImgs((prev) => prev.concat(result));
                 setRandomImgs(result);
               })
-              .catch((err) => console.error(err));
+              .catch(() => toast.error("오류 발생"));
           })
-          .catch((err) => {
-            console.error(err);
-          });
+          .catch(() => toast.error("오류 발생"));
         resolve();
       };
     });
@@ -101,8 +97,14 @@ const TailScent = () => {
             </div>
           </div>
 
-          <div className="flex flex-col items-center justify-center py-48 mb-32 border-solid border-b border-gray-200">
-            <div className="flex flex-col justify-center items-center mb-10">
+          <div
+            className="flex flex-col items-center justify-center py-48 mb-32 border-solid border-b border-gray-200"
+            data-aos="fade-in"
+          >
+            <div
+              className="flex flex-col justify-center items-center mb-10"
+              data-aos="fade-in"
+            >
               {image && (
                 <img
                   className="max-w-xl max-h-xl rounded-lg"
@@ -112,7 +114,7 @@ const TailScent = () => {
               )}
               {!image && (
                 <h2 className="text-3xl mb-10">
-                  향을 찾고싶은 이미지를 고르세요
+                  향을 찾을 이미지를 선택하세요
                 </h2>
               )}
               {!image && (
@@ -140,30 +142,63 @@ const TailScent = () => {
             </div>
           </div>
 
-          {scent !== "당신의 향은" && (
-            <div className="flex flex-col items-center justify-center mx-auto">
+          <div
+            className="flex flex-col items-center justify-center mx-auto"
+            data-aos="fade-up"
+          >
+            {!scent && (
               <div className="flex flex-col justify-center items-center mb-10">
-                <h1 className="text-3xl mb-10">{scent}</h1>
-                <h2 className="text-md text-gray-500">같은 향을 가진 그림</h2>
-                <div className="flex mt-6 justify-center">
+                <h1 className="text-3xl font-bold mb-10">
+                  그림을 선택해주세요!
+                </h1>
+              </div>
+            )}
+            {scent && (
+              <div className="flex flex-col justify-center items-center">
+                <div className="flex flex-col justify-center items-center">
+                  <h1 className="text-3xl font-bold mb-10">
+                    선택한 그림의 향은?
+                  </h1>
+                </div>
+                <div className="flex flex-col mt-6 justify-center items-center mb-10">
+                  <h1 className="text-2xl mb-4">{scent}</h1>
                   <div className="w-16 h-1 rounded-full bg-gray-500 inline-flex"></div>
                 </div>
+                <div className="grid md:grid-cols-3 gap-2">
+                  {randomImgs?.map((image) => (
+                    <div
+                      key={image.pieceImg}
+                      className="shadow-md rounded mb-2 drop-shadow-md overflow-hidden relative cursor-pointer xl:w-96 xl:h-96 w-56 h-56"
+                      onClick={() => navigate(`/pieces/${image.pieceSeq}`)}
+                    >
+                      {/* 그림 */}
+                      <div
+                        className="absolute inset-0 bg-cover bg-center z-0"
+                        style={{
+                          backgroundImage: `url('http://j7d201.p.ssafy.io/api/my-file/read/${image.pieceImg}')`,
+                        }}
+                      ></div>
+
+                      {/* 설명 */}
+                      <div className="opacity-0 hover:opacity-90 hover:bg-gray-900 ease-in-out duration-300 absolute inset-0 z-10 flex flex-col justify-center items-center p-4">
+                        <div className="text-2xl text-white font-semibold mb-6 text-center">
+                          {image.pieceTitle}
+                        </div>
+                        <div className="text-1xl text-white text-center">
+                          {image.pieceArtist}
+                        </div>
+                      </div>
+                      <img
+                        alt="gallery"
+                        className="w-full h-full object-cover object-center rounded transition ease-in-out duration-300"
+                        src={`http://j7d201.p.ssafy.io/api/my-file/read/${image.pieceImg}`}
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
-              <div className="grid md:grid-cols-3 gap-2">
-                {randomImgs?.map((image) => (
-                  <div
-                    key={image.pieceImg}
-                    className="relative cursor-pointer rounded-lg xl:w-96 xl:h-96 w-56 h-56 bg-cover bg-center bg-gray-100 flex justify-center items-center"
-                    style={{
-                      backgroundImage: `url('http://j7d201.p.ssafy.io/api/my-file/read/${image.pieceImg}')`,
-                    }}
-                    // 상세페이지 이동 추가
-                    onClick={() => navigate(`/pieces/${image.pieceSeq}`)}
-                  ></div>
-                ))}
-              </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </section>
       <Footer />

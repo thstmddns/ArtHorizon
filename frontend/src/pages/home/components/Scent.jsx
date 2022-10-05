@@ -17,8 +17,8 @@ const Reviews = () => {
             className="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto"
             data-aos="fade-in"
           >
-            자신만의 개성으로 무장한 신인 화가들의 작품을 만나보세요. 그들과
-            소통하고 공감하세요. 오직 Art Horizon 에서만 가능합니다.
+            저희는 그림에서 느껴지는 감각을 향으로 표현하고자 했습니다. <br />{" "}
+            당신이 선택한 이미지는 어떤 향을 가질까요?
           </p>
           <div className="flex mt-6 justify-center">
             <div className="w-16 h-1 rounded-full bg-amber-400 inline-flex"></div>
@@ -28,7 +28,7 @@ const Reviews = () => {
         {/* 6개의 어쩌고 */}
         <div className="flex flex-wrap lg:w-4/5 sm:mx-auto sm:mb-2 -mx-2">
           <div className="p-2 sm:w-1/2 w-full" data-aos="fade-right">
-            <div className="bg-sky-300 rounded flex p-4 h-full items-center">
+            <div className="bg-red-500 rounded flex p-4 h-full items-center">
               <svg
                 fill="none"
                 stroke="white"
@@ -42,12 +42,29 @@ const Reviews = () => {
                 <path d="M22 4L12 14.01l-3-3"></path>
               </svg>
               <span className="title-font font-medium text-white">
-                Authentic Cliche Forage
+                스파이시
               </span>
             </div>
           </div>
           <div className="p-2 sm:w-1/2 w-full" data-aos="fade-left">
-            <div className="bg-sky-300 rounded flex p-4 h-full items-center">
+            <div className="bg-red-300 rounded flex p-4 h-full items-center">
+              <svg
+                fill="none"
+                stroke="black"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="3"
+                className="text-indigo-500 w-6 h-6 flex-shrink-0 mr-4"
+                viewBox="0 0 24 24"
+              >
+                <path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path>
+                <path d="M22 4L12 14.01l-3-3"></path>
+              </svg>
+              <span className="title-font font-medium text-black">로즈</span>
+            </div>
+          </div>
+          <div className="p-2 sm:w-1/2 w-full" data-aos="fade-right">
+            <div className="bg-yellow-300 rounded flex p-4 h-full items-center">
               <svg
                 fill="none"
                 stroke="white"
@@ -60,9 +77,60 @@ const Reviews = () => {
                 <path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path>
                 <path d="M22 4L12 14.01l-3-3"></path>
               </svg>
-              <span className="title-font font-medium text-white">
-                Kinfolk Chips Snackwave
+              <span className="title-font font-medium text-gray-500">
+                시트러스
               </span>
+            </div>
+          </div>
+          <div className="p-2 sm:w-1/2 w-full" data-aos="fade-left">
+            <div className="bg-yellow-200 rounded flex p-4 h-full items-center">
+              <svg
+                fill="none"
+                stroke="black"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="3"
+                className="text-indigo-500 w-6 h-6 flex-shrink-0 mr-4"
+                viewBox="0 0 24 24"
+              >
+                <path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path>
+                <path d="M22 4L12 14.01l-3-3"></path>
+              </svg>
+              <span className="title-font font-medium text-black">드라이</span>
+            </div>
+          </div>
+          <div className="p-2 sm:w-1/2 w-full" data-aos="fade-right">
+            <div className="bg-emerald-500 rounded flex p-4 h-full items-center">
+              <svg
+                fill="none"
+                stroke="white"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="3"
+                className="text-indigo-500 w-6 h-6 flex-shrink-0 mr-4"
+                viewBox="0 0 24 24"
+              >
+                <path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path>
+                <path d="M22 4L12 14.01l-3-3"></path>
+              </svg>
+              <span className="title-font font-medium text-white">그린</span>
+            </div>
+          </div>
+          <div className="p-2 sm:w-1/2 w-full" data-aos="fade-left">
+            <div className="bg-emerald-200 rounded flex p-4 h-full items-center">
+              <svg
+                fill="none"
+                stroke="black"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="3"
+                className="text-indigo-500 w-6 h-6 flex-shrink-0 mr-4"
+                viewBox="0 0 24 24"
+              >
+                <path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path>
+                <path d="M22 4L12 14.01l-3-3"></path>
+              </svg>
+              <span className="title-font font-medium text-black">허브</span>
             </div>
           </div>
           <div className="p-2 sm:w-1/2 w-full" data-aos="fade-right">
@@ -79,16 +147,14 @@ const Reviews = () => {
                 <path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path>
                 <path d="M22 4L12 14.01l-3-3"></path>
               </svg>
-              <span className="title-font font-medium text-white">
-                Coloring Book Ethical
-              </span>
+              <span className="title-font font-medium text-white">워터리</span>
             </div>
           </div>
           <div className="p-2 sm:w-1/2 w-full" data-aos="fade-left">
-            <div className="bg-sky-400 rounded flex p-4 h-full items-center">
+            <div className="bg-sky-300 rounded flex p-4 h-full items-center">
               <svg
                 fill="none"
-                stroke="white"
+                stroke="black"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="3"
@@ -98,13 +164,11 @@ const Reviews = () => {
                 <path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path>
                 <path d="M22 4L12 14.01l-3-3"></path>
               </svg>
-              <span className="title-font font-medium text-white">
-                Typewriter Polaroid Cray
-              </span>
+              <span className="title-font font-medium text-black">코튼</span>
             </div>
           </div>
           <div className="p-2 sm:w-1/2 w-full" data-aos="fade-right">
-            <div className="bg-sky-500 rounded flex p-4 h-full items-center">
+            <div className="bg-neutral-500 rounded flex p-4 h-full items-center">
               <svg
                 fill="none"
                 stroke="white"
@@ -117,16 +181,14 @@ const Reviews = () => {
                 <path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path>
                 <path d="M22 4L12 14.01l-3-3"></path>
               </svg>
-              <span className="title-font font-medium text-white">
-                Pack Truffaut Blue
-              </span>
+              <span className="title-font font-medium text-white">스모키</span>
             </div>
           </div>
           <div className="p-2 sm:w-1/2 w-full" data-aos="fade-left">
-            <div className="bg-sky-500 rounded flex p-4 h-full items-center">
+            <div className="bg-neutral-400 rounded flex p-4 h-full items-center">
               <svg
                 fill="none"
-                stroke="white"
+                stroke="black"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="3"
@@ -136,9 +198,7 @@ const Reviews = () => {
                 <path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path>
                 <path d="M22 4L12 14.01l-3-3"></path>
               </svg>
-              <span className="title-font font-medium text-white">
-                The Catcher In The Rye
-              </span>
+              <span className="title-font font-medium text-black">머스크</span>
             </div>
           </div>
         </div>

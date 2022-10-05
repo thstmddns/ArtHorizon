@@ -21,7 +21,7 @@ import MyPage from "./pages/mypage/MyPage";
 import UserModify from "./pages/usermodify/UserModify";
 import Pieces from "./pages/pieces/Pieces";
 import Piece from "./pages/piece/Piece";
-import Register from "./pages/register/Register";
+// import Register from "./pages/register/Register";
 import Filter from "./pages/filter/Filter";
 import PieceCommit from "./pages/piececommit/PieceCommit";
 import StyleTransfer from "./pages/style-transfer/StyleTransfer";
@@ -57,7 +57,7 @@ const router = createBrowserRouter([
     element: <Pieces />,
   },
   {
-    path: "/pieces/search",
+    path: "/pieces/search/:searchName",
     element: <Searchpieces />,
   },
   {

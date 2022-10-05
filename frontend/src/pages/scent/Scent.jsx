@@ -4,8 +4,10 @@ import { useRef } from "react";
 import { useState } from "react";
 import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
+import { useNavigate } from "react-router-dom";
 
 const TailScent = () => {
+  const navigate = useNavigate();
   const [image, setImage] = useState("");
   const [scent, setScent] = useState("당신의 향은?");
   const [randomImgs, setRandomImgs] = useState([]);
@@ -155,6 +157,8 @@ const TailScent = () => {
                     style={{
                       backgroundImage: `url('http://j7d201.p.ssafy.io/api/my-file/read/${image.pieceImg}')`,
                     }}
+                    // 상세페이지 이동 추가
+                    onClick={() => navigate(`/pieces/${image.pieceSeq}`)}
                   ></div>
                 ))}
               </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback } from "react";
 import axios from "axios";
 import { CgSpinner } from "react-icons/cg";
 
@@ -7,14 +7,14 @@ import Footer from "../../components/Footer";
 
 // fileName을 여기 넣어놓으시오
 const url = "http://j7d201.p.ssafy.io/api/my-file/read/";
-const imageNames = [
-  "150_Diego Rivera_Evening Twilight at Acapulco.jpg",
-  "935_Camille Pissarro_The Roundelay.jpg",
-  "761_Henri Matisse_Fruit and Coffeepot.jpg",
-  "461_Francisco Goya_Dont scream stupid.jpg",
-  "267_Mikhail Vrubel_Pan.jpg",
-  "618_Caravaggio_The Lute Player.jpg",
-];
+// const imageNames = [
+//   "150_Diego Rivera_Evening Twilight at Acapulco.jpg",
+//   "935_Camille Pissarro_The Roundelay.jpg",
+//   "761_Henri Matisse_Fruit and Coffeepot.jpg",
+//   "461_Francisco Goya_Dont scream stupid.jpg",
+//   "267_Mikhail Vrubel_Pan.jpg",
+//   "618_Caravaggio_The Lute Player.jpg",
+// ];
 
 const initialTestImages = [
   {
@@ -52,7 +52,7 @@ const StyleTransfer = () => {
 
   const targetInput = useRef();
 
-  const [testImages, setTestImages] = useState(initialTestImages);
+  // const [testImages, setTestImages] = useState(initialTestImages);
 
   const targetSelect = () => {
     targetInput.current.click();
@@ -95,7 +95,7 @@ const StyleTransfer = () => {
     formData.append("filed", file);
     formData.append("src", sourceImg);
     const config = {
-      Headers: {
+      headers: {
         "content-type": "multipart/form-data",
         "Access-Control-Allow-Origin": "*",
         withCredentials: true,
@@ -250,6 +250,9 @@ const StyleTransfer = () => {
               )}
               Style Transfer
             </button>
+            <div className="my-10">
+              AI를 이용하는 과정에서 연산시간이 오래 걸릴 수도 있습니다
+            </div>
             {isLoading && (
               <div
                 className={`flex justify-center items-center mt-10 h-96 w-96 p-4 bg-gray-200 rounded-lg drop-shadow-md mb-10 ${"animate-pulse"} transition`}

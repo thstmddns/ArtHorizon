@@ -58,7 +58,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/pieces/search",
-    element: <Searchpieces />
+    element: <Searchpieces />,
   },
   {
     path: "/pieces/:pieceSeq",
@@ -70,8 +70,8 @@ const router = createBrowserRouter([
   },
   {
     path: "/register",
-    element: isLogin() ? <PieceCommit /> : <Navigate to="/" replace />,
-    // element: <Register />,
+    // element: isLogin() ? <PieceCommit /> : <Navigate to="/" replace />,
+    element: isLogin() ? <Register /> : <Navigate to="/" replace />,
   },
   {
     path: "/style",

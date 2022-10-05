@@ -130,8 +130,8 @@ const Piece = () => {
                   </div>
                   <div className="text-white text-lg">{piece.pieceGenre}</div>
                   <div className="text-white text-lg">{piece.pieceStyle}</div>
-                  <div className="mt-4">
-                    <div className="inline text-white text-lg font-bold bg-gray-900 rounded-lg drop-shadow-md p-2">
+                  <div className="flex mb-4">
+                    <div className="text-white text-lg font-bold bg-gray-900 rounded-lg drop-shadow-md px-2 py-1">
                       # {piece.pieceScent}
                     </div>
                   </div>
@@ -168,7 +168,7 @@ const Piece = () => {
         )}
 
         {/* 유저 아트 그림, 정보 */}
-        {!cinema && piece && piece.pieceType === "U" && (
+        {!cinema && piece && piece.pieceType === "A" && (
           <div
             className="mx-auto flex justify-center items-center absolute top-0 left-0"
             style={{
@@ -187,41 +187,68 @@ const Piece = () => {
                 src={`http://j7d201.p.ssafy.io/api/my-file/read/${piece.pieceImg}`}
                 style={{ maxWidth: "73vw", maxHeight: "90vh" }}
                 onClick={() => setCinema(true)}
+                data-aos="zoom-out"
               />
 
               {/* 설명 */}
               <div
                 className="flex flex-col justify-between backdrop-blur-sm p-4"
                 // style={{ width: "23vw", maxHeight: "90vh" }}
+                data-aos="fade-left"
               >
                 {/* 내용 */}
                 <div className="flex flex-col">
                   <div
-                    className="text-white mb-2 font-bold text-2xl"
+                    className="text-white mb-2 font-bold text-3xl"
                     style={{ lineHeight: "1" }}
                   >
                     {piece.pieceTitleKr}
                   </div>
-                  <div className="text-white mb-4 font-bold">
+                  <div className="text-white mb-4 font-bold text-xl">
                     {piece.pieceArtistKr}
                   </div>
-                  <div className="text-white mb-2">{piece.pieceYear}</div>
-                  <div className="text-white mb-2">{piece.pieceGenre}</div>
-                  <div className="text-white mb-2">{piece.pieceStyle}</div>
-                  <div className="text-white mb-2">{piece.pieceScent} 향</div>
-                  <div className="text-white mb-2">
-                    태그: {piece.pieceTag} ..
-                  </div>
-                  <div className="text-white mb-2">
+                  <div className="text-white text-lg">{piece.pieceDesc}</div>
+                  <div className="text-white text-lg">
                     &#8361; {piece.piecePrice}
                   </div>
+                  <div className="flex flex-wrap text-white text-lg mb-2">
+                    {piece.pieceTag.split(",").map((tag) => (
+                      <div
+                        key={Math.random().toString()}
+                        className="text-white px-2 py-1 bg-gray-100 drop-shadow-md rounded-lg text-gray-800 mr-2"
+                      >
+                        # {tag}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex mb-4">
+                    <div className="text-white text-lg font-bold bg-gray-900 rounded-lg drop-shadow-md px-2 py-1">
+                      # {piece.pieceScent}
+                    </div>
+                  </div>
+                  {/* <div className="text-white text-lg">
+                    태그: {piece.pieceTag} ..
+                  </div> */}
                 </div>
 
                 {/* 버튼 */}
                 <div className="flex">
-                  <button className="flex text-white bg-amber-700 border-0 py-3 px-6 focus:outline-none hover:bg-amber-500 active:bg-amber-600 focus:ring focus:ring-amber-300 rounded-lg transition mr-2">
-                    북마크 {piece.pieceBookmarkCount}
-                  </button>
+                  {piece.pieceBookmarkYn === "Y" && (
+                    <button
+                      className="flex text-white bg-amber-700 border-0 py-3 px-6 focus:outline-none hover:bg-amber-500 active:bg-amber-600 focus:ring focus:ring-amber-300 rounded-lg transition mr-2"
+                      onClick={cancelBookmark}
+                    >
+                      북마크 해제 {piece.pieceBookmarkCount}
+                    </button>
+                  )}
+                  {piece.pieceBookmarkYn === "N" && (
+                    <button
+                      className="flex text-white bg-amber-700 border-0 py-3 px-6 focus:outline-none hover:bg-amber-500 active:bg-amber-600 focus:ring focus:ring-amber-300 rounded-lg transition mr-2"
+                      onClick={setBookmark}
+                    >
+                      북마크 {piece.pieceBookmarkCount}
+                    </button>
+                  )}
                   <button className="flex text-white bg-sky-700 border-0 py-3 px-6 focus:outline-none hover:bg-sky-500 active:bg-sky-600 focus:ring focus:ring-sky-300 rounded-lg transition">
                     작품 결제
                   </button>

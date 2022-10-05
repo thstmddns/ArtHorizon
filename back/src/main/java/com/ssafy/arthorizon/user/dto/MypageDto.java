@@ -16,6 +16,7 @@ public class MypageDto {
     private int userFollowerCount;
     private char userIsMe;
     private char userFollowYn;
+    private String userDesc;
 
     private SignupDto.SignupResult result;
 
@@ -30,5 +31,6 @@ public class MypageDto {
         this.userArtCount = userEntity.getUserArtCount();
         this.userFollowingCount = userEntity.getUserFollowingCount();
         this.userFollowerCount = userEntity.getUserFollowerCount();
+        this.userDesc = userEntity.getUserDesc();
     }
 }

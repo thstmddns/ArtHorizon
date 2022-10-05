@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Intro = () => {
   const navigate = useNavigate();
@@ -42,14 +42,28 @@ const Intro = () => {
           </div>
         </div>
 
-        <button
-          className="flex mx-auto mt-16 text-white bg-amber-400 border-0 py-4 px-12 focus:outline-none hover:bg-amber-500 active:bg-amber-600 focus:ring focus:ring-amber-300 hover:drop-shadow-md rounded-lg text-xl font-bold transition"
-          onClick={() => navigate("/pieces")}
-          data-aos="fade-up"
-        >
-          원하는 그림 검색하기
-        </button>
+        <div className="flex justify-center items-center">
+          <div data-aos="fade-up">
+            <button
+              className="flex mr-4 text-white border-gray-300 bg-amber-400 border-0 py-4 px-12 focus:outline-none hover:bg-amber-500 active:bg-amber-600 focus:ring focus:ring-amber-300 hover:drop-shadow-md rounded-lg text-xl font-bold transition"
+              onClick={() => navigate("/pieces")}
+            >
+              작품 구경하러 가기!
+            </button>
+          </div>
+
+          <div data-aos="fade-up">
+            <button
+              className="flex text-white bg-sky-400 py-4 px-12 focus:outline-none hover:bg-sky-500 active:bg-sky-600 focus:ring focus:ring-sky-300 hover:drop-shadow-md rounded-lg text-xl font-bold transition"
+              onClick={() => navigate("/register")}
+            >
+              나의 작품 전시하기!
+            </button>
+          </div>
+        </div>
       </div>
+
+      <div className="container px-5 mx-auto"></div>
     </section>
   );
 };

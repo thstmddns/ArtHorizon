@@ -21,6 +21,7 @@ const NotFound = () => {
           </p>
           <Link
             to="/"
+            replace
             className="px-8 py-3 text-white font-bold rounded-lg bg-amber-400 hover:bg-amber-500 focus:ring-4 focus:ring-amber-200 transition"
           >
             홈 페이지로 이동

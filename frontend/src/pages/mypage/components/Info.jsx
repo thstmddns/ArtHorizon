@@ -22,7 +22,7 @@ const Info = () => {
       })
       .catch((err) => {
         if (err.response.status === 400) {
-          navigate("/", { replace: true });
+          navigate("/404", { replace: true });
           toast.error("존재하지 않는 유저입니다");
         }
       });

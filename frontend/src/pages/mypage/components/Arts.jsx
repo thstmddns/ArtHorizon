@@ -10,20 +10,24 @@ const Arts = () => {
   const [selectedTab, setSelectedTab] = useState("나의 아트");
   const [userArts, setUserArts] = useState([]);
   const [boomarkArts, setBookmarkArts] = useState([]);
+
   const [isMine, setIsMine] = useState(false);
 
   useEffect(() => {
-    // 유저 아트 가져오기
-    userArtApi
-      .getUserArts(1)
-      .then((res) => setUserArts(res.data.pieceList))
-      .catch(() => toast.error("나의 아트 가져오기 실패"));
-
     // 마이페이지 정보 가져오기
     authApi
       .getMyPage(targetUserSeq)
       .then((res) => {
         setIsMine(res.data.userIsMe === "Y" ? true : false);
+
+        // 화가이면 유저 아트 가져오기
+        if (res.data.isArtist === "A") {
+          userArtApi
+            .getUserArts(1)
+            .then((res) => setUserArts(res.data.pieceList))
+            .catch(() => toast.error("나의 아트 가져오기 실패"));
+        }
+
         // 나의 마이페이지이면 북마크 아트 가져오기
         if (res.data.userIsMe === "Y") {
           authApi
@@ -135,7 +139,7 @@ const Arts = () => {
           ))}
 
         {/* 북마크 아트 없음 */}
-        {selectedTab === "북마크한 아트" && boomarkArts?.length === 0 && (
+        {selectedTab === "북마크한 아트" && !boomarkArts && (
           <div data-aos="fade-in">북마크 아트가 없습니다.</div>
         )}
       </div>

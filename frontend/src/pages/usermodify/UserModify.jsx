@@ -20,6 +20,7 @@ const UserModify = () => {
         style={{ marginTop: "71px", minHeight: "87.5vh" }}
       >
         <div className="flex container py-24 mx-auto" data-aos="fade-in">
+          {/* 탭 */}
           <div className="flex flex-col mr-20">
             <div
               key={"1"}
@@ -67,6 +68,8 @@ const UserModify = () => {
               회원 탈퇴
             </div>
           </div>
+
+          {/* 폼 */}
           <div className="container mx-auto">
             {selectedTab === "기본정보 변경" && <Info />}
             {selectedTab === "비밀번호 변경" && <Password />}

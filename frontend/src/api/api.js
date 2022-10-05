@@ -67,8 +67,16 @@ export const authApi = {
   changeProfile: (profileData) => api.put("/users/change-profile", profileData),
   changePassword: (passwordData) => api.put("/users/password", passwordData),
   changeType: () => api.put("/users/change"),
-  getBookmarks: () => api.get("/users/bookmark"),
-  getMyPage: (targetUserSeq) => api.get(`/users/profile/${targetUserSeq}`),
+  getBookmarkArts: () => api.get("/users/bookmark"),
+  getMyPage: (targetUserSeq) =>
+    api.get(`/users/profile/${targetUserSeq}`, {
+      headers: {
+        jwt: "",
+        crossDomain: true,
+        credentials: "include",
+        withCredentials: true,
+      },
+    }),
   follow: (targetUserSeq) => api.post(`/users/follow/${targetUserSeq}`),
   unfollow: (targetUserSeq) => api.delete(`/users/follow/${targetUserSeq}`),
   getFollowers: (targetUserSeq) =>

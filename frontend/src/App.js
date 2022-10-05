@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   createBrowserRouter,
   RouterProvider,
@@ -23,12 +23,12 @@ import Pieces from "./pages/pieces/Pieces";
 import Piece from "./pages/piece/Piece";
 import Register from "./pages/register/Register";
 import Filter from "./pages/filter/Filter";
-import PieceCommit from "./pages/piececommit/PieceCommit";
 import StyleTransfer from "./pages/style-transfer/StyleTransfer";
 import Scent from "./pages/scent/Scent";
 import NotFound from "./pages/not-found/NotFound";
 import Searchpieces from "./pages/pieces/Searchpieces";
 
+// localStorage에 access-token이 있으면 로그인 상태라고 판단
 const isLogin = () => !!localStorage.getItem("access-token");
 
 const router = createBrowserRouter([
@@ -70,7 +70,6 @@ const router = createBrowserRouter([
   },
   {
     path: "/register",
-    // element: isLogin() ? <PieceCommit /> : <Navigate to="/" replace />,
     element: isLogin() ? <Register /> : <Navigate to="/" replace />,
   },
   {
@@ -89,11 +88,16 @@ const router = createBrowserRouter([
 
 const App = () => {
   const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   AOS.init();
 
   React.useEffect(() => {
-    dispatch(getUser());
-  }, [dispatch]);
+    // localStorage에 access-token (JWT) 있으면 getUser()로 로그인 사용자 정보 가져옴
+    if (localStorage.getItem("access-token")) {
+      dispatch(getUser());
+    }
+    // isLoggedIn 넣는 이유는 로그아웃하는 것을 감지하기 위해
+  }, [dispatch, isLoggedIn]);
 
   return (
     <React.Fragment>

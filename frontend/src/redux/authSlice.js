@@ -25,7 +25,6 @@ export const getUser = createAsyncThunk(
       const res = await authApi.getUser();
       return res.data;
     } catch (err) {
-      console.log(err.response.status);
       return rejectWithValue(JSON.parse(err));
     }
   }
@@ -38,9 +37,8 @@ export const login = createAsyncThunk(
       const res = await authApi.login(credentials);
       localStorage.setItem("access-token", `jwt ${res.data.jwt}`);
       // axios.defaults.headers.common["Authorization"] = `jwt ${res.data}`;
-      console.log("login success");
-    } catch (error) {
-      return rejectWithValue(JSON.parse(error));
+    } catch (err) {
+      return rejectWithValue(JSON.parse(err));
     }
   }
 );
@@ -51,9 +49,8 @@ export const signup = createAsyncThunk(
     try {
       const res = await authApi.signup(credentials);
       localStorage.setItem("access-token", `jwt ${res.data.jwt}`);
-      console.log("signup success");
-    } catch (error) {
-      return rejectWithValue(JSON.parse(error));
+    } catch (err) {
+      return rejectWithValue(JSON.parse(err));
     }
   }
 );
@@ -68,9 +65,9 @@ export const quit = createAsyncThunk(
       const res = await authApi.quit();
       console.log(res);
       localStorage.removeItem("access-token");
-    } catch (error) {
-      console.error(error);
-      return rejectWithValue(JSON.parse(error.response));
+    } catch (err) {
+      console.error(err);
+      return rejectWithValue(JSON.parse(err.response));
     }
   }
 );
@@ -81,9 +78,9 @@ export const changeProfile = createAsyncThunk(
     try {
       const res = await authApi.changeProfile(profileData);
       console.log(res);
-    } catch (error) {
-      console.error(error);
-      return rejectWithValue(JSON.parse(error.response));
+    } catch (err) {
+      console.error(err);
+      return rejectWithValue(JSON.parse(err.response));
     }
   }
 );
@@ -94,9 +91,9 @@ export const changePassword = createAsyncThunk(
     try {
       const res = await authApi.changePassword(passwordData);
       console.log(res);
-    } catch (error) {
-      console.error(error);
-      return rejectWithValue(JSON.parse(error.response));
+    } catch (err) {
+      console.error(err);
+      return rejectWithValue(JSON.parse(err.response));
     }
   }
 );
@@ -107,9 +104,9 @@ export const changeType = createAsyncThunk(
     try {
       const res = await authApi.changeType();
       console.log(res);
-    } catch (error) {
-      console.error(error);
-      return rejectWithValue(JSON.parse(error.response));
+    } catch (err) {
+      console.error(err);
+      return rejectWithValue(JSON.parse(err.response));
     }
   }
 );
@@ -122,7 +119,6 @@ const authSlice = createSlice({
       state.value = action.payload;
     },
     logout: (state) => {
-      console.log("state.isLoggedIn:", state.isLoggedIn);
       state.isLoggedIn = false;
       state.mySeq = 0;
       state.myEmail = "";
@@ -151,15 +147,15 @@ const authSlice = createSlice({
       state.myUserType = userInfo.userType;
       state.myDesc = userInfo.userDesc;
     },
-    // [getUser.rejected]: (state, action) => {
-    //   state.isLoggedIn = false;
-    //   state.mySeq = 0;
-    //   state.myEmail = "";
-    //   state.myNickname = "";
-    //   state.myImageURL = "";
-    //   state.myUserType = "";
-    //   state.myDesc = "";
-    // },
+    [getUser.rejected]: (state, action) => {
+      state.isLoggedIn = false;
+      state.mySeq = 0;
+      state.myEmail = "";
+      state.myNickname = "";
+      state.myImageURL = "";
+      state.myUserType = "";
+      state.myDesc = "";
+    },
   },
 });
 

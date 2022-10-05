@@ -44,10 +44,17 @@ public class UserArtService {
         PieceEntity pieceEntity = new PieceEntity(userArtDto);
 
         // 유저는 직접 채워줘야함
-        pieceEntity.setPieceArtist(userRepository.findByUserSeq(artistSeq));
+        UserEntity userEntity = userRepository.findByUserSeq(artistSeq);
+        pieceEntity.setPieceArtist(userEntity);
 
             try{
+                // 작품 등록을 마치면
                 pieceRepository.saveAndFlush(pieceEntity);
+
+                // 작가의 작품 개수를 +1
+                userEntity.setUserArtCount(userEntity.getUserArtCount()+1);
+                userRepository.saveAndFlush(userEntity);
+
             } catch (Exception e){
                 return "fail";
             }
@@ -78,7 +85,16 @@ public class UserArtService {
     public String userArtDeleteService(Long userArtSeq) {
 
         try{
+            // 작품을 삭제했으면
             pieceRepository.deleteById(userArtSeq);
+
+            // 유저 찾기
+            UserEntity userEntity = pieceRepository.findByPieceSeq(userArtSeq).getPieceArtist();
+
+            // 작가의 작품 개수를 -1
+            userEntity.setUserArtCount(userEntity.getUserArtCount()-1);
+            userRepository.saveAndFlush(userEntity);
+
         } catch (Exception e){
             return "fail";
         }

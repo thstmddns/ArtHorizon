@@ -92,7 +92,7 @@ public class UserArtController {
     // 유저 아트 판매
 
     // 나의 유저아트 모아보기
-    @GetMapping("")
+    @GetMapping("/{userSeq}")
     public ResponseEntity<PiecePageDto> myUserArt(@RequestHeader("jwt") String jwt, @RequestParam("page") int page) {
 
         // jwt가 비었을 경우에는 알아서 인터셉터가 잡아줄테니까

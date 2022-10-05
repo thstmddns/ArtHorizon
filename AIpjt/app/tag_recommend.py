@@ -18,6 +18,7 @@ import copy
 import csv
 from PIL import Image
 
+
 def get_tag(source1):
     # 모델 정의
     class BasicBlock(nn.Module):

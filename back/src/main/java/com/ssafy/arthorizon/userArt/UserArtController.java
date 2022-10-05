@@ -1,12 +1,15 @@
 package com.ssafy.arthorizon.userArt;
 
 import com.ssafy.arthorizon.piece.dto.PieceDto;
+import com.ssafy.arthorizon.piece.dto.PieceListDto;
 import com.ssafy.arthorizon.piece.dto.PiecePageDto;
 import com.ssafy.arthorizon.userArt.dto.UserArtDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.ssafy.arthorizon.user.JwtService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/user-art")
@@ -91,24 +94,19 @@ public class UserArtController {
 
     // 유저 아트 판매
 
-    // 나의 유저아트 모아보기
-    @GetMapping("/{userSeq}")
-    public ResponseEntity<PiecePageDto> myUserArt(@RequestHeader("jwt") String jwt, @RequestParam("page") int page) {
+    // 마이페이지 주인의 유저아트 모아보기
+    @GetMapping("/{artistSeq}")
+    public ResponseEntity<List<PieceListDto>> myUserArt(@PathVariable Long artistSeq) {
 
         // jwt가 비었을 경우에는 알아서 인터셉터가 잡아줄테니까
 
-        // 존재하는 유저인지 확인
-        Long artistSeq = jwtService.getUserSeq(jwt);
-        if(artistSeq==null) {
-            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
-        } else {
-            PiecePageDto result = userArtService.myUserArtService(artistSeq, page);
-            if(result.getResult()== PieceDto.PieceResult.SUCCESS){
-                return new ResponseEntity<>(result, HttpStatus.OK);
-            } else {
+            List<PieceListDto> result = userArtService.myUserArtService(artistSeq);
+            if(result.isEmpty()){
                 return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+
+            } else {
+                return new ResponseEntity<>(result, HttpStatus.OK);
             }
-        }
 
     }
 

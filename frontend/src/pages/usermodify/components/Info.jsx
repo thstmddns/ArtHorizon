@@ -1,27 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
-import { changeProfile, getUser } from "../../../redux/authSlice";
-
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
+import { changeProfile } from "../../../redux/authSlice";
 
 const Info = () => {
   const dispatch = useDispatch();
-  const originNickname = useSelector((state) => state.auth.nickname);
-  const originDesc = useSelector((state) => state.auth.desc);
+  const originNickname = useSelector((state) => state.auth.myNickname);
+  const originDesc = useSelector((state) => state.auth.myDesc);
   const [nickname, setNickname] = useState("");
   const [description, setDescription] = useState("");
 
   useEffect(() => {
-    dispatch(getUser());
     setNickname(originNickname);
     setDescription(originDesc);
   }, [dispatch, originNickname, originDesc]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-
     if (!nickname.trim()) {
       toast.warn("닉네임을 입력하세요");
       return;
@@ -32,13 +28,10 @@ const Info = () => {
       userDesc: description,
     });
 
-    setNickname("");
-    setDescription("");
-
-    // dispatch(getUser());
-    // dispatch(changeProfile(profileData));
-
-    dispatch(changeProfile(profileData));
+    dispatch(changeProfile(profileData))
+      .unwrap()
+      .then(() => toast.success("성공적으로 변경되었습니다"))
+      .catch(() => toast.error("변경에 실패했습니다"));
   };
 
   return (
@@ -60,7 +53,7 @@ const Info = () => {
             name="nickname"
             className="w-full bg-gray-50 rounded-lg border border-gray-300 focus:border-amber-500 focus:bg-white focus:ring-2 focus:ring-amber-200 outline-none text-gray-700 py-1 px-3 leading-8 transition"
             placeholder="닉네임을 입력하세요"
-            value={nickname}
+            defaultValue={nickname}
             onChange={(e) => setNickname(e.target.value)}
           />
         </div>

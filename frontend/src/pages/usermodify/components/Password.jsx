@@ -13,27 +13,20 @@ const Password = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-
-    let hasError = false;
-
     if (!password1.trim()) {
       toast.warn("기존 비밀번호를 입력하세요");
-      hasError = true;
+      return;
     }
     if (!password2.trim()) {
       toast.warn("변경할 비밀번호를 입력하세요");
-      hasError = true;
+      return;
     }
     if (!password3.trim()) {
       toast.warn("변경할 비밀번호를 한 번 더 입력하세요");
-      hasError = true;
+      return;
     }
     if (password2 !== password3) {
       toast.warn("비밀번호가 일치하지 않습니다");
-      hasError = true;
-    }
-
-    if (hasError) {
       return;
     }
 
@@ -45,8 +38,10 @@ const Password = () => {
     setPassword1("");
     setPassword2("");
     setPassword3("");
-    dispatch(changePassword(passwordData));
-    toast.success("비밀번호 변경에 성공했습니다.");
+    dispatch(changePassword(passwordData))
+      .unwrap()
+      .then(() => toast.success("비밀번호 변경에 성공했습니다."))
+      .catch(() => toast.error("비밀번호 변경에 실패했습니다"));
   };
 
   return (
@@ -102,6 +97,7 @@ const Password = () => {
             onChange={(e) => setPassword3(e.target.value)}
           />
         </div>
+
         <div className="flex justify-end">
           <button
             type="submit"

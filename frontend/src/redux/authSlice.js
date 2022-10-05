@@ -63,10 +63,9 @@ export const quit = createAsyncThunk(
       //   "Authorization"
       // ] = `jwt ${localStorage.getItem("access-token")}`;
       const res = await authApi.quit();
-      console.log(res);
       localStorage.removeItem("access-token");
+      return res.data;
     } catch (err) {
-      console.error(err);
       return rejectWithValue(JSON.parse(err.response));
     }
   }
@@ -77,9 +76,8 @@ export const changeProfile = createAsyncThunk(
   async (profileData, { rejectWithValue }) => {
     try {
       const res = await authApi.changeProfile(profileData);
-      console.log(res);
+      return res.data;
     } catch (err) {
-      console.error(err);
       return rejectWithValue(JSON.parse(err.response));
     }
   }
@@ -90,9 +88,8 @@ export const changePassword = createAsyncThunk(
   async (passwordData, { rejectWithValue }) => {
     try {
       const res = await authApi.changePassword(passwordData);
-      console.log(res);
+      return res.data;
     } catch (err) {
-      console.error(err);
       return rejectWithValue(JSON.parse(err.response));
     }
   }
@@ -103,9 +100,8 @@ export const changeType = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const res = await authApi.changeType();
-      console.log(res);
+      return res.data;
     } catch (err) {
-      console.error(err);
       return rejectWithValue(JSON.parse(err.response));
     }
   }
@@ -133,9 +129,6 @@ const authSlice = createSlice({
   extraReducers: {
     [login.fulfilled]: (state) => {
       state.isLoggedIn = true;
-    },
-    [login.rejected]: () => {
-      console.log("login rejected");
     },
     [getUser.fulfilled]: (state, action) => {
       const userInfo = action.payload;

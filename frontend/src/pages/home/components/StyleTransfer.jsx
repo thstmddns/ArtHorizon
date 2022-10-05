@@ -44,9 +44,7 @@ const StyleTransfer = () => {
               </svg>
             </div>
             <div className="flex-grow">
-              <h2 className="text-gray-900 text-xl mb-3">
-                어떤 것을 바꾸고 싶으신가요?
-              </h2>
+              <h2 className="text-gray-900 text-xl mb-3">변환</h2>
               <p className="leading-relaxed text-base text-gray-500">
                 어떤 이미지를 바꾸고 싶으신가요? 유명한 작품? 당신의 소장품?
                 아니면 추억에 남은 사진? 어떤 것이든 다 가능합니다. 사진을

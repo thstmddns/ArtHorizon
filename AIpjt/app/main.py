@@ -22,6 +22,7 @@ origins = [
     "https://localhost.tiangolo.com",
     "http://localhost",
     "http://localhost:8080",
+    "http://localhost:3000",
     "http://j7d201.p.ssafy.io",
     "http://j7d201.p.ssafy.io:80",
 ]

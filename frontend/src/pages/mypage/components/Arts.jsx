@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import { authApi, userArtApi } from "../../../api/api";
 
@@ -8,54 +9,31 @@ const Arts = () => {
   const { targetUserSeq } = useParams();
   const [selectedTab, setSelectedTab] = useState("나의 아트");
   const [userArts, setUserArts] = useState([]);
-  const [bookmarks, setBookmarks] = useState([]);
+  const [boomarkArts, setBookmarkArts] = useState([]);
   const [isMine, setIsMine] = useState(false);
 
   useEffect(() => {
-    const fetchUserArts = async () => {
-      try {
-        const res = await userArtApi.getUserArts(1);
-        console.log("유저아트 res:", res);
-        setUserArts(res.data.pieceList);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    const fetchBookmarks = async () => {
-      try {
-        const { data } = await authApi.getBookmarks();
-        console.log("북마크아트 data", data);
-        setBookmarks(data.bookmarkList);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    const getMyPageInfo = async () => {
-      try {
-        const res = await authApi.getMyPage(targetUserSeq);
+    // 유저 아트 가져오기
+    userArtApi
+      .getUserArts(1)
+      .then((res) => setUserArts(res.data.pieceList))
+      .catch(() => toast.error("나의 아트 가져오기 실패"));
+
+    // 마이페이지 정보 가져오기
+    authApi
+      .getMyPage(targetUserSeq)
+      .then((res) => {
         setIsMine(res.data.userIsMe === "Y" ? true : false);
-      } catch (error) {
-        console.error("해당하는 유저가 존재하지 않습니다");
-      }
-    };
-    getMyPageInfo();
-    fetchUserArts();
-    fetchBookmarks();
-    console.log("userArts:", userArts);
-    console.log("bookmarks:", bookmarks);
-  }, []);
-
-  const getMyArts = () => {
-    setSelectedTab("나의 아트");
-    console.log("userArts:", userArts);
-    console.log("bookmarks:", bookmarks);
-  };
-
-  const getBookmarkArts = () => {
-    setSelectedTab("북마크한 아트");
-    console.log("userArts:", userArts);
-    console.log("bookmarks:", bookmarks);
-  };
+        // 나의 마이페이지이면 북마크 아트 가져오기
+        if (res.data.userIsMe === "Y") {
+          authApi
+            .getBookmarkArts()
+            .then((res) => setBookmarkArts(res.data.bookmarkList))
+            .catch(() => toast.error("북마크 아트 가져오기 실패"));
+        }
+      })
+      .catch(() => {}); // 존재하지 않는 유저입니다 라고 Info.jsx에서 toast 처리해서 여기서는 하지 않음
+  }, [targetUserSeq]);
 
   return (
     <div className="flex flex-col" data-aos="fade-in">
@@ -65,7 +43,7 @@ const Arts = () => {
           className={`flex cursor-pointer px-5 py-2 border-solid border-b-4 text-gray-600 border-gray-200 transition ${
             selectedTab === "나의 아트" && "font-bold border-sky-400"
           }`}
-          onClick={getMyArts}
+          onClick={() => setSelectedTab("나의 아트")}
         >
           나의 아트
         </div>
@@ -75,16 +53,15 @@ const Arts = () => {
             className={`flex cursor-pointer px-5 py-2 border-solid border-b-4 text-gray-600 border-gray-200 transition ${
               selectedTab === "북마크한 아트" && "font-bold border-sky-400"
             }`}
-            onClick={getBookmarkArts}
+            onClick={() => setSelectedTab("북마크한 아트")}
           >
             북마크 아트
           </div>
         )}
       </div>
 
-      {/* <ArtList /> */}
-      {/* <div className="grid grid-cols-4 gap-2 pb-24 mx-auto"> */}
       <div className="lg:columns-4 md:columns-3 sm:columns-2 gap-2">
+        {/* 나의 아트 */}
         {selectedTab === "나의 아트" &&
           userArts?.map((userArt) => (
             <div
@@ -94,12 +71,6 @@ const Arts = () => {
               data-aos="fade-in"
             >
               {/* 그림 */}
-              {/* <div
-                className="absolute inset-0 bg-cover bg-center z-0"
-                style={{
-                  backgroundImage: `url('https://source.unsplash.com/random/${bookmark.pieceSeq}x${bookmark.pieceSeq}')`,
-                }}
-              ></div> */}
               <div
                 className="absolute inset-0 bg-cover bg-center z-0"
                 style={{
@@ -108,30 +79,30 @@ const Arts = () => {
               ></div>
 
               {/* 설명 */}
-              <div className="opacity-0 hover:opacity-90 hover:bg-gray-900 ease-in-out duration-300 absolute inset-0 z-10 flex flex-col justify-center items-center">
-                <div className="text-1xl text-white font-semibold mb-2">
-                  {userArt.pieceArtist}
+              <div className="opacity-0 hover:opacity-90 hover:bg-gray-900 absolute inset-0 z-10 flex flex-col justify-center items-center transition">
+                <div className="text-2xl text-white font-semibold mb-2">
+                  {userArt.pieceTitle}
                 </div>
                 <div className="text-1xl text-white font-semibold">
-                  {userArt.pieceTitle}
+                  {userArt.pieceArtist}
                 </div>
               </div>
               <img
                 alt="gallery"
-                className="w-full h-full object-cover object-center rounded transition ease-in-out duration-300"
-                // src={`https://source.unsplash.com/random/${parseInt(
-                //   (Math.random() * (40 - 10) + 10) * 10
-                // )}x${parseInt((Math.random() * (50 - 10) + 10) * 10)}`}
+                className="w-full h-full object-cover object-center rounded transition"
                 src={`http://j7d201.p.ssafy.io/api/my-file/read/${userArt.pieceImg}`}
               />
             </div>
           ))}
+
+        {/* 나의 아트 없음 */}
         {selectedTab === "나의 아트" && userArts?.length === 0 && (
           <div data-aos="fade-in">나의 아트가 없습니다.</div>
         )}
 
+        {/* 북마크 아트 */}
         {selectedTab === "북마크한 아트" &&
-          bookmarks?.map((bookmark) => (
+          boomarkArts?.map((bookmark) => (
             <div
               key={Math.random().toString()}
               className="rounded-lg drop-shadow-md overflow-hidden relative cursor-pointer mb-2"
@@ -139,12 +110,6 @@ const Arts = () => {
               data-aos="fade-in"
             >
               {/* 그림 */}
-              {/* <div
-                className="absolute inset-0 bg-cover bg-center z-0"
-                style={{
-                  backgroundImage: `url('https://source.unsplash.com/random/${bookmark.pieceSeq}x${bookmark.pieceSeq}')`,
-                }}
-              ></div> */}
               <div
                 className="absolute inset-0 bg-cover bg-center z-0"
                 style={{
@@ -153,25 +118,24 @@ const Arts = () => {
               ></div>
 
               {/* 설명 */}
-              <div className="opacity-0 hover:opacity-90 hover:bg-gray-900 ease-in-out duration-300 absolute inset-0 z-10 flex flex-col justify-center items-center">
-                <div className="text-1xl text-white font-semibold mb-2">
-                  {bookmark.pieceArtistKr}
+              <div className="opacity-0 hover:opacity-90 hover:bg-gray-900 absolute inset-0 z-10 flex flex-col justify-center items-center transition">
+                <div className="text-2xl text-white font-semibold mb-2">
+                  {bookmark.pieceTitleKr}
                 </div>
                 <div className="text-1xl text-white font-semibold">
-                  {bookmark.pieceTitleKr}
+                  {bookmark.pieceArtistKr}
                 </div>
               </div>
               <img
                 alt="gallery"
-                className="w-full h-full object-cover object-center rounded transition ease-in-out duration-300"
-                // src={`https://source.unsplash.com/random/${parseInt(
-                //   (Math.random() * (40 - 10) + 10) * 10
-                // )}x${parseInt((Math.random() * (50 - 10) + 10) * 10)}`}
+                className="w-full h-full object-cover object-center rounded transition"
                 src={`http://j7d201.p.ssafy.io/api/my-file/read/${bookmark.pieceImg}`}
               />
             </div>
           ))}
-        {selectedTab === "북마크한 아트" && bookmarks?.length === 0 && (
+
+        {/* 북마크 아트 없음 */}
+        {selectedTab === "북마크한 아트" && boomarkArts?.length === 0 && (
           <div data-aos="fade-in">북마크 아트가 없습니다.</div>
         )}
       </div>

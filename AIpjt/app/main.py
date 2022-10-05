@@ -1,7 +1,7 @@
 from fastapi import FastAPI, File,UploadFile, Form
 import sys
 sys.path.append('/prod/app')
-# sys.path.append('/home/ubuntu/S07P22D201/AIpjt/app/')
+
 from styletransfer import style_transfer
 from tag_recommend import get_tag
 from objectdetection import detection
@@ -18,11 +18,11 @@ import cv2
 app = FastAPI()
 
 origins = [
-    "http://localhost.tiangolo.com",
-    "https://localhost.tiangolo.com",
     "http://localhost",
     "http://localhost:8080",
     "http://localhost:3000",
+    "http://j7d201.p.ssafy.io",
+    "http://j7d201.p.ssafy.io:80",
 ]
 
 app.add_middleware(

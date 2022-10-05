@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { artistApi } from "../../../api/api";
 
@@ -39,20 +39,20 @@ const Artists = () => {
           </p>
         </div>
 
-        {/* 화가 아이템 */}
+        {/* 화가 1 */}
         <div data-aos="flip-up">
           <div
             className="flex items-center lg:w-3/5 mx-auto border-b p-8 mb-10 border-gray-200 sm:flex-row flex-col bg-white rounded-xl drop-shadow-md cursor-pointer hover:scale-105 transition"
             onClick={() => navigate(`/mypage/${artists[0]?.userSeq}`)}
           >
-            <div className="sm:w-32 sm:h-32 h-20 w-20 sm:mr-10 inline-flex items-center justify-center rounded-full bg-sky-100 text-indigo-500 flex-shrink-0">
-              <img
-                className="w-full h-full object-cover object-center rounded-full"
-                src={`https://source.unsplash.com/${parseInt(
-                  Math.random() * 100 * 5
-                )}x${parseInt(Math.random() * 100 * 5)}`}
-                alt="blog"
-              />
+            <div className="sm:w-32 sm:h-32 h-20 w-20 sm:mr-10 inline-flex items-center justify-center rounded-full bg-sky-100 flex-shrink-0 drop-shadow-md">
+              {artists[0]?.userImg && (
+                <img
+                  className="w-full h-full object-cover object-center rounded-full"
+                  src={`http://j7d201.p.ssafy.io/api/my-file/read/${artists[0]?.userImg}`}
+                  alt="userImg"
+                />
+              )}
             </div>
             <div className="flex-grow sm:text-left text-center mt-6 sm:mt-0">
               <h2 className="text-gray-900 text-lg font-bold mb-2">
@@ -62,7 +62,6 @@ const Artists = () => {
                 {artists[0]?.userDesc && artists[0].userDesc}
                 {!artists[0]?.userDesc && "상태 메시지 없음"}
               </p>
-
               <div className="mt-3 text-sky-500 inline-flex items-center text-sm">
                 화가 페이지로
               </div>
@@ -70,7 +69,7 @@ const Artists = () => {
           </div>
         </div>
 
-        {/* 화가 아이템 */}
+        {/* 화가 2 */}
         <div data-aos="flip-down">
           <div
             className="flex items-center lg:w-3/5 mx-auto border-b p-8 mb-10 border-gray-200 sm:flex-row flex-col bg-white rounded-xl drop-shadow-md cursor-pointer hover:scale-105 transition"
@@ -84,37 +83,36 @@ const Artists = () => {
                 {artists[1]?.userDesc && artists[1].userDesc}
                 {!artists[1]?.userDesc && "상태 메시지 없음"}
               </p>
-
               <div className="mt-3 text-sky-500 inline-flex items-center text-sm">
                 화가 페이지로
               </div>
             </div>
-            <div className="sm:w-32 sm:order-none order-first sm:h-32 h-20 w-20 sm:ml-10 inline-flex items-center justify-center rounded-full bg-sky-100 text-indigo-500 flex-shrink-0">
-              <img
-                className="w-full h-full object-cover object-center rounded-full"
-                src={`https://source.unsplash.com/${parseInt(
-                  Math.random() * 100 * 5
-                )}x${parseInt(Math.random() * 100 * 5)}`}
-                alt="blog"
-              />
+            <div className="sm:w-32 sm:order-none order-first sm:h-32 h-20 w-20 sm:ml-10 inline-flex items-center justify-center rounded-full bg-sky-100 flex-shrink-0 drop-shadow-md">
+              {artists[1]?.userImg && (
+                <img
+                  className="w-full h-full object-cover object-center rounded-full"
+                  src={`http://j7d201.p.ssafy.io/api/my-file/read/${artists[1]?.userImg}`}
+                  alt="userImg"
+                />
+              )}
             </div>
           </div>
         </div>
 
-        {/* 화가 아이템 */}
+        {/* 화가 3 */}
         <div data-aos="flip-up">
           <div
             className="flex items-center lg:w-3/5 mx-auto p-8 mb-10 sm:flex-row flex-col bg-white rounded-xl drop-shadow-md cursor-pointer hover:scale-105 transition"
             onClick={() => navigate(`/mypage/${artists[2]?.userSeq}`)}
           >
-            <div className="sm:w-32 sm:h-32 h-20 w-20 sm:mr-10 inline-flex items-center justify-center rounded-full bg-sky-100 text-indigo-500 flex-shrink-0">
-              <img
-                className="w-full h-full object-cover object-center rounded-full"
-                src={`https://source.unsplash.com/${parseInt(
-                  Math.random() * 100 * 5
-                )}x${parseInt(Math.random() * 100 * 5)}`}
-                alt="blog"
-              />
+            <div className="sm:w-32 sm:h-32 h-20 w-20 sm:mr-10 inline-flex items-center justify-center rounded-full bg-sky-100 flex-shrink-0 drop-shadow-md">
+              {artists[2]?.userImg && (
+                <img
+                  className="w-full h-full object-cover object-center rounded-full"
+                  src={`http://j7d201.p.ssafy.io/api/my-file/read/${artists[2]?.userImg}`}
+                  alt="userImg"
+                />
+              )}
             </div>
             <div className="flex-grow sm:text-left text-center mt-6 sm:mt-0">
               <h2 className="text-gray-900 text-lg font-bold mb-2">
@@ -124,7 +122,7 @@ const Artists = () => {
                 {artists[2]?.userDesc && artists[2].userDesc}
                 {!artists[2]?.userDesc && "상태 메시지 없음"}
               </p>
-              <div className="mt-3 text-sky-500 inline-flex items-center">
+              <div className="mt-3 text-sky-500 inline-flex items-center text-sm">
                 화가 페이지로
               </div>
             </div>

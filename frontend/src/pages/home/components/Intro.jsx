@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Intro = () => {
   const navigate = useNavigate();
@@ -20,19 +20,14 @@ const Intro = () => {
               Horizon
             </h1>
           </div>
-          {/* <h1 className="text-9xl font-medium title-font text-gray-900 text-amber-300 mb-4">
-            Art
-          </h1>
-          <h1 className="text-9xl font-medium title-font text-gray-900 text-amber-300 mb-4">
-            Horizon
-          </h1> */}
+
           <p
             className="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto text-gray-500"
             data-aos="fade-in"
           >
             바다와 하늘의 지평선처럼 화가와 관람객을 이어주는{" "}
             <strong>ArtHorzion</strong>. <br /> 화가 여러분들은 이곳에
-            올림으로써 당신의 작품이 전세계 누구나 볼 수 있을겁니다. <br />{" "}
+            올림으로써 당신의 작품이 전세계 누구나 볼 수 있을 겁니다. <br />{" "}
             작품을 보러 오신 여러분, 이곳에서 처음 만나는 작가의 작품을
             관람해보세요. <br /> 아직 많이 낯설으시다고요? 그런 분들을 위한
             재미있는 서비스도 있으니 즐겨주시기 바랍니다.
@@ -62,8 +57,6 @@ const Intro = () => {
           </div>
         </div>
       </div>
-
-      <div className="container px-5 mx-auto"></div>
     </section>
   );
 };

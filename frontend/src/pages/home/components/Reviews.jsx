@@ -23,8 +23,9 @@ const Reviews = () => {
             <div className="w-16 h-1 rounded-full bg-amber-400 inline-flex"></div>
           </div>
         </div>
+
         <div className="flex flex-wrap -m-4">
-          {/* 후기 아이템 */}
+          {/* 후기 1 */}
           <div className="p-4 lg:w-1/3 md:w-1/2 w-full" data-aos="zoom-in">
             <div className="h-full bg-white p-8 rounded-xl hover:drop-shadow-lg hover:-translate-y-6 transition">
               <svg
@@ -44,7 +45,7 @@ const Reviews = () => {
             </div>
           </div>
 
-          {/* 후기 아이템 */}
+          {/* 후기 2 */}
           <div className="p-4 lg:w-1/3 md:w-1/2 w-full" data-aos="zoom-in">
             <div className="h-full bg-white p-8 rounded-xl hover:drop-shadow-lg hover:-translate-y-6 transition">
               <svg
@@ -63,7 +64,7 @@ const Reviews = () => {
             </div>
           </div>
 
-          {/* 후기 아이템 */}
+          {/* 후기 3 */}
           <div className="p-4 lg:w-1/3 md:w-1/2 w-full" data-aos="zoom-in">
             <div className="h-full bg-white p-8 rounded-xl hover:drop-shadow-lg hover:-translate-y-6 transition">
               <svg
@@ -83,7 +84,7 @@ const Reviews = () => {
             </div>
           </div>
 
-          {/* 후기 아이템 */}
+          {/* 후기 4 */}
           <div className="p-4 lg:w-1/3 md:w-1/2 w-full" data-aos="zoom-in">
             <div className="h-full bg-white p-8 rounded-xl hover:drop-shadow-lg hover:-translate-y-6 transition">
               <svg
@@ -103,7 +104,7 @@ const Reviews = () => {
             </div>
           </div>
 
-          {/* 후기 아이템 */}
+          {/* 후기 5 */}
           <div className="p-4 lg:w-1/3 md:w-1/2 w-full" data-aos="zoom-in">
             <div className="h-full bg-white p-8 rounded-xl hover:drop-shadow-lg hover:-translate-y-6 transition">
               <svg
@@ -123,7 +124,7 @@ const Reviews = () => {
             </div>
           </div>
 
-          {/* 후기 아이템 */}
+          {/* 후기 6 */}
           <div className="p-4 lg:w-1/3 md:w-1/2 w-full" data-aos="zoom-in">
             <div className="h-full bg-white p-8 rounded-xl hover:drop-shadow-lg hover:-translate-y-6 transition">
               <svg
@@ -146,19 +147,3 @@ const Reviews = () => {
 };
 
 export default Reviews;
-
-{
-  /* <Link className="inline-flex items-center">
-                <img
-                  alt="testimonial"
-                  src="https://dummyimage.com/106x106"
-                  className="w-12 h-12 rounded-full flex-shrink-0 object-cover object-center"
-                />
-                <span className="flex-grow flex flex-col pl-4">
-                  <span className="title-font font-medium text-gray-900">
-                    Holden Caulfield
-                  </span>
-                  <span className="text-gray-500 text-sm">UI DEVELOPER</span>
-                </span>
-              </Link> */
-}

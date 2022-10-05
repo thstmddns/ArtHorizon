@@ -18,6 +18,8 @@ import copy
 import csv
 from PIL import Image
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi import FastAPI
+
 app = FastAPI()
 
 origins = [

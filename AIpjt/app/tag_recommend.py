@@ -170,7 +170,7 @@ def get_tag(source1):
     device = torch.device('cpu')
     model = resnet50().to(device)
     img = source1
-    PATH = 'final_final.pt'
+    PATH = '/prod/app/final_final.pt'
     model.load_state_dict(torch.load(PATH, map_location=device))
     model.eval()
 

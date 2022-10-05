@@ -371,9 +371,11 @@ public class UserService {
         while (userSet.size()<3) {
             // 사이즈 안에서 랜덤
             int randomIndex = (int) (Math.random()*(size));
-            UserEntity userEntity = userEntityList.get(randomIndex);
-            ArtistDto artistDto = new ArtistDto(userEntity);
-            userSet.add(artistDto);
+            if(randomIndex>0) {
+                UserEntity userEntity = userEntityList.get(randomIndex);
+                ArtistDto artistDto = new ArtistDto(userEntity);
+                userSet.add(artistDto);
+            }
         }
 
         List<ArtistDto> artistDtos = new ArrayList<>(userSet);

@@ -81,6 +81,10 @@ const router = createBrowserRouter([
     element: <Scent />,
   },
   {
+    path: "/404",
+    element: <NotFound />,
+  },
+  {
     path: "/*",
     element: <NotFound />,
   },
@@ -96,6 +100,8 @@ const App = () => {
     if (localStorage.getItem("access-token")) {
       dispatch(getUser());
     }
+    // console.log("isLoggedIn:", isLoggedIn);
+    // console.log("access-token:", localStorage.getItem("access-token"));
     // isLoggedIn 넣는 이유는 로그아웃하는 것을 감지하기 위해
   }, [dispatch, isLoggedIn]);
 

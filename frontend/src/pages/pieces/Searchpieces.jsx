@@ -23,9 +23,9 @@ const Searchpieces = () => {
   }
 
   // 검색 타입
-  const [type, setType] = useState(getType);
+  const [type, setType] = useState("");
   // 검색 단어
-  const [search, setSerach] = useState(getSearch);
+  const [search, setSerach] = useState("");
 
   const [page, setPage] = useState(1);
   const [searchPieces, setSearchPieces] = useState([]);
@@ -132,7 +132,7 @@ const Searchpieces = () => {
                   className="text-6xl font-medium title-font text-gray-900 mb-4"
                   data-aos="fade-down"
                 >
-                  검색 작품 목록
+                  검색 목록
                 </h1>
                 <p
                   className="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto text-gray-500"
@@ -262,7 +262,7 @@ const Searchpieces = () => {
                     className={`shadow-md rounded mb-2 drop-shadow-md overflow-hidden relative cursor-pointer ${
                       isLoading && "animate-pulse"
                     }`}
-                    onClick={() => navigate(`${piece.pieceSeq}`)}
+                    onClick={() => navigate(`/pieces/${piece.pieceSeq}`)}
                   >
                     {/* 그림 */}
                     <div

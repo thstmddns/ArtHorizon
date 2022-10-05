@@ -17,24 +17,6 @@ import time
 import copy
 import csv
 from PIL import Image
-from fastapi.middleware.cors import CORSMiddleware
-app = FastAPI()
-
-origins = [
-    "http://localhost",
-    "http://localhost:8080",
-    "http://localhost:3000",
-    "http://j7d201.p.ssafy.io",
-    "http://j7d201.p.ssafy.io:80",
-]
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 def get_tag(source1):
     # 모델 정의

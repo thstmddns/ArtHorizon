@@ -91,8 +91,8 @@ const TailScent = () => {
               className="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto text-gray-500"
               data-aos="fade-in"
             >
-              당신이 올린 이미지는 어떤 향을 가지고 있을까요? <br />
-              확인하고 같은 향을 가진 작품들도 함께 보세요.
+              당신의 이미지는 어떤 향을 가지고 있을까요? 같은 향을 가진 작품들도
+              함께 확인하세요
             </p>
             <div className="flex mt-6 justify-center">
               <div className="w-16 h-1 rounded-full bg-amber-500 inline-flex"></div>

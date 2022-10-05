@@ -20,7 +20,7 @@ import NavBar from "../../components/NavBar";
 
 const Pieces = () => {
   const navigate = useNavigate();
-  // const [recentPieces, setRecentPieces] = useState([]);
+  const [recentPieces, setRecentPieces] = useState([]);
   const [randomPieces, setRandomPieces] = useState([]);
   // const [popularPiecesList, setPopularPiecesList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -33,16 +33,16 @@ const Pieces = () => {
   const [isFetching, setIsFetching] = useState(false);
   const [hasNextPage, setNextPage] = useState(true);
 
-  // const fetchRecentPieces = useCallback(async () => {
-  //   // setIsLoading(true);
-  //   const { data } = await piecesApi.getPiecesRecent(page);
-  //   console.log("data:", data);
-  //   setRecentPieces((prevState) => [...prevState, ...data.pieceList]);
-  //   setPage((prevState) => prevState + 1);
-  //   // setNextPage();
-  //   setIsFetching(false);
-  //   setIsLoading(false);
-  // }, [page]);
+  const fetchRecentPieces = useCallback(async () => {
+    // setIsLoading(true);
+    const { data } = await piecesApi.getPiecesRecent(page);
+    console.log("data:", data);
+    setRecentPieces((prevState) => [...prevState, ...data.pieceList]);
+    setPage((prevState) => prevState + 1);
+    // setNextPage();
+    setIsFetching(false);
+    setIsLoading(false);
+  }, [page]);
 
   const fetchRandomPieces = useCallback(async () => {
     const { data } = await piecesApi.getPiecesRandom(page);
@@ -94,8 +94,8 @@ const Pieces = () => {
   useEffect(() => {
     if (isFetching && hasNextPage) {
       setIsLoading(true);
-      // setTimeout(fetchRecentPieces, 1000);
-      setTimeout(fetchRandomPieces, 1000);
+      setTimeout(fetchRecentPieces, 1000);
+      // setTimeout(fetchRandomPieces, 1000);
       // fetchRecentPieces();
       // fetchRandomPieces();
     } else if (!hasNextPage) {
@@ -264,7 +264,7 @@ const Pieces = () => {
 
               {/* 그림 리스트 */}
               <div className="lg:columns-4 md:columns-3 sm:columns-2 gap-2">
-                {randomPieces?.map((piece) => (
+                {recentPieces?.map((piece) => (
                   <div
                     key={Math.random().toString()}
                     className={`shadow-md rounded mb-2 drop-shadow-md overflow-hidden relative cursor-pointer ${

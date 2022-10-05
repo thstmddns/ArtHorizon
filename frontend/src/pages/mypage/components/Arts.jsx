@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 
 import { authApi, userArtApi } from "../../../api/api";
 
@@ -16,8 +15,17 @@ const Arts = () => {
     const fetchUserArts = async () => {
       try {
         const res = await userArtApi.getUserArts(1);
-        console.log("res:", res);
-        // setUserArts(data);
+        console.log("유저아트 res:", res);
+        setUserArts(res.data.pieceList);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    const fetchBookmarks = async () => {
+      try {
+        const { data } = await authApi.getBookmarks();
+        console.log("북마크아트 data", data);
+        setBookmarks(data.bookmarkList);
       } catch (err) {
         console.error(err);
       }
@@ -32,24 +40,21 @@ const Arts = () => {
     };
     getMyPageInfo();
     fetchUserArts();
-    // dispatch(getBookmarks());
-  }, [targetUserSeq]);
+    fetchBookmarks();
+    console.log("userArts:", userArts);
+    console.log("bookmarks:", bookmarks);
+  }, []);
 
   const getMyArts = () => {
     setSelectedTab("나의 아트");
+    console.log("userArts:", userArts);
+    console.log("bookmarks:", bookmarks);
   };
 
   const getBookmarkArts = () => {
     setSelectedTab("북마크한 아트");
-    const fetchBookmarks = async () => {
-      try {
-        const { data } = await authApi.getBookmarks();
-        setBookmarks(data.bookmarkList);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchBookmarks();
+    console.log("userArts:", userArts);
+    console.log("bookmarks:", bookmarks);
   };
 
   return (
@@ -105,10 +110,10 @@ const Arts = () => {
               {/* 설명 */}
               <div className="opacity-0 hover:opacity-90 hover:bg-gray-900 ease-in-out duration-300 absolute inset-0 z-10 flex flex-col justify-center items-center">
                 <div className="text-1xl text-white font-semibold mb-2">
-                  {userArt.pieceArtistKr}
+                  {userArt.pieceArtist}
                 </div>
                 <div className="text-1xl text-white font-semibold">
-                  {userArt.pieceTitleKr}
+                  {userArt.pieceTitle}
                 </div>
               </div>
               <img

@@ -158,9 +158,11 @@ const Piece = () => {
                       북마크 {piece.pieceBookmarkCount}
                     </button>
                   )}
-                  <button className="flex text-white bg-sky-700 border-0 py-3 px-6 focus:outline-none hover:bg-sky-500 active:bg-sky-600 focus:ring focus:ring-sky-300 rounded-lg transition">
-                    작품 결제
-                  </button>
+                  {piece.piecePrice > 0 && (
+                    <button className="flex text-white bg-sky-700 border-0 py-3 px-6 focus:outline-none hover:bg-sky-500 active:bg-sky-600 focus:ring focus:ring-sky-300 rounded-lg transition">
+                      작품 결제
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -208,9 +210,11 @@ const Piece = () => {
                     {piece.pieceArtistKr}
                   </div>
                   <div className="text-white text-lg">{piece.pieceDesc}</div>
-                  <div className="text-white text-lg">
-                    &#8361; {piece.piecePrice}
-                  </div>
+                  {piece.piecePrice > 0 && (
+                    <div className="text-white text-lg">
+                      &#8361; {piece.piecePrice}
+                    </div>
+                  )}
                   <div className="flex flex-wrap text-white text-lg mb-2">
                     {piece.pieceTag.split(",").map((tag) => (
                       <div
@@ -249,9 +253,11 @@ const Piece = () => {
                       북마크 {piece.pieceBookmarkCount}
                     </button>
                   )}
-                  <button className="flex text-white bg-sky-700 border-0 py-3 px-6 focus:outline-none hover:bg-sky-500 active:bg-sky-600 focus:ring focus:ring-sky-300 rounded-lg transition">
-                    작품 결제
-                  </button>
+                  {piece.piecePrice > 0 && (
+                    <button className="flex text-white bg-sky-700 border-0 py-3 px-6 focus:outline-none hover:bg-sky-500 active:bg-sky-600 focus:ring focus:ring-sky-300 rounded-lg transition">
+                      작품 결제
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

@@ -36,7 +36,7 @@ const Pieces = () => {
   const fetchRecentPieces = useCallback(async () => {
     // setIsLoading(true);
     const { data } = await piecesApi.getPiecesRecent(page);
-    console.log("data:", data);
+    // console.log("data:", data);
     setRecentPieces((prevState) => [...prevState, ...data.pieceList]);
     setPage((prevState) => prevState + 1);
     // setNextPage();
@@ -271,6 +271,9 @@ const Pieces = () => {
                       isLoading && "animate-pulse"
                     }`}
                     onClick={() => navigate(`${piece.pieceSeq}`)}
+                    onContextMenu={(e) => {
+                      e.preventDefault();
+                    }}
                   >
                     {/* 그림 */}
                     <div

@@ -130,10 +130,10 @@ public class UserController {
     }
 
     @GetMapping("/bookmark")
-    public ResponseEntity<BookmarkPageDto> bookmarkList(@RequestHeader("jwt") String jwt, @RequestParam(value = "page", defaultValue = "1") int page) {
+    public ResponseEntity<List<BookmarkListDto>> bookmarkList(@RequestHeader("jwt") String jwt) {
         Long currentUserSeq = jwtService.getUserSeq(jwt);
-        BookmarkPageDto bookmarkPageDto = userService.bookmarkList(currentUserSeq, page);
-        return new ResponseEntity<>(bookmarkPageDto, HttpStatus.OK);
+        List<BookmarkListDto> bookmarkListDtos = userService.bookmarkList(currentUserSeq);
+        return new ResponseEntity<>(bookmarkListDtos, HttpStatus.OK);
     }
 
     @GetMapping("/info")

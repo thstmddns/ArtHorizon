@@ -277,22 +277,28 @@ public class UserService {
         return bookmarkDto;
     }
 
-    public BookmarkPageDto bookmarkList(Long userSeq, int page) {
-        int offset = LIMIT * (page - 1);
-        List<BookmarkEntity> bookmarkEntities = bookmarkRepository.findBookmarkList(userSeq, LIMIT, offset);
+    public List<BookmarkListDto> bookmarkList(Long userSeq) {
+
+        List<BookmarkEntity> bookmarkEntities = bookmarkRepository.findBookmarkEntitiesByBookmarker_UserSeq(userSeq);
+
         // 북마크한 작품이 없을 때
         if (bookmarkEntities.isEmpty()) {
-            BookmarkPageDto bookmarkPageDto = new BookmarkPageDto();
-            bookmarkPageDto.setTotalPage(0);
-            bookmarkPageDto.setPage(0);
-            bookmarkPageDto.setResult(BookmarkDto.BookmarkResult.NO_SUCH_PIECE);
-            return bookmarkPageDto;
+//            BookmarkPageDto bookmarkPageDto = new BookmarkPageDto();
+//            bookmarkPageDto.setTotalPage(0);
+//            bookmarkPageDto.setPage(0);
+//            bookmarkPageDto.setResult(BookmarkDto.BookmarkResult.NO_SUCH_PIECE);
+            return new ArrayList<>();
         }
-        int totalPage = (int) Math.ceil((bookmarkRepository.countAllByBookmarker_UserSeq(userSeq))/(double)LIMIT);
+//        int totalPage = (int) Math.ceil((bookmarkRepository.countAllByBookmarker_UserSeq(userSeq))/(double)LIMIT);
 
-        BookmarkPageDto bookmarkPageDto = new BookmarkPageDto(totalPage, page, bookmarkEntities);
-        bookmarkPageDto.setResult(BookmarkDto.BookmarkResult.SUCCESS);
-        return bookmarkPageDto;
+        List<BookmarkListDto> bookmarkListDtos = new ArrayList<>();
+
+        for(BookmarkEntity bookmark:bookmarkEntities){
+            // 엔티티-->리스트dto변환
+            bookmarkListDtos.add(new BookmarkListDto(bookmark));
+        }
+
+        return bookmarkListDtos;
     }
 
     public UserInfoDto userInfo(Long userSeq) {

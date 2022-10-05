@@ -14,9 +14,6 @@ public interface PieceRepository extends JpaRepository<PieceEntity,Long> {
     // 작품 전체 개수 조회
     int countAllBy();
 
-    // 작가에 따른 개수 조회
-    int countAllByPieceArtist_UserSeq(Long seq);
-
     // 작품명으로 검색 개수 조회
     int countAllByPieceTitleKrContainsOrPieceTitleEnContains(String keyword1, String keyword2);
 
@@ -39,9 +36,11 @@ public interface PieceRepository extends JpaRepository<PieceEntity,Long> {
     List<PieceEntity> findPopularList(@Param(value="limit") int limit, @Param(value="offset") int offset);
 
     // 나의 작품 목록 조회
-    @Query(value="select * from pieceTb where pieceArtistSeq = :artistSeq order by pieceSeq desc limit :limit offset :offset", nativeQuery = true)
-    List<PieceEntity> findMyArtList(@Param(value="limit") int limit, @Param(value="offset") int offset,
-                                    @Param(value="artistSeq") Long artistSeq);
+//    @Query(value="select * from pieceTb where pieceArtistSeq = :artistSeq order by pieceSeq desc limit :limit offset :offset", nativeQuery = true)
+//    List<PieceEntity> findMyArtList(@Param(value="limit") int limit, @Param(value="offset") int offset,
+//                                    @Param(value="artistSeq") Long artistSeq);
+
+    List<PieceEntity> findPieceEntitiesByPieceArtist_UserSeq(Long seq);
 
     // 단일 작품 조회
     PieceEntity findByPieceSeq(Long pieceSeq);

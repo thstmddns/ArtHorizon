@@ -119,7 +119,7 @@ const Pieces = () => {
   const enterkey = (key) => {
     if (key === "Enter") {
       // console.log("yes");
-      navigate("/pieces/search", {
+      navigate(`/pieces/search/${search}`, {
         state: {
           type: type,
           search: search,

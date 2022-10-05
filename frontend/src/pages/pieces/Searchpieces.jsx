@@ -11,20 +11,15 @@ const Searchpieces = () => {
 
   const getType = location.state.type;
   const getSearch = location.state.search;
-  let showType = "";
-  if (getType === "pieces") {
-    showType = "작품명";
-  } else if (getType === "artists") {
-    showType = "명화작가명";
-  } else if (getType === "users") {
-    showType = "유저작가명";
-  } else {
-    showType = "태그";
-  }
 
-  // 검색 타입
+  //검색한 타입
+  const [tryType, setTryType] = useState(getType);
+  //검색한 단어
+  const [trySearch, setTrySearch] = useState(getSearch);
+
+  // 검색할 타입
   const [type, setType] = useState("");
-  // 검색 단어
+  // 검색할 단어
   const [search, setSerach] = useState("");
 
   const [page, setPage] = useState(1);
@@ -32,25 +27,37 @@ const Searchpieces = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
   const [hasNextPage, setNextPage] = useState(true);
+  const [changeSearch, setChangeSerach] = useState(true);
 
-  const fetchSearchPieces = useCallback(async () => {
-    const url = `http://j7d201.p.ssafy.io/api/search/${getType}?page=${page}`;
+  let showType = "";
+  if (tryType === "pieces") {
+    showType = "작품명";
+  } else if (tryType === "artists") {
+    showType = "명화작가명";
+  } else if (tryType === "users") {
+    showType = "유저작가명";
+  } else {
+    showType = "태그";
+  }
+
+  const fetchSearchPieces = useCallback(() => {
+    const url = `http://j7d201.p.ssafy.io/api/search/${tryType}?page=${page}`;
     let data = JSON.stringify({});
-    if (getType === "pieces") {
+    if (tryType === "pieces") {
       data = JSON.stringify({
-        pieceTitle: getSearch,
+        pieceTitle: trySearch,
       });
-    } else if (getType === "artists") {
+    } else if (tryType === "artists") {
       data = JSON.stringify({
-        artistName: getSearch,
+        artistName: trySearch,
       });
-    } else if (getType === "users") {
+    } else if (tryType === "users") {
       data = JSON.stringify({
-        userNickname: getSearch,
+        userNickname: trySearch,
       });
     } else {
       data = JSON.stringify({
-        tags: getSearch,
+        tags: trySearch,
       });
     }
     const config = {
@@ -58,7 +65,7 @@ const Searchpieces = () => {
         "content-type": "application/json",
       },
     };
-    console.log(url, data, config);
+    // console.log(url, data, config);
     axios
       .post(url, data, config)
       .then((res) => {
@@ -72,7 +79,7 @@ const Searchpieces = () => {
         setSearchPieces((prevState) => [...prevState, ...result.pieceList]);
       })
       .catch((err) => console.error("get error", err));
-  }, [page, getSearch, getType]);
+  }, [page, trySearch, tryType]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -92,7 +99,7 @@ const Searchpieces = () => {
     } else if (!hasNextPage) {
       setIsFetching(false);
     }
-  }, [isFetching, fetchSearchPieces, hasNextPage]);
+  }, [isFetching, fetchSearchPieces, hasNextPage, changeSearch]);
 
   const columnChange = (type) => {
     // console.log(type);
@@ -108,12 +115,15 @@ const Searchpieces = () => {
   // 검색 시도
   const enterkey = (key) => {
     if (key === "Enter") {
-      // console.log("yes");
-      navigate("/pieces/search", {
+      // 방법 두 개
+      // 1. 이 페이지를 유지한 상태에서 searchPieces, page를 초기화한 후 다시 fetchSearchPieces를 작동시킨다.
+      // 2. navigate를 이용해 state을 새로 업데이트 한 후 새 페이지를 유도한다.
+      navigate(`/pieces/search/${search}`, {
         state: {
           type: type,
           search: search,
         },
+        replace: true,
       });
     }
   };
@@ -139,7 +149,7 @@ const Searchpieces = () => {
                   data-aos="fade-in"
                 >
                   <strong className="font-bold">
-                    {showType} {getSearch}
+                    {showType} {trySearch}
                   </strong>
                   에 대한 검색결과입니다.
                 </p>

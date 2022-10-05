@@ -335,8 +335,7 @@ const Pieces = () => {
 
 export default Pieces;
 
-
-  /* <div
+/* <div
 key={Math.random().toString()}
 className="shadow-md rounded mb-2 drop-shadow-md overflow-hidden absolute top-0 left-0"
 >
@@ -349,7 +348,6 @@ className="shadow-md rounded mb-2 drop-shadow-md overflow-hidden absolute top-0 
   src={`https://source.unsplash.com/random/${piece.pieceSeq}x${piece.pieceSeq}`}
 />
 </div> */
-
 
 // {/* 그림 리스트 */}
 // <div className="lg:columns-4 md:columns-3 sm:columns-2 gap-2">

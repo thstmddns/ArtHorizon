@@ -11,6 +11,7 @@ const Searchpieces = () => {
 
   const getType = location.state.type;
   const getSearch = location.state.search;
+  console.log(getType);
 
   //검색한 타입
   const [tryType, setTryType] = useState(getType);
@@ -57,7 +58,7 @@ const Searchpieces = () => {
       });
     } else {
       data = JSON.stringify({
-        tags: trySearch,
+        tag: trySearch,
       });
     }
     const config = {
@@ -113,18 +114,23 @@ const Searchpieces = () => {
   };
 
   // 검색 시도
-  const enterkey = (key) => {
+  const enterkey = async (key) => {
     if (key === "Enter") {
       // 방법 두 개
       // 1. 이 페이지를 유지한 상태에서 searchPieces, page를 초기화한 후 다시 fetchSearchPieces를 작동시킨다.
+      setSearchPieces(() => []);
+      setPage(() => 1);
+      setTryType(() => type);
+      setTrySearch(() => search);
       // 2. navigate를 이용해 state을 새로 업데이트 한 후 새 페이지를 유도한다.
       navigate(`/pieces/search/${search}`, {
         state: {
           type: type,
           search: search,
         },
-        replace: true,
+        replace: false,
       });
+      window.location.reload();
     }
   };
 

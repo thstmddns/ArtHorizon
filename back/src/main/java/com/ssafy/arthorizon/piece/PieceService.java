@@ -128,7 +128,7 @@ public class PieceService {
 
         // 중복제거를 위해 set 형태로 고안
         Set<TagDto> tagSet = new HashSet<>();
-        // 랜덤 추출을 위한 총 개수 생성
+        // 랜덤 추출을 위한 총 개수 생성ㅣ[
         int lowCount = 15;
 
         while(tagSet.size()<8){

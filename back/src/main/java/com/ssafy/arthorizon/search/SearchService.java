@@ -109,7 +109,7 @@ public class SearchService {
         // 검색 결과가 없을 수도 있으니 비어있는 것은 오류로 잡아내지 않음
 
         // 전체 작품 목록의 수를 뽑아옴
-        int totalPage = (int) Math.ceil(pieceRepository.countAllByPieceTagContains(tag)/LIMIT) +1;
+        int totalPage = (int) Math.ceil(pieceRepository.countAllByPieceTagContainsOrPieceScentContains(tag, tag)/LIMIT) +1;
         System.out.println(totalPage);
 
         // 반환할 페이지 dto를 작성

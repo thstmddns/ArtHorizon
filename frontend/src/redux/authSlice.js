@@ -123,7 +123,8 @@ const authSlice = createSlice({
       state.myUserType = "";
       state.myDesc = "";
       localStorage.removeItem("access-token");
-      toast.success("성공적으로 로그아웃했습니다");
+      // toast.success("성공적으로 로그아웃했습니다");
+      // window.location.reload();
     },
   },
   extraReducers: {

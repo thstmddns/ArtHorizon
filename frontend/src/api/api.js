@@ -89,7 +89,15 @@ export const piecesApi = {
   getPiecesRecent: (page) => api.get("/pieces/recent", { params: { page } }),
   getPiecesPopular: (page) => api.get("/pieces/popular", { params: { page } }),
   getPiecesRandom: (page) => api.get("/pieces/random", { params: { page } }),
-  getPieceDetail: (pieceSeq) => api.get(`/pieces/${pieceSeq}`),
+  getPieceDetail: (pieceSeq) =>
+    api.get(`/pieces/${pieceSeq}`, {
+      headers: {
+        jwt: "",
+        crossDomain: true,
+        credentials: "include",
+        withCredentials: true,
+      },
+    }),
   getMainTags: () => api.get("pieces/tag"),
   getBackgroundImage: () => api.get("/pieces/main"),
 };

@@ -20,6 +20,7 @@ const NavBar = () => {
     dispatch(logout());
     navigate("/", { replace: true });
     toast.success("성공적으로 로그아웃했습니다");
+    // window.location.reload();
   };
 
   return (

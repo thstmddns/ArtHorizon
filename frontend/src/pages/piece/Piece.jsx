@@ -1,65 +1,62 @@
 import React, { useState, useEffect } from "react";
-
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import { authApi, piecesApi } from "../../api/api";
+
+import { FaBookmark, FaRegBookmark, FaHashtag } from "react-icons/fa";
+import { MdOutlinePayment } from "react-icons/md";
 
 import NavBarDark from "../../components/NavBarDark";
 
 const Piece = () => {
   const { pieceSeq } = useParams();
+  const navigate = useNavigate();
   const [piece, setPiece] = useState();
   const [cinema, setCinema] = useState(false);
 
   useEffect(() => {
-    const fetchPieceDetail = async () => {
-      try {
-        const { data } = await piecesApi.getPieceDetail(pieceSeq);
-        setPiece(data);
-        console.log("data:", data);
-      } catch (error) {
-        console.error("what");
-      }
-    };
-    fetchPieceDetail();
+    piecesApi
+      .getPieceDetail(pieceSeq)
+      .then((res) => setPiece(res.data))
+      .catch(() => toast.error("작품 불러오기 오류"));
   }, [pieceSeq]);
 
+  // 북마크 설정하기
   const setBookmark = () => {
     authApi
       .setBookmark(pieceSeq)
       .then(() => {
-        console.log("북마크완료");
-        const fetchPieceDetail = async () => {
-          try {
-            const { data } = await piecesApi.getPieceDetail(pieceSeq);
-            setPiece(data);
-            console.log("data:", data);
-          } catch (error) {
-            console.error("what");
-          }
-        };
-        fetchPieceDetail();
+        piecesApi
+          .getPieceDetail(pieceSeq)
+          .then((res) => setPiece(res.data))
+          .catch(() => toast.error("작품 불러오기 오류"));
       })
-      .catch((err) => console.error("에러뭐임:", err));
+      .catch((err) => {
+        if (err.response.status === 401) {
+          toast.info("로그인이 필요합니다");
+          navigate("/login");
+        } else {
+          toast.error("북마크 오류");
+        }
+      });
   };
 
+  // 북마크 해제하기
   const cancelBookmark = () => {
     authApi
       .deleteBookmark(pieceSeq)
-      .then((res) => {
-        console.log("북마크해제완료");
-        const fetchPieceDetail = async () => {
-          try {
-            const { data } = await piecesApi.getPieceDetail(pieceSeq);
-            setPiece(data);
-            console.log("data:", data);
-          } catch (error) {
-            console.error("what");
-          }
-        };
-        fetchPieceDetail();
+      .then(() => {
+        piecesApi
+          .getPieceDetail(pieceSeq)
+          .then((res) => setPiece(res.data))
+          .catch(() => toast.error("작품 불러오기 오류"));
       })
-      .catch((err) => console.error("에러뭐임:", err));
+      .catch(() => toast.error("북마크 해제 오류"));
+  };
+
+  const paymentHandler = () => {
+    toast.info("결제를 진행합니다");
   };
 
   return (
@@ -131,8 +128,11 @@ const Piece = () => {
                   <div className="text-white text-lg">{piece.pieceGenre}</div>
                   <div className="text-white text-lg">{piece.pieceStyle}</div>
                   <div className="flex mb-4">
-                    <div className="text-white text-lg font-bold bg-gray-900 rounded-lg drop-shadow-md px-2 py-1 cursor-pointer hover:scale-105 transition">
-                      # {piece.pieceScent}
+                    <div className="flex items-center text-white text-lg font-bold bg-gray-900 rounded-lg drop-shadow-md px-2 py-1 cursor-pointer hover:scale-105 transition">
+                      <FaHashtag fill="white" className="mr-1" />{" "}
+                      <div className="text-white text-lg font-bold">
+                        {piece.pieceScent}
+                      </div>
                     </div>
                   </div>
                   {/* <div className="text-white text-lg">
@@ -147,7 +147,8 @@ const Piece = () => {
                       className="flex text-white bg-amber-700 border-0 py-3 px-6 focus:outline-none hover:bg-amber-500 active:bg-amber-600 focus:ring focus:ring-amber-300 rounded-lg transition mr-2"
                       onClick={cancelBookmark}
                     >
-                      북마크 해제 {piece.pieceBookmarkCount}
+                      <FaBookmark fill="white" className="mr-2" />
+                      {piece.pieceBookmarkCount}
                     </button>
                   )}
                   {piece.pieceBookmarkYn === "N" && (
@@ -155,7 +156,8 @@ const Piece = () => {
                       className="flex text-white bg-amber-700 border-0 py-3 px-6 focus:outline-none hover:bg-amber-500 active:bg-amber-600 focus:ring focus:ring-amber-300 rounded-lg transition mr-2"
                       onClick={setBookmark}
                     >
-                      북마크 {piece.pieceBookmarkCount}
+                      <FaRegBookmark fill="white" className="mr-2" />
+                      {piece.pieceBookmarkCount}
                     </button>
                   )}
                   {piece.piecePrice > 0 && (
@@ -219,15 +221,18 @@ const Piece = () => {
                     {piece.pieceTag.split(",").map((tag) => (
                       <div
                         key={Math.random().toString()}
-                        className="text-white px-2 py-1 bg-gray-100 drop-shadow-md rounded-lg text-gray-800 mr-2"
+                        className="flex justify-center items-center text-white px-2 py-1 bg-gray-100 drop-shadow-md rounded-lg text-gray-800 mr-2"
                       >
-                        # {tag}
+                        <FaHashtag fill="" className="mr-1" /> <div>{tag}</div>
                       </div>
                     ))}
                   </div>
                   <div className="flex mb-4">
-                    <div className="text-white text-lg font-bold bg-gray-900 rounded-lg drop-shadow-md px-2 py-1 cursor-pointer hover:scale-105 transition">
-                      # {piece.pieceScent}
+                    <div className="flex items-center text-white text-lg font-bold bg-gray-900 rounded-lg drop-shadow-md px-2 py-1 cursor-pointer hover:scale-105 transition">
+                      <FaHashtag fill="white" className="mr-1" />{" "}
+                      <div className="text-white text-lg font-bold">
+                        {piece.pieceScent}
+                      </div>
                     </div>
                   </div>
                   {/* <div className="text-white text-lg">
@@ -242,7 +247,8 @@ const Piece = () => {
                       className="flex text-white bg-amber-700 border-0 py-3 px-6 focus:outline-none hover:bg-amber-500 active:bg-amber-600 focus:ring focus:ring-amber-300 rounded-lg transition mr-2"
                       onClick={cancelBookmark}
                     >
-                      북마크 해제 {piece.pieceBookmarkCount}
+                      <FaBookmark fill="white" className="mr-2" />
+                      {piece.pieceBookmarkCount}
                     </button>
                   )}
                   {piece.pieceBookmarkYn === "N" && (
@@ -250,12 +256,16 @@ const Piece = () => {
                       className="flex text-white bg-amber-700 border-0 py-3 px-6 focus:outline-none hover:bg-amber-500 active:bg-amber-600 focus:ring focus:ring-amber-300 rounded-lg transition mr-2"
                       onClick={setBookmark}
                     >
-                      북마크 {piece.pieceBookmarkCount}
+                      <FaRegBookmark fill="white" className="mr-2" />
+                      {piece.pieceBookmarkCount}
                     </button>
                   )}
                   {piece.piecePrice > 0 && (
-                    <button className="flex text-white bg-sky-700 border-0 py-3 px-6 focus:outline-none hover:bg-sky-500 active:bg-sky-600 focus:ring focus:ring-sky-300 rounded-lg transition">
-                      작품 결제
+                    <button
+                      className="flex text-white bg-sky-700 border-0 py-3 px-6 focus:outline-none hover:bg-sky-500 active:bg-sky-600 focus:ring focus:ring-sky-300 rounded-lg transition"
+                      onClick={paymentHandler}
+                    >
+                      <MdOutlinePayment fill="white" />
                     </button>
                   )}
                 </div>
@@ -312,33 +322,3 @@ const Piece = () => {
 };
 
 export default Piece;
-
-// {piece && (
-//   <div
-//     key={Math.random().toString()}
-//     className="shadow-md rounded mb-2 drop-shadow-md overflow-hidden relative cursor-pointer"
-//   >
-//     {/* 그림 */}
-//     <div
-//       className="absolute inset-0 bg-cover bg-center z-0"
-//       style={{
-//         backgroundImage: `url('http://j7d201.p.ssafy.io/api/my-file/read/${piece.pieceImg}')`,
-//       }}
-//     ></div>
-
-//     {/* 설명 */}
-//     <div className="opacity-0 hover:opacity-90 hover:bg-gray-900 ease-in-out duration-300 absolute inset-0 z-10 flex flex-col justify-center items-center">
-//       <div className="text-1xl text-white font-semibold mb-2">
-//         {piece.pieceArtist}
-//       </div>
-//       <div className="text-1xl text-white font-semibold">
-//         {piece.pieceTitle}
-//       </div>
-//     </div>
-//     <img
-//       alt="gallery"
-//       className="w-full h-full object-cover object-center rounded transition ease-in-out duration-300"
-//       src={`http://j7d201.p.ssafy.io/api/my-file/read/${piece.pieceImg}`}
-//     />
-//   </div>
-// )}

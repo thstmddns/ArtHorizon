@@ -17,8 +17,9 @@ const StyleTransfer = () => {
             className="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto text-gray-500"
             data-aos="fade-in"
           >
-            마음에 드는 사진이 있으신가요? 남들과는 다른 것을 원하시나요? 그
-            사진을 그림의 스타일로 바꿔 드립니다. 무료로 지금 바로 시작하세요.
+            마음에 드는 사진이 있으신가요? 남들과는 다른 것을 원하시나요?
+            <br /> 그 사진을 그림의 스타일로 바꿔 드립니다. 무료로 지금 바로
+            시작하세요.
           </p>
           <div className="flex mt-6 justify-center">
             <div className="w-16 h-1 rounded-full bg-sky-300 inline-flex"></div>
@@ -106,8 +107,7 @@ const StyleTransfer = () => {
               <p className="leading-relaxed text-base text-gray-500">
                 이미지들을 고르셨으면, 실행을 해보세요! 저희의 AI가 여러분이
                 선택한 이미지들을 받아 새로운 작품을 만들어내 가져올겁니다. 혹시
-                마음에 드시나요? 그렇다면 이미지를 다운로드까지 해 직접
-                가져보세요.
+                마음에 드시나요? 다운로드 하세요!
               </p>
             </div>
           </div>

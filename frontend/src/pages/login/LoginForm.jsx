@@ -95,14 +95,14 @@ const LoginForm = () => {
 
         {/* 버튼 */}
         <button
-          className="text-white border border-amber-300 bg-amber-400 py-2 px-6 rounded-lg text-lg hover:bg-amber-500 focus:bg-amber-600 focus:ring-4 focus:ring-amber-200 transition"
+          className="text-white font-bold border border-amber-300 bg-amber-400 py-2 px-6 rounded-lg text-lg hover:bg-amber-500 focus:bg-amber-600 focus:ring-4 focus:ring-amber-200 transition"
           onClick={submitHandler}
         >
-          로그인하기
+          로그인
         </button>
         <Link
           to="/signup"
-          className="text-xs text-gray-500 mt-3 text-center hover:text-gray-900 transition"
+          className="text-sm text-gray-500 mt-3 text-center hover:text-gray-900 transition"
         >
           회원가입
         </Link>

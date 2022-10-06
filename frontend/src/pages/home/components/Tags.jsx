@@ -42,12 +42,12 @@ const Tags = () => {
             <div className="h-1 w-20 bg-sky-300 rounded"></div>
           </div>
           <p
-            className="lg:w-1/2 w-full leading-relaxed text-gray-500"
+            className="lg:w-1/2 w-full leading-relaxed text-gray-500 text-right"
             data-aos="fade-left"
           >
-            Art Horizon의 AI가 자사 데이터베이스의 작품을 분석하고, 태그와
-            통계를 생성한 것을 바탕으로 태그를 추천합니다. 신기한 태그의 맛을
-            보세요.
+            Art Horizon의 AI가 자사 데이터베이스의 작품을 분석하고, <br />
+            해당 결과를 바탕으로 태그를 추천합니다. Art Horizon의 특별한 태그를
+            경험하세요.
           </p>
         </div>
         <div className="flex flex-wrap -m-4">

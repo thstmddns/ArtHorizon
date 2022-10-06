@@ -110,3 +110,14 @@ export const userArtApi = {
   // getUserArts: (page) => api.get("/user-art", { params: { page } }),
   getUserArts: (targetUserSeq) => api.get(`/user-art/${targetUserSeq}`),
 };
+
+export const searchApi = {
+  searchPiece: (searchData, page) =>
+    api.post(`/search/pieces`, searchData, { params: { page } }),
+  searchArtist: (searchData, page) =>
+    api.post(`/search/artists`, searchData, { params: { page } }),
+  searchUser: (searchData, page) =>
+    api.post(`/search/users`, searchData, { params: { page } }),
+  searchTag: (searchData, page) =>
+    api.post(`/search/tags`, searchData, { params: { page } }),
+};

@@ -20,6 +20,7 @@ import Signup from "./pages/signup/Signup";
 import MyPage from "./pages/mypage/MyPage";
 import UserModify from "./pages/usermodify/UserModify";
 import Pieces from "./pages/pieces/Pieces";
+import Search from "./pages/search/Search";
 import Piece from "./pages/piece/Piece";
 import Register from "./pages/register/Register";
 import Filter from "./pages/filter/Filter";
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
   {
     path: "/pieces",
     element: <Pieces />,
+  },
+  {
+    path: "/search",
+    element: <Search />,
   },
   {
     path: "/pieces/search/:searchName",

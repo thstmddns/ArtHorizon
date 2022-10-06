@@ -17,8 +17,7 @@ const Reviews = () => {
             className="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto"
             data-aos="fade-in"
           >
-            저희는 그림에서 느껴지는 감각을 향으로 표현하고자 했습니다. <br />{" "}
-            당신이 선택한 이미지는 어떤 향을 가질까요?
+            당신이 선택한 이미지는 어떤 향이 날까요?
           </p>
           <div className="flex mt-6 justify-center">
             <div className="w-16 h-1 rounded-full bg-amber-400 inline-flex"></div>
@@ -202,12 +201,9 @@ const Reviews = () => {
             </div>
           </div>
         </div>
-        <Link to="/scent">
-          <button
-            className="flex mx-auto mt-16 text-white bg-amber-400 border-0 py-2 px-8 focus:outline-none hover:bg-amber-500 active:bg-amber-600 focus:ring focus:ring-amber-300 rounded-lg text-lg transition"
-            data-aos="fade-down"
-          >
-            그림의 향 찾으러 가기!
+        <Link to="/scent" data-aos="fade-down">
+          <button className="flex mx-auto mt-16 text-white bg-amber-400 border-0 py-2 px-8 focus:outline-none hover:bg-amber-500 active:bg-amber-600 focus:ring focus:ring-amber-300 rounded-lg text-lg transition">
+            그림의 향 탐색
           </button>
         </Link>
       </div>

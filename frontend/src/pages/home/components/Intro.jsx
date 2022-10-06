@@ -1,8 +1,18 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const Intro = () => {
   const navigate = useNavigate();
+  const { isLoggedIn } = useSelector((state) => state.auth.isLoggedIn);
+
+  const goRegisterHandler = () => {
+    if (!isLoggedIn) {
+      toast.info("로그인이 필요한 서비스입니다");
+    }
+    navigate("/register");
+  };
 
   return (
     <section
@@ -50,7 +60,7 @@ const Intro = () => {
           <div data-aos="fade-up">
             <button
               className="flex text-white bg-sky-400 py-4 px-12 focus:outline-none hover:bg-sky-500 active:bg-sky-600 focus:ring focus:ring-sky-300 hover:drop-shadow-md rounded-lg text-xl font-bold transition"
-              onClick={() => navigate("/register")}
+              onClick={goRegisterHandler}
             >
               나의 작품 전시하기!
             </button>

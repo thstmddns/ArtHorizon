@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { getUser, logout } from "../redux/authSlice";
 
-import logoImage from "../assets/images/Art_Horizon_Logo.png";
+// import logoImage from "../assets/images/Art_Horizon_Logo.png";
+import arthorizonLogo from "../assets/images/arthorizionlogo.png";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ const NavBar = () => {
           to="/"
           className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
         >
-          <img src={logoImage} className="w-30 h-10" alt="logoImage" />
+          <img src={arthorizonLogo} className="w-30 h-14" alt="logoImage" />
         </Link>
         <div className="text-gray-600 md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-900	flex flex-wrap items-center text-base justify-center">
           <Link

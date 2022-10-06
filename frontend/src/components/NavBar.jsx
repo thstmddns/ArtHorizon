@@ -5,7 +5,8 @@ import { toast } from "react-toastify";
 
 import { logout } from "../redux/authSlice";
 
-import logoImage from "../assets/images/Art_Horizon_Logo.png";
+// import logoImage from "../assets/images/Art_Horizon_Logo.png";
+import arthorizonLogo from "../assets/images/arthorizionlogo.png";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -34,7 +35,7 @@ const NavBar = () => {
           to="/"
           className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
         >
-          <img src={logoImage} className="w-30 h-10" alt="logoImage" />
+          <img src={arthorizonLogo} className="w-30 h-14" alt="logoImage" />
         </Link>
         <div className="text-gray-600 md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center">
           <Link
@@ -47,7 +48,7 @@ const NavBar = () => {
             to="/style"
             className="mr-5 text-sky-900 underline-offset-4 hover:underline hover:text-sky-400 transition"
           >
-            스타일 트랜스퍼
+            AI 스타일
           </Link>
           <Link
             to="/scent"

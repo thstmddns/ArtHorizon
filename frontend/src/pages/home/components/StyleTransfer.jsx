@@ -11,15 +11,15 @@ const StyleTransfer = () => {
             className="text-3xl font-medium title-font text-gray-900 mb-4"
             data-aos="fade-up"
           >
-            스타일 트랜스퍼
+            AI 스타일
           </h1>
           <p
             className="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto text-gray-500"
             data-aos="fade-in"
           >
-            마음에 드는 사진이 있으신가요? 남들과는 다른 것을 원하시나요?
-            <br /> 그 사진을 그림의 스타일로 바꿔 드립니다. 무료로 지금 바로
-            시작하세요.
+            마음에 드는 이미지가 있으신가요? 남들과는 다른 것을 원하시나요?
+            <br /> 그 이미지를 원하는 그림의 스타일로 바꿔 드립니다. 무료로 지금
+            바로 시작하세요.
           </p>
           <div className="flex mt-6 justify-center">
             <div className="w-16 h-1 rounded-full bg-sky-300 inline-flex"></div>
@@ -48,8 +48,7 @@ const StyleTransfer = () => {
               <h2 className="text-gray-900 text-xl mb-3">변환</h2>
               <p className="leading-relaxed text-base text-gray-500">
                 어떤 이미지를 바꾸고 싶으신가요? 유명한 작품? 당신의 소장품?
-                아니면 추억에 남은 사진? 어떤 것이든 다 가능합니다. 사진을
-                가져와주세요
+                아니면 추억에 남은 사진? 어떤 것이든 다 가능합니다.
               </p>
             </div>
           </div>
@@ -74,12 +73,10 @@ const StyleTransfer = () => {
               </svg>
             </div>
             <div className="flex-grow">
-              <h2 className="text-gray-900 text-xl mb-3">
-                명화를 선택해주세요
-              </h2>
+              <h2 className="text-gray-900 text-xl mb-3">명화</h2>
               <p className="leading-relaxed text-base text-gray-500">
                 저희 DB에 저장된 명화들을 제공해드립니다. 여기서 마음에 드는
-                작풍의 작품을 골라주세요. 선택은 언제든지 가능합니다.
+                작품을 골라주세요. 선택은 언제든지 가능합니다.
               </p>
             </div>
           </div>
@@ -105,19 +102,15 @@ const StyleTransfer = () => {
             <div className="flex-grow">
               <h2 className="text-gray-900 text-xl mb-3">결과</h2>
               <p className="leading-relaxed text-base text-gray-500">
-                이미지들을 고르셨으면, 실행을 해보세요! 저희의 AI가 여러분이
-                선택한 이미지들을 받아 새로운 작품을 만들어내 가져올겁니다. 혹시
-                마음에 드시나요? 다운로드 하세요!
+                이미지를 선택하셨다면, 시작하세요. AI가 여러분이 선택한 이미지를
+                스타일링합니다. 마음에 들었다면 다운로드 하세요!
               </p>
             </div>
           </div>
         </div>
-        <Link to="/style">
-          <button
-            className="flex mx-auto mt-16 text-white bg-sky-400 border-0 py-2 px-8 focus:outline-none hover:bg-sky-500 active:bg-sky-600 focus:ring focus:ring-sky-300 rounded-lg text-lg transition"
-            data-aos="fade-down"
-          >
-            지금 바로 시작하기!
+        <Link to="/style" data-aos="fade-down">
+          <button className="flex mx-auto mt-16 text-white bg-sky-400 border-0 py-2 px-8 focus:outline-none hover:bg-sky-500 active:bg-sky-600 focus:ring focus:ring-sky-300 rounded-lg text-lg transition">
+            AI 스타일 시작
           </button>
         </Link>
       </div>

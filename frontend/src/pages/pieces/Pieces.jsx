@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { FaArrowDown, FaSpinner, FaSearch, FaHashtag } from "react-icons/fa";
 
 import { piecesApi, searchApi } from "../../api/api";
@@ -62,6 +62,7 @@ const initialKeywordsState = [
 
 const Pieces = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [recentPieces, setRecentPieces] = useState([]);
   // const [popularPiecesList, setPopularPiecesList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -116,6 +117,22 @@ const Pieces = () => {
     }
   }, [isFetching, fetchRecentPieces, hasNextPage]);
 
+  useEffect(() => {
+    if (location.state?.tagKeyword) {
+      setIsSearched(true);
+      const searchData4 = JSON.stringify({
+        tag: location.state.tagKeyword,
+      });
+      searchApi
+        .searchTag(searchData4, 1)
+        .then((res) => {
+          console.log("res:", res);
+          setSearchResults(res.data);
+        })
+        .catch((err) => console.error(err));
+    }
+  }, [location]);
+
   const selectKeywordHandler = (e, keywordId) => {
     setKeywords((prev) => {
       return [
@@ -158,8 +175,7 @@ const Pieces = () => {
           .searchPiece(searchData1, 1)
           .then((res) => {
             console.log("res:", res);
-            // setSearchResults((prev) => [...prev, res.data.pieceList]);
-            setSearchResults(res.data.pieceList);
+            setSearchResults(res.data);
             console.log("searchResults:", searchResults);
           })
           .catch((err) => console.error(err));
@@ -173,8 +189,7 @@ const Pieces = () => {
           .searchArtist(searchData2, 1)
           .then((res) => {
             console.log("res:", res);
-            // setSearchResults((prev) => [...prev, res.data.pieceList]);
-            setSearchResults(res.data.pieceList);
+            setSearchResults(res.data);
           })
           .catch((err) => console.error(err));
         break;
@@ -187,8 +202,7 @@ const Pieces = () => {
           .searchUser(searchData3, 1)
           .then((res) => {
             console.log("res:", res);
-            // setSearchResults((prev) => [...prev, res.data.artistDtoList]);
-            setSearchResults(res.data.artistDtoList);
+            setSearchResults(res.data);
           })
           .catch((err) => console.error(err));
         break;
@@ -201,8 +215,7 @@ const Pieces = () => {
           .searchTag(searchData4, 1)
           .then((res) => {
             console.log("res:", res);
-            // setSearchResults((prev) => [...prev, res.data.pieceList]);
-            setSearchResults(res.data.pieceList);
+            setSearchResults(res.data);
           })
           .catch((err) => console.error(err));
         break;
@@ -327,7 +340,7 @@ const Pieces = () => {
                     <div>
                       <Link to="/register" data-aos="fade-up">
                         <div className="block text-white rounded-lg px-6 py-3 bg-amber-400 drop-shadow-md space-y-3 hover:bg-amber-300 hover:ring-amber-400 focus:ring-4 focus:bg-amber-300 focus:ring-amber-400 transition">
-                          작품 전시
+                          나의 작품 등록
                         </div>
                       </Link>
                     </div>
@@ -452,33 +465,39 @@ const Pieces = () => {
                 <div className="lg:columns-4 md:columns-3 sm:columns-2 gap-2">
                   {searchResults?.map((piece) => (
                     <div
-                      key={piece.pieceSeq}
+                      key={piece.pieceSeq ?? piece.userImg}
                       className={`shadow-md rounded mb-2 drop-shadow-md overflow-hidden relative cursor-pointer ${
                         isLoading && "animate-pulse"
                       }`}
-                      onClick={() => navigate(`${piece.pieceSeq}`)}
+                      onClick={() =>
+                        navigate(`${piece.pieceSeq ?? piece.userImg}`)
+                      }
                     >
                       {/* 그림 */}
                       <div
                         className="absolute inset-0 bg-cover bg-center z-0"
                         style={{
-                          backgroundImage: `url('http://j7d201.p.ssafy.io/api/my-file/read/${piece.pieceImg}')`,
+                          backgroundImage: `url('http://j7d201.p.ssafy.io/api/my-file/read/${
+                            piece.pieceImg ?? piece.userImg
+                          }')`,
                         }}
                       ></div>
 
                       {/* 설명 */}
                       <div className="opacity-0 hover:opacity-90 hover:bg-gray-900 ease-in-out duration-300 absolute inset-0 z-10 flex flex-col justify-center items-center p-4">
                         <div className="text-2xl text-white font-semibold mb-6 text-center">
-                          {piece.pieceTitle}
+                          {piece.pieceTitle ?? piece.userDesc}
                         </div>
                         <div className="text-1xl text-white text-center">
-                          {piece.pieceArtist}
+                          {piece.pieceArtist ?? piece.userNickname}
                         </div>
                       </div>
                       <img
                         alt="gallery"
                         className="w-full h-full object-cover object-center rounded transition ease-in-out duration-300"
-                        src={`http://j7d201.p.ssafy.io/api/my-file/read/${piece.pieceImg}`}
+                        src={`http://j7d201.p.ssafy.io/api/my-file/read/${
+                          piece.pieceImg ?? piece.userImg
+                        }`}
                       />
                     </div>
                   ))}

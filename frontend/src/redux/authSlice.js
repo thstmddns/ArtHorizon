@@ -150,6 +150,15 @@ const authSlice = createSlice({
       state.myUserType = "";
       state.myDesc = "";
     },
+    [quit.fulfilled]: (state) => {
+      state.isLoggedIn = false;
+      state.mySeq = 0;
+      state.myEmail = "";
+      state.myNickname = "";
+      state.myImageURL = "";
+      state.myUserType = "";
+      state.myDesc = "";
+    },
   },
 });
 

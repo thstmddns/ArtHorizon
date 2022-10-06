@@ -1,14 +1,13 @@
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  createBrowserRouter,
-  RouterProvider,
-  Navigate,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
+
+import PrivateRoute from "./PrivateRoute";
+import ProtectedRoute from "./ProtectedRoute";
 
 import { getUser } from "./redux/authSlice";
 
@@ -27,10 +26,6 @@ import Filter from "./pages/filter/Filter";
 import StyleTransfer from "./pages/style-transfer/StyleTransfer";
 import Scent from "./pages/scent/Scent";
 import NotFound from "./pages/not-found/NotFound";
-import Searchpieces from "./pages/pieces/Searchpieces";
-
-// localStorage에 access-token이 있으면 로그인 상태라고 판단
-const isLogin = () => !!localStorage.getItem("access-token");
 
 const router = createBrowserRouter([
   {
@@ -39,15 +34,27 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: isLogin() ? <Navigate to="/" replace /> : <Login />,
+    element: (
+      <ProtectedRoute>
+        <Login />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/signup",
-    element: isLogin() ? <Navigate to="/" replace /> : <Signup />,
+    element: (
+      <ProtectedRoute>
+        <Signup />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/usermodify",
-    element: isLogin() ? <UserModify /> : <Navigate to="/" replace />,
+    element: (
+      <PrivateRoute>
+        <UserModify />
+      </PrivateRoute>
+    ),
   },
   {
     path: "/mypage/:targetUserSeq",
@@ -62,10 +69,6 @@ const router = createBrowserRouter([
     element: <Search />,
   },
   {
-    path: "/pieces/search/:searchName",
-    element: <Searchpieces />,
-  },
-  {
     path: "/pieces/:pieceSeq",
     element: <Piece />,
   },
@@ -75,7 +78,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/register",
-    element: isLogin() ? <Register /> : <Navigate to="/" replace />,
+    element: (
+      <PrivateRoute>
+        <Register />
+      </PrivateRoute>
+    ),
   },
   {
     path: "/style",
@@ -130,3 +137,96 @@ const App = () => {
 };
 
 export default App;
+
+// import React, { useEffect, useState } from "react";
+// import { Routes, Route, useLocation, useParams } from "react-router-dom";
+// import { RecommendPlaceMain, PlaceDetailMain } from "./pages/index";
+// import Navbar from "../src/components/common/Navbar";
+// import Footer from "./components/common/Footer";
+// import OnBoard from "./pages/OnBoard";
+// import MyPage from "./pages/MyPage";
+// import Survey from "./pages/Survey";
+// import Redirect from "./components/oauth/Redirect";
+// import SNS from "./pages/SNS";
+// import { Provider, useSelector } from "react-redux";
+// import store, { RootState } from "./store";
+// import { CSSTransition, TransitionGroup } from "react-transition-group";
+// import "./App.css";
+// import ProtectedRoute from "./components/common/ProtectedRoute";
+// import { AuthState } from "../src/store/auth";
+// import { springAxios } from "./apis";
+// function App() {
+//   const isAuthenticated = useSelector(
+//     (state: RootState) => state.auth.isAuthenticated
+//   );
+
+//   if (isAuthenticated) {
+//     springAxios.defaults.headers.common["Authorization"] =
+//       localStorage.getItem("accessToken")!;
+//   }
+//   const location = useLocation();
+//   const userId = useSelector((state: RootState) => state.auth.userId);
+
+//   const isSurveyed = window.location.href.includes("survey");
+
+//   // const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+//   // survey 시 navbar 제거 위함
+
+//   // useEffect(() => {}, [isAuthenticated]);
+
+//   // const isSurveyed = useSelector((state: RootState) => state.auth.isSurveyed);
+
+//   return (
+//     <>
+//       {isAuthenticated && !isSurveyed && (
+//         <Navbar isAuthenticated={isAuthenticated} userId={userId} />
+//       )}
+//       {/* 로그인 기능 구현 될 경우 Navbar 수정 /}
+//       {/ <Navbar isAuthenticated={isAuthenticated} /> /}
+//       <TransitionGroup className="transition-group">
+//         <CSSTransition
+//           key={location.pathname}
+//           classNames="pageSlider"
+//           timeout={500}
+//         >
+//           <Routes location={location}>
+//             <Route path="/" element={<OnBoard />} />
+//             <Route
+//               path="/survey"
+//               element={
+//                 <ProtectedRoute isAuthenticated={isAuthenticated}>
+//                   <Survey />
+//                 </ProtectedRoute>
+//               }
+//             />
+//             <Route
+//               path="/mypage/:id"
+//               element={
+//                 <ProtectedRoute isAuthenticated={isAuthenticated}>
+//                   <MyPage />
+//                 </ProtectedRoute>
+//               }
+//             />
+//             <Route
+//               path="/recommendMain"
+//               element={
+//                 <RecommendPlaceMain
+//                   latitude={36.271610662143146}
+//                   longitude={129.29439396586432}
+//                 />
+//               }
+//             />
+//             {/ <Route path="/kakao" element={<Redirect />} /> /}
+//             <Route path="/place/:place_id" element={<PlaceDetailMain />} />
+//             <Route path="/sns" element={<SNS />} />
+//           </Routes>
+//         </CSSTransition>
+//       </TransitionGroup>
+//       {/ <Footer /> */}
+//       {isAuthenticated && <Footer />}
+//     </>
+//   );
+// }
+
+// export default App;

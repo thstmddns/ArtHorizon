@@ -231,8 +231,8 @@ def style_transfer(source1, source2):
     img = img.resize((512,512))
     return_image = io.BytesIO()
     img.save(return_image, "JPEG")
-    # return_value = base64.b64encode(return_image.getvalue())
+    return_value = base64.b64encode(return_image.getvalue())
     end = time.time()
     print(f"{end - start:.5f} sec")
-    return return_image
+    return return_value
 

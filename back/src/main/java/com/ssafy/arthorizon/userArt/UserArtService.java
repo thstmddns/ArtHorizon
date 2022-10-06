@@ -101,6 +101,13 @@ public class UserArtService {
     }
 
     // 유저 아트 판매
+//    public String userArtCollectService(Long userSeq, Long pieceSeq) {
+//
+//
+//
+//
+//    }
+
 
     // 나의 유저 아트 보기
     public List<PieceListDto> myUserArtService(Long artistSeq) {

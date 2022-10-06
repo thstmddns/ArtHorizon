@@ -1,7 +1,7 @@
 from fastapi import FastAPI, File,UploadFile, Form
 import sys
 sys.path.append('/prod/app')
-
+from starlette.responses import StreamingResponse
 from styletransfer import style_transfer
 from tag_recommend import get_tag
 from objectdetection import detection
@@ -51,6 +51,10 @@ async def nst(filed: bytes = File(), src : str = Form()):
     # return_image = io.BytesIO()
     # img.save(return_image, "JPEG")
     # return StreamingResponse(content=return_image, media_type="image/jpeg")
+    return_image = style_transfer(io.BytesIO(filed),src)
+    return_image.seek(0)
+    return StreamingResponse(content=return_image, media_type="image/jpeg")
+
     return style_transfer(io.BytesIO(filed),src)
     
 

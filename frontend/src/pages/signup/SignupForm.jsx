@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { FaCheck } from "react-icons/fa";
 
 import { authApi } from "../../api/api";
 import { signup } from "../../redux/authSlice";
@@ -120,9 +121,11 @@ const SignupForm = () => {
             />
             <button
               type="button"
-              className="text-white border border-amber-300 bg-amber-400 px-6 rounded-lg text-lg hover:bg-amber-500 focus:bg-amber-600 focus:ring-4 focus:ring-amber-200 transition"
+              className="text-white border border-amber-300 bg-amber-400 px-4 rounded-lg text-lg hover:bg-amber-500 focus:bg-amber-600 focus:ring-4 focus:ring-amber-200 transition"
               onClick={checkEmailHandler}
-            ></button>
+            >
+              <FaCheck fill="white" />
+            </button>
           </div>
         </div>
 
@@ -143,9 +146,11 @@ const SignupForm = () => {
             />
             <button
               type="button"
-              className="text-white border border-amber-300 bg-amber-400 px-6 rounded-lg text-lg hover:bg-amber-500 focus:bg-amber-600 focus:ring-4 focus:ring-amber-200 transition"
+              className="text-white border border-amber-300 bg-amber-400 px-4 rounded-lg text-lg hover:bg-amber-500 focus:bg-amber-600 focus:ring-4 focus:ring-amber-200 transition"
               onClick={checkNicknameHandler}
-            ></button>
+            >
+              <FaCheck fill="white" />
+            </button>
           </div>
         </div>
 

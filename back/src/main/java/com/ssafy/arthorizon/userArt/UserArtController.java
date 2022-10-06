@@ -124,4 +124,17 @@ public class UserArtController {
 
     }
 
+    // 내가 구매한 유저아트 모아보기
+    @GetMapping("/my-collect")
+    public ResponseEntity<List<PieceListDto>> myCollectArt(@RequestHeader("jwt") String jwt) {
+
+        // jwt가 비었을 경우에는 인터셉터가 잡아줄 테니까
+
+        Long userSeq = jwtService.getUserSeq(jwt);
+        List<PieceListDto> result = userArtService.myCollectArtService(userSeq);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+
+
+    }
+
 }

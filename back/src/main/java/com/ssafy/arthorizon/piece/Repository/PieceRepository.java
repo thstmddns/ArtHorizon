@@ -52,18 +52,26 @@ public interface PieceRepository extends JpaRepository<PieceEntity,Long> {
     List<PieceEntity> findPieceEntitiesByPieceType(String type);
 
     // 작품명으로 검색
-    @Query(value="select * from pieceTb where pieceTitleKr LIKE %:keyword% or pieceTitleEn LIKE %:keyword% order by pieceSeq desc limit :limit offset :offset", nativeQuery = true)
-    List<PieceEntity> findByTitle(@Param(value="limit") int limit, @Param(value="offset") int offset,
-                                  @Param(value="keyword") String keyword);
+//    @Query(value="select * from pieceTb where pieceTitleKr LIKE %:keyword% or pieceTitleEn LIKE %:keyword% order by pieceSeq desc limit :limit offset :offset", nativeQuery = true)
+//    List<PieceEntity> findByTitle(@Param(value="limit") int limit, @Param(value="offset") int offset,
+//                                  @Param(value="keyword") String keyword);
+
+    @Query(value="select * from pieceTb where pieceTitleKr LIKE %:keyword% or pieceTitleEn LIKE %:keyword% order by pieceSeq desc", nativeQuery = true)
+    List<PieceEntity> findByTitle(@Param(value="keyword") String keyword);
 
     // 작가명으로 검색 (명화 한정)
-    @Query(value="select * from pieceTb where pieceArtistKr LIKE %:keyword% or pieceArtistEn LIKE %:keyword% order by pieceSeq desc limit :limit offset :offset", nativeQuery = true)
-    List<PieceEntity> findByPieceArtist(@Param(value="limit") int limit, @Param(value="offset") int offset,
-                                  @Param(value="keyword") String keyword);
+//    @Query(value="select * from pieceTb where pieceArtistKr LIKE %:keyword% or pieceArtistEn LIKE %:keyword% order by pieceSeq desc limit :limit offset :offset", nativeQuery = true)
+//    List<PieceEntity> findByPieceArtist(@Param(value="limit") int limit, @Param(value="offset") int offset,
+//                                  @Param(value="keyword") String keyword);
+
+    @Query(value="select * from pieceTb where pieceArtistKr LIKE %:keyword% or pieceArtistEn LIKE %:keyword% order by pieceSeq desc", nativeQuery = true)
+    List<PieceEntity> findByPieceArtist(@Param(value="keyword") String keyword);
 
     // 태그 내용으로 검색
-    @Query(value="select * from pieceTb where pieceTag LIKE %:keyword% or pieceScent LIKE %:keyword% order by pieceSeq desc limit :limit offset :offset", nativeQuery = true)
-    List<PieceEntity> findByTag(@Param(value="limit") int limit, @Param(value="offset") int offset,
-                                        @Param(value="keyword") String keyword);
+//    @Query(value="select * from pieceTb where pieceTag LIKE %:keyword% or pieceScent LIKE %:keyword% order by pieceSeq desc limit :limit offset :offset", nativeQuery = true)
+//    List<PieceEntity> findByTag(@Param(value="limit") int limit, @Param(value="offset") int offset,
+//                                        @Param(value="keyword") String keyword);
+    @Query(value="select * from pieceTb where pieceTag LIKE %:keyword% or pieceScent LIKE %:keyword% order by pieceSeq desc", nativeQuery = true)
+    List<PieceEntity> findByTag(@Param(value="keyword") String keyword);
 
 }

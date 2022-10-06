@@ -21,9 +21,12 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     List<UserEntity> findUserEntitiesByUserType(char type);
 
     // 사용자 검색
-    @Query(value="select * from userTb where userNickname LIKE %:keyword% order by userSeq desc limit :limit offset :offset", nativeQuery = true)
-    List<UserEntity> findByNickname(@Param(value="limit") int limit, @Param(value="offset") int offset,
-                                  @Param(value="keyword") String keyword);
+//    @Query(value="select * from userTb where userNickname LIKE %:keyword% order by userSeq desc limit :limit offset :offset", nativeQuery = true)
+//    List<UserEntity> findByNickname(@Param(value="limit") int limit, @Param(value="offset") int offset,
+//                                  @Param(value="keyword") String keyword);
+
+    @Query(value="select * from userTb where userNickname LIKE %:keyword% order by userSeq desc", nativeQuery = true)
+    List<UserEntity> findByNickname(@Param(value="keyword") String keyword);
 
     // 사용자 검색 개수 조회
     int countAllByUserNicknameContains(String keyword);

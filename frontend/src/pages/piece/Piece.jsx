@@ -252,33 +252,42 @@ const Piece = () => {
                 </div>
 
                 {/* 버튼 */}
-                <div className="flex">
-                  {piece.pieceBookmarkYn === "Y" && (
-                    <button
-                      className="flex text-white bg-amber-700 border-0 py-3 px-6 focus:outline-none hover:bg-amber-500 active:bg-amber-600 focus:ring focus:ring-amber-300 rounded-lg transition mr-2"
-                      onClick={cancelBookmark}
-                    >
-                      <FaBookmark fill="white" className="mr-2" />
-                      {piece.pieceBookmarkCount}
-                    </button>
-                  )}
-                  {piece.pieceBookmarkYn === "N" && (
-                    <button
-                      className="flex text-white bg-amber-700 border-0 py-3 px-6 focus:outline-none hover:bg-amber-500 active:bg-amber-600 focus:ring focus:ring-amber-300 rounded-lg transition mr-2"
-                      onClick={setBookmark}
-                    >
-                      <FaRegBookmark fill="white" className="mr-2" />
-                      {piece.pieceBookmarkCount}
-                    </button>
-                  )}
-                  {piece.piecePrice > 0 && (
-                    <button
-                      className="flex text-white bg-sky-700 border-0 py-3 px-6 focus:outline-none hover:bg-sky-500 active:bg-sky-600 focus:ring focus:ring-sky-300 rounded-lg transition"
-                      onClick={paymentHandler}
-                    >
-                      <MdOutlinePayment fill="white" />
-                    </button>
-                  )}
+                <div className="flex justify-between mb-2">
+                  <div className="flex">
+                    {piece.pieceBookmarkYn === "Y" && (
+                      <button
+                        className="flex text-white bg-amber-700 border-0 py-3 px-6 focus:outline-none hover:bg-amber-500 active:bg-amber-600 focus:ring focus:ring-amber-300 rounded-lg transition mr-2"
+                        onClick={cancelBookmark}
+                      >
+                        <FaBookmark fill="white" className="mr-2" />
+                        {piece.pieceBookmarkCount}
+                      </button>
+                    )}
+                    {piece.pieceBookmarkYn === "N" && (
+                      <button
+                        className="flex text-white bg-amber-700 border-0 py-3 px-6 focus:outline-none hover:bg-amber-500 active:bg-amber-600 focus:ring focus:ring-amber-300 rounded-lg transition mr-2"
+                        onClick={setBookmark}
+                      >
+                        <FaRegBookmark fill="white" className="mr-2" />
+                        {piece.pieceBookmarkCount}
+                      </button>
+                    )}
+                    {piece.piecePrice > 0 && (
+                      <button
+                        className="flex text-white bg-sky-700 border-0 py-3 px-6 focus:outline-none hover:bg-sky-500 active:bg-sky-600 focus:ring focus:ring-sky-300 rounded-lg transition"
+                        onClick={paymentHandler}
+                      >
+                        <MdOutlinePayment fill="white" />
+                      </button>
+                    )}
+                  </div>
+
+                  <button
+                    className="flex text-white bg-gray-700 border-0 py-3 px-6 focus:outline-none hover:bg-gray-500 active:bg-gray-600 focus:ring focus:ring-gray-300 rounded-lg transition"
+                    onClick={() => navigate("/pieces")}
+                  >
+                    <FaList fill="white" />
+                  </button>
                 </div>
               </div>
             </div>

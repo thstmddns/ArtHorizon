@@ -1,6 +1,8 @@
 package com.ssafy.arthorizon.userArt;
 
+import com.ssafy.arthorizon.piece.Entity.CollectEntity;
 import com.ssafy.arthorizon.piece.Entity.PieceEntity;
+import com.ssafy.arthorizon.piece.Repository.CollectRepository;
 import com.ssafy.arthorizon.piece.Repository.PieceRepository;
 import com.ssafy.arthorizon.piece.dto.PieceListDto;
 import com.ssafy.arthorizon.user.Entity.UserEntity;
@@ -20,6 +22,9 @@ public class UserArtService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private CollectRepository collectRepository;
 
     private final int LIMIT = 8;
 
@@ -101,12 +106,21 @@ public class UserArtService {
     }
 
     // 유저 아트 판매
-//    public String userArtCollectService(Long userSeq, Long pieceSeq) {
-//
-//
-//
-//
-//    }
+    public String userArtCollectService(Long userSeq, Long pieceSeq) {
+
+        // 입력받은 것으로 엔티티를 만들어서 구매시킴
+        CollectEntity collectEntity = new CollectEntity();
+        collectEntity.setCollector(userRepository.findByUserSeq(userSeq));
+        collectEntity.setCollecting(pieceRepository.findByPieceSeq(pieceSeq));
+
+        try {
+            collectRepository.saveAndFlush(collectEntity);
+            return "success";
+        } catch (Exception e) {
+            return "save error";
+        }
+
+    }
 
 
     // 나의 유저 아트 보기

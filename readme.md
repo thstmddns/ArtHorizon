@@ -2,7 +2,7 @@
 
 
 
-## 🎨 Art Horizon, Link Art and You
+## 🎨 Art Horizon, Link The Art and You
 
 > 일반인의 미술 진입 장벽을 낮추고 많은 화가들이 자신들의 작품을 많은 사람들에게 보여줄 수 있는 인터넷 미술 관람 서비스
 
@@ -35,11 +35,54 @@
 
 ## 🛠 기술 스택
 
-- A.I : `Python 3.10.7`, `Pytorch 1.12.1`, `FastApi 0.85.0`, `uvicorn 0.18.3`
-- B.E: `Java SDK 1.8.0_192`, `Spring-boot`
-- F.E: `JavaScript(ES6+)`, `Node.js(v16.17.0)`, `React(18.2.0)`, `Redux-Toolkit`, `React Router(v6.4.0)`
-- Server: `AWS EC2`, `Ubuntu`, `nginx`
-- DB: `MySQL 8.0`
+### ✔A.I 
+
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)![PyTorch](https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?style=for-the-badge&logo=PyTorch&logoColor=white)![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
+
+| 라이브러리 명 | 설명                                                         |
+| ------------- | ------------------------------------------------------------ |
+| pytorch       | 연구 프로토타이핑에서 프로덕션 배포까지의 경로를 가속화하는 오픈 소스 머신 러닝 프레임워크 |
+
+
+
+### ✔B.E
+
+![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=java&logoColor=white)![Spring](https://img.shields.io/badge/springboot-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
+
+| 라이브러리 명 | 설명                                                         |
+| ------------- | ------------------------------------------------------------ |
+| Spring boot   | 기본 Spring 프레임워크에 톰캣 서버를 내장하고 여러 편의 기능들을 추가한 자바 웹 프레임워크 |
+| JWT           | 클라이언드와 서버, 서비스와 서비스 사이의 통신 시 권한 인가를 위해 사용하는 토큰 |
+| Lombok        | 어노테이션을 제공해 메서드 작성 코드를 줄여주는 라이브러리   |
+| Swagger       | REST API를 설계, 빌드, 문서화 및 사용하는데 도움이 되는 OpenAPI사양을 중심으로 구축된 오픈 소스 라이브러리 |
+
+
+
+### ✔F.E
+
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
+
+| 라이브러리 명    | 설명                                                         |
+| ---------------- | ------------------------------------------------------------ |
+| aos              | 스크롤하면 애니메이션 효과와 함께 표시하는 라이브러리        |
+| axios            | 브라우저와 node.js에서 사용할 수 있는 Promise 기반 HTTP 클라이언트 라이브러리 |
+| react-router-dom | react에서 SPA를 사용할 수 있게 해주는 라이브러리             |
+| react-icons      | ES6 imports를 사용해 React 프로젝트에 인기 있는 아이콘들을 쉽게 사용할 수 있는 라이브러리 |
+| redux-toolkit    | Redux을 더 쉽게 사용하기 위한 라이브러리                     |
+| react-toastify   | 프로젝트 앱 내에서 쉽게 알림을 제공해주는 라이브러리         |
+| tailwindcss      | 디자인 시스템을 위한 API                                     |
+
+
+
+### ✔ Server
+
+![AWS](https://img.shields.io/badge/AWS_EC2-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)![Ubuntu](https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=ubuntu&logoColor=white)![Nginx](https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white)
+
+
+
+### ✔DB
+
+ ![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)
 
 <br><br>
 

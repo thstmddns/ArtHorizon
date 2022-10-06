@@ -143,14 +143,14 @@ const StyleTransfer = () => {
               className="text-6xl font-medium title-font text-gray-900 mb-4"
               data-aos="fade-down"
             >
-              스타일 트랜스퍼
+              AI 스타일
             </h1>
             <p
               className="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto text-gray-500"
               data-aos="fade-in"
             >
-              좋아하는 작품이 있나요? 해당 작품의 스타일로 본인의 그림을
-              바꿔보세요.
+              좋아하는 작품이 있나요? 해당 작품의 스타일로 AI가 당신의 이미지를
+              바꿔줍니다.
             </p>
             <div className="flex mt-6 justify-center">
               <div className="w-16 h-1 rounded-full bg-sky-500 inline-flex"></div>
@@ -163,7 +163,7 @@ const StyleTransfer = () => {
           >
             <div className="flex flex-col items-center justify-center pb-32 mb-32 border-solid border-b border-gray-200">
               <h2 className="text-3xl mb-10">
-                스타일 트랜스퍼를 적용할 사진을 고르세요.
+                AI 스타일을 적용할 이미지를 선택하세요.
               </h2>
               {targetImg && (
                 <img
@@ -256,7 +256,7 @@ const StyleTransfer = () => {
                       style={{ color: "white", marginRight: "5px" }}
                     />
                   )}
-                  이미지 변환하기!
+                  AI 스타일링
                 </button>
               </div>
               <div className="my-10" data-aos="fade-in">

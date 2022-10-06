@@ -58,10 +58,9 @@ const Tags = () => {
               className="p-4 xl:w-1/4 md:w-1/2 sm:w-1/2 drop-shadow-md transition ease-in-out hover:-translate-y-6 duration-200 cursor-pointer"
               // 태그 클릭시 검색 결과 화면 이동
               onClick={() =>
-                navigate(`/pieces/search/${tag.tagTitle}`, {
+                navigate(`/pieces`, {
                   state: {
-                    type: "tags",
-                    search: tag.tagTitle,
+                    tagKeyword: tag.tagTitle,
                   },
                 })
               }

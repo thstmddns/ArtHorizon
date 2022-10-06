@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import logoImage from "../assets/images/Art_Horizon_Logo.png";
+import arthorizonLogo from "../assets/images/arthorizionlogo.png";
 
 const NavBar2 = () => {
   return (
@@ -15,7 +16,7 @@ const NavBar2 = () => {
           to="/"
           className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"
         >
-          <img src={logoImage} className="w-46 h-24" alt="logoImage" />
+          <img src={arthorizonLogo} className="w-56 h-38" alt="logoImage" />
         </Link>
         <div className="text-gray-600 md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center"></div>
 

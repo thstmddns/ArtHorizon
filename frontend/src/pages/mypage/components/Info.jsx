@@ -58,7 +58,7 @@ const Info = () => {
         )}
 
         {/* 정보 */}
-        <div className="flex flex-col mt-5">
+        <div className="flex flex-col mt-2">
           <div className="flex mb-5">
             <div className="font-bold text-3xl mr-2">
               {userData?.userNickname}
@@ -71,7 +71,7 @@ const Info = () => {
           <div className="mb-5">
             <div className="text-gray-500">{userData?.userEmail}</div>
           </div>
-          <div className="flex">
+          <div className="flex mb-3">
             <div className="flex mr-4">
               <div className="mr-1">나의 작품</div>
               <div className="font-bold">{userData?.userArtCount}</div>
@@ -85,6 +85,7 @@ const Info = () => {
               <div className="font-bold">{userData?.userFollowingCount}</div>
             </div>
           </div>
+          <div className="text-gray-500">{userData?.userDesc}</div>
         </div>
       </div>
 

@@ -278,6 +278,32 @@ const Pieces = () => {
               {/* 검색 바 */}
               <section className="text-gray-600 body-font mb-10">
                 <div className="mx-auto xl:w-2/4 lg:w-3/4">
+                  {/* 검색 고르는 것들 */}
+                  <div className="flex justify-between items-center mb-3">
+                    <div className="flex">
+                      {keywords?.map((keyword) => (
+                        <div key={keyword.id} data-aos="flip-up">
+                          <div
+                            className={`flex px-4 py-3 mr-4 rounded-lg hover:drop-shadow-md border-solid border border-gray-200 bg-white cursor-pointer hover:bg-sky-300 hover:text-white focus:ring focus:ring-sky-500 transition ${
+                              keyword.isSelected &&
+                              " text-white bg-sky-300 hover:bg-white hover:text-sky-500"
+                            }`}
+                            onClick={(e) => selectKeywordHandler(e, keyword.id)}
+                          >
+                            {keyword.keywordName}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <div>
+                      <Link to="/register" data-aos="fade-up">
+                        <div className="block text-white rounded-lg px-6 py-3 bg-amber-400 hover:drop-shadow-md space-y-3 hover:bg-amber-300 hover:ring-amber-400 focus:ring-4 focus:bg-amber-300 focus:ring-amber-400 transition">
+                          나의 작품 등록
+                        </div>
+                      </Link>
+                    </div>
+                  </div>
+
                   {/* 검색 */}
                   <form method="post" onSubmit={submitHandler}>
                     <label className="relative block mb-4" data-aos="zoom-in">
@@ -318,33 +344,6 @@ const Pieces = () => {
                       </div>
                     </label>
                   </form>
-
-                  {/* 검색 고르는 것들 */}
-                  <div className="flex justify-between items-center pb-8 mb-8">
-                    <div className="flex">
-                      {keywords?.map((keyword) => (
-                        <div key={keyword.id} data-aos="flip-up">
-                          <div
-                            className={`flex px-4 py-3 mr-4 rounded-lg drop-shadow-md border-solid border border-gray-200 bg-white cursor-pointer hover:bg-sky-300 hover:text-white transition ${
-                              keyword.isSelected &&
-                              " text-white bg-sky-300 hover:bg-white hover:text-sky-500"
-                            }`}
-                            onClick={(e) => selectKeywordHandler(e, keyword.id)}
-                          >
-                            {/* <FaHashtag fill="" className="mr-1" /> */}#{" "}
-                            {keyword.keywordName}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                    <div>
-                      <Link to="/register" data-aos="fade-up">
-                        <div className="block text-white rounded-lg px-6 py-3 bg-amber-400 drop-shadow-md space-y-3 hover:bg-amber-300 hover:ring-amber-400 focus:ring-4 focus:bg-amber-300 focus:ring-amber-400 transition">
-                          나의 작품 등록
-                        </div>
-                      </Link>
-                    </div>
-                  </div>
                 </div>
               </section>
             </div>

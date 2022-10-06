@@ -1,6 +1,6 @@
 package com.ssafy.arthorizon.search;
 
-import com.ssafy.arthorizon.piece.PieceEntity;
+import com.ssafy.arthorizon.piece.Entity.PieceEntity;
 import com.ssafy.arthorizon.piece.Repository.PieceRepository;
 import com.ssafy.arthorizon.piece.dto.PieceDto;
 import com.ssafy.arthorizon.piece.dto.PiecePageDto;

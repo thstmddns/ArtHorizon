@@ -1,4 +1,4 @@
-package com.ssafy.arthorizon.piece;
+package com.ssafy.arthorizon.piece.Entity;
 
 import com.ssafy.arthorizon.user.Entity.UserEntity;
 import com.ssafy.arthorizon.userArt.dto.UserArtDto;

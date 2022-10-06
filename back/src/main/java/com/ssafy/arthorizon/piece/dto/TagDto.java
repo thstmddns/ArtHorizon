@@ -1,9 +1,7 @@
 package com.ssafy.arthorizon.piece.dto;
 
-import com.ssafy.arthorizon.piece.TagEntity;
+import com.ssafy.arthorizon.piece.Entity.TagEntity;
 import lombok.Data;
-
-import java.util.List;
 
 @Data
 public class TagDto {

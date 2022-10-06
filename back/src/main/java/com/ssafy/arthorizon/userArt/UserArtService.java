@@ -1,11 +1,8 @@
 package com.ssafy.arthorizon.userArt;
 
-import com.ssafy.arthorizon.file.FileService;
-import com.ssafy.arthorizon.piece.PieceEntity;
+import com.ssafy.arthorizon.piece.Entity.PieceEntity;
 import com.ssafy.arthorizon.piece.Repository.PieceRepository;
-import com.ssafy.arthorizon.piece.dto.PieceDto;
 import com.ssafy.arthorizon.piece.dto.PieceListDto;
-import com.ssafy.arthorizon.piece.dto.PiecePageDto;
 import com.ssafy.arthorizon.user.Entity.UserEntity;
 import com.ssafy.arthorizon.user.Repository.UserRepository;
 import com.ssafy.arthorizon.userArt.dto.UserArtDto;
@@ -14,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserArtService {

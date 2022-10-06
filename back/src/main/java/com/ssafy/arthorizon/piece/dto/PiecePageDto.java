@@ -1,6 +1,6 @@
 package com.ssafy.arthorizon.piece.dto;
 
-import com.ssafy.arthorizon.piece.PieceEntity;
+import com.ssafy.arthorizon.piece.Entity.PieceEntity;
 import lombok.Data;
 
 import java.util.ArrayList;

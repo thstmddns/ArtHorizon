@@ -1,6 +1,6 @@
 package com.ssafy.arthorizon.piece.dto;
 
-import com.ssafy.arthorizon.piece.PieceEntity;
+import com.ssafy.arthorizon.piece.Entity.PieceEntity;
 import lombok.Data;
 
 @Data
@@ -30,6 +30,7 @@ public class PieceDto {
     private int piecePrice;
 
     private char pieceBookmarkYn;
+    private char pieceCollectYn;
 
     private PieceResult result;
 

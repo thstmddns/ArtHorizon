@@ -101,12 +101,7 @@ public class UserArtController {
         // jwt가 비었을 경우에는 알아서 인터셉터가 잡아줄테니까
 
             List<PieceListDto> result = userArtService.myUserArtService(artistSeq);
-            if(result.isEmpty()){
-                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-
-            } else {
-                return new ResponseEntity<>(result, HttpStatus.OK);
-            }
+            return new ResponseEntity<>(result, HttpStatus.OK);
 
     }
 

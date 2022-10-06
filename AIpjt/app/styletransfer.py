@@ -3,12 +3,13 @@ from PIL import Image
 import torchvision, torchvision.transforms as transforms, torchvision.models as models
 from torchvision.utils import save_image 
 import os, copy, urllib.request, io,numpy, datetime, cv2, base64
-
+import time
 
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 
 
 def style_transfer(source1, source2):
+    start = time.time()
     source_img = ''
     for i in source2:
         if i == ' ':
@@ -166,7 +167,7 @@ def style_transfer(source1, source2):
         return optimizer
     
     def run_style_transfer(cnn, normalization_mean, normalization_std,
-                       content_img, style_img, input_img, num_steps=300,
+                       content_img, style_img, input_img, num_steps=200,
                        style_weight=1000000, content_weight=1):
         """Run the style transfer."""
         print('Building the style transfer model..')
@@ -227,9 +228,11 @@ def style_transfer(source1, source2):
     
     
     img = torchvision.transforms.ToPILImage()(output.squeeze())
+    img = img.resize((512,512))
     return_image = io.BytesIO()
     img.save(return_image, "JPEG")
     return_value = base64.b64encode(return_image.getvalue())
-    
+    end = time.time()
+    print(f"{end - start:.5f} sec")
     return return_value
 

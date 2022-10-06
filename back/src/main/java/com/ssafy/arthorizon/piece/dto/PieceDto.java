@@ -1,6 +1,6 @@
 package com.ssafy.arthorizon.piece.dto;
 
-import com.ssafy.arthorizon.piece.PieceEntity;
+import com.ssafy.arthorizon.piece.Entity.PieceEntity;
 import lombok.Data;
 
 @Data
@@ -30,6 +30,7 @@ public class PieceDto {
     private int piecePrice;
 
     private char pieceBookmarkYn;
+    private char pieceCollectYn;
 
     private PieceResult result;
 
@@ -42,7 +43,13 @@ public class PieceDto {
         this.pieceType=pieceEntity.getPieceType();
         this.pieceTitleKr=pieceEntity.getPieceTitleKr();
         this.pieceTitleEn=pieceEntity.getPieceTitleEn();
-        this.pieceArtistKr=pieceEntity.getPieceArtistKr();
+        if(pieceEntity.getPieceType().equals("M")){
+            // 명화인 경우
+            this.pieceArtistKr=pieceEntity.getPieceArtistKr();
+        } else if(pieceEntity.getPieceType().equals("A")){
+            // 유저 아트인 경우
+            this.pieceArtistKr=pieceEntity.getPieceArtist().getUserNickname();
+        }
         this.pieceArtistEn=pieceEntity.getPieceArtistEn();
         this.pieceArtistSeq=pieceEntity.getPieceArtist().getUserSeq();
         this.pieceDesc=pieceEntity.getPieceDesc();

@@ -1,6 +1,6 @@
 package com.ssafy.arthorizon.user.Entity;
 
-import com.ssafy.arthorizon.piece.PieceEntity;
+import com.ssafy.arthorizon.piece.Entity.PieceEntity;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 

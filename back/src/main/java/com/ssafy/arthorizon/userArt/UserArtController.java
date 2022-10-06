@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import com.ssafy.arthorizon.user.JwtService;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/user-art")
@@ -93,6 +94,29 @@ public class UserArtController {
     }
 
     // 유저 아트 판매
+//    @PostMapping("/collect")
+//    public ResponseEntity<String> userArtCollect(@RequestHeader("jwt") String jwt, @RequestBody Map<String, Long> order) {
+//        if(jwt.isEmpty()) {
+//            return new ResponseEntity<>(FAILURE, HttpStatus.UNAUTHORIZED);
+//        } else {
+//            Long userSeq = jwtService.getUserSeq(jwt);
+//            Long pieceSeq = order.get("pieceSeq");
+//            String result = userArtService.userArtCollectService(userSeq, pieceSeq);
+//
+//            if(result.equals("success")) {
+//                return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
+//            } else {
+//                return new ResponseEntity<>(FAILURE, HttpStatus.BAD_REQUEST);
+//            }
+//
+//        }
+//
+//
+//
+//
+//
+//
+//    }
 
     // 마이페이지 주인의 유저아트 모아보기
     @GetMapping("/{artistSeq}")
@@ -101,12 +125,7 @@ public class UserArtController {
         // jwt가 비었을 경우에는 알아서 인터셉터가 잡아줄테니까
 
             List<PieceListDto> result = userArtService.myUserArtService(artistSeq);
-            if(result.isEmpty()){
-                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-
-            } else {
-                return new ResponseEntity<>(result, HttpStatus.OK);
-            }
+            return new ResponseEntity<>(result, HttpStatus.OK);
 
     }
 

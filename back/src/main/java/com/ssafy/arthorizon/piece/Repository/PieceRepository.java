@@ -1,6 +1,6 @@
 package com.ssafy.arthorizon.piece.Repository;
 
-import com.ssafy.arthorizon.piece.PieceEntity;
+import com.ssafy.arthorizon.piece.Entity.PieceEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

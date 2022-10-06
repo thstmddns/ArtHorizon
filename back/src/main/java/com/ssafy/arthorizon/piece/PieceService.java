@@ -1,5 +1,8 @@
 package com.ssafy.arthorizon.piece;
 
+import com.ssafy.arthorizon.piece.Entity.CollectEntity;
+import com.ssafy.arthorizon.piece.Entity.PieceEntity;
+import com.ssafy.arthorizon.piece.Repository.CollectRepository;
 import com.ssafy.arthorizon.piece.Repository.PieceRepository;
 import com.ssafy.arthorizon.piece.Repository.TagRepository;
 import com.ssafy.arthorizon.piece.dto.PieceDto;
@@ -11,7 +14,6 @@ import com.ssafy.arthorizon.user.Repository.BookmarkRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.HTML;
 import java.util.*;
 
 @Service
@@ -25,6 +27,9 @@ public class PieceService {
 
     @Autowired
     private BookmarkRepository bookmarkRepository;
+
+    @Autowired
+    private CollectRepository collectRepository;
 
     private final int LIMIT = 8;
 
@@ -81,6 +86,7 @@ public class PieceService {
             if(userSeq == 0) {
                 // 비로그인 상태의 유저라는 의미이므로 userBookmarkYn은 N으로 나간다
                 pieceDto.setPieceBookmarkYn('N');
+                pieceDto.setPieceCollectYn('N');
             } else {
                 // 로그인 상태의 유저라는 의미이므로 북마크 되어있는지 검사한다
                 Optional<BookmarkEntity> bookmarkEntityOptional =
@@ -90,6 +96,17 @@ public class PieceService {
                 } else {
                     pieceDto.setPieceBookmarkYn('N');
                 }
+
+                // 로그인 상태의 유저라는 의미이므로 구매되어 있는지 검사한다
+                Optional<CollectEntity> collectEntity =
+                        collectRepository.findCollectEntityByCollecting_PieceSeqAndAndCollector_UserSeq(pieceEntity.getPieceSeq(), userSeq);
+
+                if(collectEntity.isPresent()) {
+                    pieceDto.setPieceCollectYn('Y');
+                } else {
+                    pieceDto.setPieceCollectYn('N');
+                }
+
             }
 
             return pieceDto;

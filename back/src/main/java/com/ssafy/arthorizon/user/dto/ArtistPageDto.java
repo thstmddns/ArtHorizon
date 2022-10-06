@@ -1,8 +1,5 @@
 package com.ssafy.arthorizon.user.dto;
 
-import com.ssafy.arthorizon.piece.PieceEntity;
-import com.ssafy.arthorizon.piece.dto.PieceDto;
-import com.ssafy.arthorizon.piece.dto.PieceListDto;
 import com.ssafy.arthorizon.user.Entity.UserEntity;
 import lombok.Data;
 

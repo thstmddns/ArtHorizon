@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import logoImage from "../assets/images/Art_Horizon_Logo.png";
+// import logoImage from "../assets/images/Art_Horizon_Logo.png";
 import arthorizonLogo from "../assets/images/arthorizionlogo.png";
 
 const NavBar2 = () => {

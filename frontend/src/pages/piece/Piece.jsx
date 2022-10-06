@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 
 import { authApi, piecesApi } from "../../api/api";
 
-import { FaBookmark, FaRegBookmark, FaHashtag } from "react-icons/fa";
+import { FaBookmark, FaRegBookmark, FaHashtag, FaList } from "react-icons/fa";
 import { MdOutlinePayment } from "react-icons/md";
 
 import NavBarDark from "../../components/NavBarDark";
@@ -126,7 +126,9 @@ const Piece = () => {
                     {piece.pieceCentury} C &ndash; {piece.pieceYear}
                   </div>
                   <div className="text-white text-lg">{piece.pieceGenre}</div>
-                  <div className="text-white text-lg">{piece.pieceStyle}</div>
+                  <div className="text-white text-lg mb-4">
+                    {piece.pieceStyle}
+                  </div>
                   <div className="flex mb-4">
                     <div className="flex items-center text-white text-lg font-bold bg-gray-900 rounded-lg drop-shadow-md px-2 py-1 cursor-pointer hover:scale-105 transition">
                       <FaHashtag fill="white" className="mr-1" />{" "}
@@ -141,30 +143,39 @@ const Piece = () => {
                 </div>
 
                 {/* 버튼 */}
-                <div className="flex">
-                  {piece.pieceBookmarkYn === "Y" && (
-                    <button
-                      className="flex text-white bg-amber-700 border-0 py-3 px-6 focus:outline-none hover:bg-amber-500 active:bg-amber-600 focus:ring focus:ring-amber-300 rounded-lg transition mr-2"
-                      onClick={cancelBookmark}
-                    >
-                      <FaBookmark fill="white" className="mr-2" />
-                      {piece.pieceBookmarkCount}
-                    </button>
-                  )}
-                  {piece.pieceBookmarkYn === "N" && (
-                    <button
-                      className="flex text-white bg-amber-700 border-0 py-3 px-6 focus:outline-none hover:bg-amber-500 active:bg-amber-600 focus:ring focus:ring-amber-300 rounded-lg transition mr-2"
-                      onClick={setBookmark}
-                    >
-                      <FaRegBookmark fill="white" className="mr-2" />
-                      {piece.pieceBookmarkCount}
-                    </button>
-                  )}
-                  {piece.piecePrice > 0 && (
-                    <button className="flex text-white bg-sky-700 border-0 py-3 px-6 focus:outline-none hover:bg-sky-500 active:bg-sky-600 focus:ring focus:ring-sky-300 rounded-lg transition">
-                      작품 결제
-                    </button>
-                  )}
+                <div className="flex justify-between mb-2">
+                  <div>
+                    {piece.pieceBookmarkYn === "Y" && (
+                      <button
+                        className="flex text-white bg-amber-700 border-0 py-3 px-6 focus:outline-none hover:bg-amber-500 active:bg-amber-600 focus:ring focus:ring-amber-300 rounded-lg transition mr-2"
+                        onClick={cancelBookmark}
+                      >
+                        <FaBookmark fill="white" className="mr-2" />
+                        {piece.pieceBookmarkCount}
+                      </button>
+                    )}
+                    {piece.pieceBookmarkYn === "N" && (
+                      <button
+                        className="flex text-white bg-amber-700 border-0 py-3 px-6 focus:outline-none hover:bg-amber-500 active:bg-amber-600 focus:ring focus:ring-amber-300 rounded-lg transition mr-2"
+                        onClick={setBookmark}
+                      >
+                        <FaRegBookmark fill="white" className="mr-2" />
+                        {piece.pieceBookmarkCount}
+                      </button>
+                    )}
+                    {piece.piecePrice > 0 && (
+                      <button className="flex text-white bg-sky-700 border-0 py-3 px-6 focus:outline-none hover:bg-sky-500 active:bg-sky-600 focus:ring focus:ring-sky-300 rounded-lg transition">
+                        작품 결제
+                      </button>
+                    )}
+                  </div>
+
+                  <button
+                    className="flex text-white bg-gray-700 border-0 py-3 px-6 focus:outline-none hover:bg-gray-500 active:bg-gray-600 focus:ring focus:ring-gray-300 rounded-lg transition"
+                    onClick={() => navigate("/pieces")}
+                  >
+                    <FaList fill="white" />
+                  </button>
                 </div>
               </div>
             </div>
@@ -217,7 +228,7 @@ const Piece = () => {
                       &#8361; {piece.piecePrice}
                     </div>
                   )}
-                  <div className="flex flex-wrap text-white text-lg mb-2">
+                  <div className="flex flex-wrap text-white text-lg mb-4">
                     {piece.pieceTag.split(",").map((tag) => (
                       <div
                         key={Math.random().toString()}

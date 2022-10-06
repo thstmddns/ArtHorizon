@@ -150,4 +150,16 @@ public class UserArtService {
 
     }
 
+    public List<PieceListDto> myCollectArtService(Long userSeq) {
+
+        List<CollectEntity> collectEntities = collectRepository.findCollectEntityByCollector_UserSeq(userSeq);
+        List<PieceListDto> pieceListDtos = new ArrayList<>();
+
+        for(CollectEntity collectEntity : collectEntities) {
+            pieceListDtos.add(new PieceListDto(collectEntity.getCollecting()));
+        }
+
+        return pieceListDtos;
+
+    }
 }

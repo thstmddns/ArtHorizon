@@ -27,7 +27,7 @@ const Piece = () => {
   const setBookmark = () => {
     authApi
       .setBookmark(pieceSeq)
-      .then((res) => {
+      .then(() => {
         console.log("북마크완료");
         const fetchPieceDetail = async () => {
           try {
@@ -131,7 +131,7 @@ const Piece = () => {
                   <div className="text-white text-lg">{piece.pieceGenre}</div>
                   <div className="text-white text-lg">{piece.pieceStyle}</div>
                   <div className="flex mb-4">
-                    <div className="text-white text-lg font-bold bg-gray-900 rounded-lg drop-shadow-md px-2 py-1">
+                    <div className="text-white text-lg font-bold bg-gray-900 rounded-lg drop-shadow-md px-2 py-1 cursor-pointer hover:scale-105 transition">
                       # {piece.pieceScent}
                     </div>
                   </div>
@@ -226,7 +226,7 @@ const Piece = () => {
                     ))}
                   </div>
                   <div className="flex mb-4">
-                    <div className="text-white text-lg font-bold bg-gray-900 rounded-lg drop-shadow-md px-2 py-1">
+                    <div className="text-white text-lg font-bold bg-gray-900 rounded-lg drop-shadow-md px-2 py-1 cursor-pointer hover:scale-105 transition">
                       # {piece.pieceScent}
                     </div>
                   </div>

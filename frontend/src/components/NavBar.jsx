@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 import { logout } from "../redux/authSlice";
 
@@ -14,6 +15,12 @@ const NavBar = () => {
     mySeq: userSeq,
     myNickname,
   } = useSelector((state) => state.auth);
+
+  const logoutHandler = () => {
+    dispatch(logout());
+    navigate("/", { replace: true });
+    toast.success("성공적으로 로그아웃했습니다");
+  };
 
   return (
     <div className="fixed inset-x-0 top-0 z-50 backdrop-blur">
@@ -77,7 +84,7 @@ const NavBar = () => {
               {myNickname}
             </button>
             <button
-              onClick={() => dispatch(logout())}
+              onClick={logoutHandler}
               className="inline-flex items-center bg-sky-400 text-white py-1 px-3 focus:outline-none hover:bg-sky-600 hover:drop-shadow-md rounded-lg text-base mt-4 md:mt-0 transition"
             >
               로그아웃

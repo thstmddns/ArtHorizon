@@ -21,10 +21,10 @@ const Arts = () => {
         setIsMine(res.data.userIsMe === "Y" ? true : false);
 
         // 화가이면 유저 아트 가져오기
-        if (res.data.isArtist === "A") {
+        if (res.data.userType === "A") {
           userArtApi
-            .getUserArts(1)
-            .then((res) => setUserArts(res.data.pieceList))
+            .getUserArts(targetUserSeq)
+            .then((res) => setUserArts(res.data))
             .catch(() => toast.error("나의 아트 가져오기 실패"));
         }
 
@@ -32,7 +32,7 @@ const Arts = () => {
         if (res.data.userIsMe === "Y") {
           authApi
             .getBookmarkArts()
-            .then((res) => setBookmarkArts(res.data.bookmarkList))
+            .then((res) => setBookmarkArts(res.data))
             .catch(() => toast.error("북마크 아트 가져오기 실패"));
         }
       })

@@ -99,5 +99,6 @@ export const artistApi = {
 };
 
 export const userArtApi = {
-  getUserArts: (page) => api.get("/user-art", { params: { page } }),
+  // getUserArts: (page) => api.get("/user-art", { params: { page } }),
+  getUserArts: (targetUserSeq) => api.get(`/user-art/${targetUserSeq}`),
 };

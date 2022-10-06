@@ -35,8 +35,8 @@ def style_transfer(source1, source2):
         source_img, "src2.jpg"
     )
     
-    mp = image_loader(source1)
-    my_img = image_loader("src2.jpg")
+    my_img = image_loader(source1)
+    mp = image_loader("src2.jpg")
     
     
     assert mp.size() == my_img.size(), \
@@ -167,8 +167,8 @@ def style_transfer(source1, source2):
         return optimizer
     
     def run_style_transfer(cnn, normalization_mean, normalization_std,
-                       content_img, style_img, input_img, num_steps=200,
-                       style_weight=1000000, content_weight=0.1):
+                       content_img, style_img, input_img, num_steps=100,
+                       style_weight=1000000, content_weight=0.3):
         """Run the style transfer."""
         print('Building the style transfer model..')
         model, style_losses, content_losses = get_style_model_and_losses(cnn,

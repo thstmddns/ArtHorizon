@@ -9,29 +9,42 @@ import { toast } from "react-toastify";
 // fileName을 여기 넣어놓으시오
 const url = "http://j7d201.p.ssafy.io/api/my-file/read/";
 
+// "54_Vasiliy Kandinskiy_Picture with an Archer.jpg"
+// "156_Claude Monet_The Willows on the River.jpg"
+// "335_Pablo Picasso_Weeping Woman.jpg"
+// "697_Leonardo da Vinci_Mona Lisa.jpg"
+// "770_Henri Matisse_Nude in Sunlit Landscape.jpg"
+// "902_Camille Pissarro_The Red Roofs.jpg"
+
 const initialTestImages = [
   {
-    imgName: "150_Diego Rivera_Evening Twilight at Acapulco.jpg",
+    // imgName: "150_Diego Rivera_Evening Twilight at Acapulco.jpg",
+    imgName: "54_Vasiliy Kandinskiy_Picture with an Archer.jpg",
     isSelected: false,
   },
   {
-    imgName: "935_Camille Pissarro_The Roundelay.jpg",
+    // imgName: "935_Camille Pissarro_The Roundelay.jpg",
+    imgName: "156_Claude Monet_The Willows on the River.jpg",
     isSelected: false,
   },
   {
-    imgName: "761_Henri Matisse_Fruit and Coffeepot.jpg",
+    // imgName: "761_Henri Matisse_Fruit and Coffeepot.jpg",
+    imgName: "335_Pablo Picasso_Weeping Woman.jpg",
     isSelected: false,
   },
   {
-    imgName: "461_Francisco Goya_Dont scream stupid.jpg",
+    // imgName: "461_Francisco Goya_Dont scream stupid.jpg",
+    imgName: "697_Leonardo da Vinci_Mona Lisa.jpg",
     isSelected: false,
   },
   {
-    imgName: "267_Mikhail Vrubel_Pan.jpg",
+    // imgName: "267_Mikhail Vrubel_Pan.jpg",
+    imgName: "770_Henri Matisse_Nude in Sunlit Landscape.jpg",
     isSelected: false,
   },
   {
-    imgName: "618_Caravaggio_The Lute Player.jpg",
+    // imgName: "618_Caravaggio_The Lute Player.jpg",
+    imgName: "902_Camille Pissarro_The Red Roofs.jpg",
     isSelected: false,
   },
 ];

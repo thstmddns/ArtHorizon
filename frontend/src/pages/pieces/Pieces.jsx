@@ -37,20 +37,7 @@ import NavBar from "../../components/NavBar";
 //   }
 // }, [isFetching, fetchRecentPieces, hasNextPage]);
 
-const LOADING_ELEMENTS = [
-  {
-    id: Math.random().toString(),
-  },
-  {
-    id: Math.random().toString(),
-  },
-  {
-    id: Math.random().toString(),
-  },
-  {
-    id: Math.random().toString(),
-  },
-];
+const LOADING_TIME = 1500;
 
 const initialKeywordsState = [
   {
@@ -125,7 +112,7 @@ const Pieces = () => {
   useEffect(() => {
     if (isFetching && hasNextPage) {
       setIsLoading(true);
-      setTimeout(fetchRecentPieces, 2000);
+      setTimeout(fetchRecentPieces, LOADING_TIME);
       // fetchRecentPieces();
     } else if (!hasNextPage) {
       setIsFetching(false);

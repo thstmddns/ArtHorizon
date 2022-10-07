@@ -37,21 +37,6 @@ import NavBar from "../../components/NavBar";
 //   }
 // }, [isFetching, fetchRecentPieces, hasNextPage]);
 
-const LOADING_ELEMENTS = [
-  {
-    id: Math.random().toString(),
-  },
-  {
-    id: Math.random().toString(),
-  },
-  {
-    id: Math.random().toString(),
-  },
-  {
-    id: Math.random().toString(),
-  },
-];
-
 const initialKeywordsState = [
   {
     id: 1,
@@ -125,7 +110,7 @@ const Pieces = () => {
   useEffect(() => {
     if (isFetching && hasNextPage) {
       setIsLoading(true);
-      setTimeout(fetchRecentPieces, 2000);
+      setTimeout(fetchRecentPieces, 1000);
       // fetchRecentPieces();
     } else if (!hasNextPage) {
       setIsFetching(false);
@@ -236,14 +221,6 @@ const Pieces = () => {
         break;
       default:
         break;
-    }
-  };
-
-  const handleClickNavigate = (e, piece) => {
-    if (selectedKeyword === "유저명") {
-      navigate(`/mypage/${piece.userSeq}`);
-    } else {
-      navigate(`${piece.pieceSeq}`);
     }
   };
 
@@ -394,12 +371,13 @@ const Pieces = () => {
                 </div>
 
                 {/* 그림 리스트 */}
-                {/* <div className="lg:columns-4 md:columns-3 sm:columns-2 gap-2"> */}
-                <div className="grid gap-2 grid-cols-4">
+                <div className="lg:columns-4 md:columns-3 sm:columns-2 gap-2">
                   {recentPieces?.map((piece) => (
                     <div
                       key={piece.pieceSeq}
-                      className={`shadow-md rounded mb-2 drop-shadow-md overflow-hidden relative cursor-pointer`}
+                      className={`shadow-md rounded mb-2 drop-shadow-md overflow-hidden relative cursor-pointer ${
+                        isLoading && "animate-pulse"
+                      }`}
                       onClick={() => navigate(`${piece.pieceSeq}`)}
                     >
                       {/* 그림 */}
@@ -426,18 +404,6 @@ const Pieces = () => {
                       />
                     </div>
                   ))}
-                  {isLoading && (
-                    <React.Fragment>
-                      <div className="w-full h-64 bg-gray-200 rounded animate-pulse"></div>
-                      <div className="w-full h-64 bg-gray-200 rounded animate-pulse"></div>
-                      <div className="w-full h-64 bg-gray-200 rounded animate-pulse"></div>
-                      <div className="w-full h-64 bg-gray-200 rounded animate-pulse"></div>
-                      <div className="w-full h-64 bg-gray-200 rounded animate-pulse"></div>
-                      <div className="w-full h-64 bg-gray-200 rounded animate-pulse"></div>
-                      <div className="w-full h-64 bg-gray-200 rounded animate-pulse"></div>
-                      <div className="w-full h-64 bg-gray-200 rounded animate-pulse"></div>
-                    </React.Fragment>
-                  )}
                 </div>
 
                 {/* 로딩 완료 */}
@@ -495,13 +461,16 @@ const Pieces = () => {
                 </div>
 
                 {/* 그림 리스트 */}
-                {/* <div className="lg:columns-4 md:columns-3 sm:columns-2 gap-2"> */}
-                <div className="grid gap-2 grid-cols-4">
+                <div className="lg:columns-4 md:columns-3 sm:columns-2 gap-2">
                   {searchResults?.map((piece) => (
                     <div
                       key={piece.pieceSeq ?? piece.userImg}
-                      className={`shadow-md rounded mb-2 drop-shadow-md overflow-hidden relative cursor-pointer`}
-                      onClick={(e) => handleClickNavigate(e, piece)}
+                      className={`shadow-md rounded mb-2 drop-shadow-md overflow-hidden relative cursor-pointer ${
+                        isLoading && "animate-pulse"
+                      }`}
+                      onClick={() =>
+                        navigate(`${piece.pieceSeq ?? piece.userImg}`)
+                      }
                     >
                       {/* 그림 */}
                       <div
@@ -523,7 +492,7 @@ const Pieces = () => {
                         </div>
                       </div>
                       <img
-                        alt="img"
+                        alt="gallery"
                         className="w-full h-full object-cover object-center rounded transition ease-in-out duration-300"
                         src={`http://j7d201.p.ssafy.io/api/my-file/read/${
                           piece.pieceImg ?? piece.userImg
